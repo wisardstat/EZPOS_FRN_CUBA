@@ -1,0 +1,121 @@
+
+<app-breadcrumb [title]="'รายการรับสินค้าเข้าคลัง'" [items]="['Stockcard']" [active_item]="'List by Group'"></app-breadcrumb>
+
+<div class="container-fluid">
+
+  <div class="row">
+      <div class="col-sm-12">
+         
+
+        <div class="card">   
+
+          <div class="card-body"> 
+              
+            <div class="row">
+
+              <div class="col-sm-3">
+                <label class="col-sm-12 col-form-label">  วันที่ทำรายการ-จาก  </label>
+                <div class="col-sm-12">
+                  <input class="form-control digits" type="date" value="2022-01-01" />
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <label class="col-sm-12 col-form-label">  ถึง  </label>
+                <div class="col-sm-12">
+                  <input class="form-control digits" type="date" value="2022-01-01" />
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                  <div class="mb-3 m-form__group">
+                      <label for="exampleFormControlSelect9">เลือกคลังสินค้า</label>
+                      <select class="form-control digits" id="exampleFormControlSelect9">
+                        <option>ทั้งหมด</option>
+                        <option>Big-C ชลบุรี</option>
+                        <option>Central ชิดลม</option>
+                        <option>Stock มือสอง</option>                          
+                      </select>
+                  </div>
+              </div> 
+              
+              <div class="col-sm-3">
+                <button class="btn btn-lg btn-primary m-t-30 m-r-15" type="submit"> Search</button>
+              </div>
+ 
+            </div> 
+
+          </div>
+
+
+        </div>
+      </div>
+  </div>
+  
+    
+    
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">              
+                <div class="card-body">
+
+                    <div class="product-list-custom custom-datatable">
+                        <div class="table-responsive ">
+                          <table class="table table-bordered">
+                            <thead class="bg-green">
+                              <tr>                                
+                                <th scope="col">รหัสเอกสาร</th>                                
+                                <th scope="col">วันที่ทำรายการ</th>
+                                <th scope="col">คลัง/ร้าน/Shop</th>
+                                <th scope="col">ประเภทสินค้า/Category</th>
+                                <th scope="col">ยี่ห้อ/Brand</th>
+                                <th scope="col">รุ่น/Model</th>
+                                <th scope="col">สี/Color</th>                                
+                                <th scope="col">Barcode</th> 
+                                <th class="text-end" scope="col">จำนวน/Qty</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                              <tr *ngFor="let stk of Stockcard; index as i">
+                                <td>
+                                    {{ stk.doc_id }} 
+                                  </td>  
+                                  <td>
+                                    {{ stk.doc_date }} 
+                                  </td>  
+                                  <td>
+                                    {{ stk.wh_name }} 
+                                  </td> 
+                                <td>
+                                  {{ stk.group_name }} 
+                                </td>  
+                                <td>
+                                    {{ stk.brand_name }} 
+                                </td>
+                                <td>                                  
+                                    {{ stk.model_name }}
+                                </td>                                
+                                <td>                                  
+                                    {{ stk.color }}
+                                </td>   
+                                <td>                                  
+                                    {{ stk.bar_code }}
+                                </td>                                
+                                <td class="text-end">
+                                    {{ stk.qty | number }}
+                                </td>
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        </div>
+                    </div><!--./product-list-->
+
+                </div><!--./card-body-->
+
+            </div><!--./card-->
+        </div><!--./col-sm-12-->
+
+    </div> <!--./row-->
+</div>    <!--./container-fluid-->
