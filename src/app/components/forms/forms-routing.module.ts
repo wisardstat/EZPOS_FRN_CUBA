@@ -6,6 +6,7 @@ import { FormValidationComponent } from './form-controls/form-validation/form-va
 import { InputGroupsComponent } from './form-controls/input-groups/input-groups.component';
 import { MegaOptionsComponent } from './form-controls/mega-options/mega-options.component';
 import { TouchspinComponent } from './form-widgets/touchspin/touchspin.component';
+
 import { Select2Component } from './form-widgets/ngselect/select2.component';
 import { SwitchComponent } from './form-widgets/switch/switch.component';
 import { ClipboardComponent } from './form-widgets/clipboard/clipboard.component';

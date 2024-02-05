@@ -1,14 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
- 
-
 import { RpBymodelComponent } from './rp-bymodel/rp-bymodel.component'
+
 
 const routes: Routes = [
   {
       path: '',
-      children: [
-           
+      children: [           
           {
             path: 'rpbymodel',
             component: RpBymodelComponent

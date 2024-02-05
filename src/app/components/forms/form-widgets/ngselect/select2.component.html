@@ -1,4 +1,10 @@
-<app-breadcrumb [title]="'Ngselect'" [items]="['Forms', 'Form Widgets']" [active_item]="'Ngselect'"></app-breadcrumb>
+
+<app-breadcrumb 
+[title]="'Ngselect'" 
+[items]="['Forms', 'Form Widgets']" 
+[active_item]="'Ngselect'"></app-breadcrumb>
+
+
 <div class="container-fluid">
   <div class="select2-drpdwn">
     <div class="row">
@@ -7,11 +13,16 @@
           <div class="card-header">
             <h5 class="card-title">NG SELECT</h5>
           </div>
+
           <div class="card-body">
             <div class="mb-2">
+
               <div class="col-form-label">Default Placeholder</div>
+
               <ng-select [items]="defaultBindingsList" placeholder="Select"
-                class="js-example-placeholder-multiple" [(ngModel)]="selectedCity"></ng-select>
+                class="js-example-placeholder-multiple" [(ngModel)]="selectedCity">
+              </ng-select>
+
             </div>
             <div class="mb-2">
               <div class="col-form-label">Single select</div>

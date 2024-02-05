@@ -1,3 +1,4 @@
+
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -5,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../../shared/shared.module';
+
 import { BaseInputsComponent } from './form-controls/base-inputs/base-inputs.component';
 import { CheckboxRadioComponent } from './form-controls/checkbox-radio/checkbox-radio.component';
 import { FormValidationComponent } from './form-controls/form-validation/form-validation.component';
@@ -20,6 +22,7 @@ import { FormsRoutingModule } from './forms-routing.module';
 
 @NgModule({
   declarations: [
+
     FormValidationComponent,
     CheckboxRadioComponent,
     InputGroupsComponent,
@@ -41,6 +44,7 @@ import { FormsRoutingModule } from './forms-routing.module';
     NgbModule,
     SharedModule,
     NgSelectModule,
+
   ]
 })
 export class FormModule { }

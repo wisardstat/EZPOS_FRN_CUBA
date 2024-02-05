@@ -1,20 +1,19 @@
 
-<app-breadcrumb [title]="'สินค้าคงเหลือ (แยกตามรุ่น/Model)'" [items]="['Inventory', 'Product']" [active_item]="'List by Group'"></app-breadcrumb>
+<app-breadcrumb 
+ [title]="'สินค้าคงเหลือ (แยกตามรุ่น/Model)'" 
+ [items]="['Inventory', 'Product','Forms', 'Form Widgets']" 
+ [active_item]="'Ngselect'"
+ ></app-breadcrumb>
 
 <div class="container-fluid">
 
   <div class="row">
-      <div class="col-sm-12">
-         
+      <div class="col-sm-12">         
 
-        <div class="card">   
-
+        <div class="card">
           <div class="card-body"> 
-              
             <div class="row">
-
               <div class="col-sm-3">
-
                 <label class="col-sm-12 col-form-label">  วันที่คลังสินค้า/Inventory Date  </label>
                 <div class="col-sm-12">
                   <input class="form-control digits" type="date" value="2022-01-01" />
@@ -26,11 +25,11 @@
 
                   <div class="mb-3 m-form__group">
                       <label for="exampleFormControlSelect9">เลือกคลังสินค้า</label>
-                      <select class="form-control digits" id="exampleFormControlSelect9">
-                        <option>ทั้งหมด</option>
-                        <option>Big-C ชลบุรี</option>
-                        <option>Central ชิดลม</option>
-                        <option>Stock มือสอง</option>                          
+                      <select class="form-control digits" id="exampleFormControlSelect9"  >
+                        <option value="0" selected>ทั้งหมด</option>  
+                        <option *ngFor="let wh of _inventory_list" [value]="wh.wh_id">
+                          {{ wh.wh_name }}
+                        </option>                      -->
                       </select>
                   </div>
 
@@ -47,42 +46,49 @@
                   </div>
               </div>
 
-             
-
             </div>
 
-            <div class="row">
+            <div class="row select2-drpdwn">
 
               <div class="col-sm-3">
 
                 <div class="mb-3 m-form__group">
-                    <label for="exampleFormControlSelect9">เลือกประเภทสินค้า/Category</label>
-                    <select class="form-control digits" id="exampleFormControlSelect9">
-                      <option>ทั้งหมด</option>
-                      <option>มือถือ/Mobile</option>
-                      <option>อุปกรณ์</option>
-                      <option>ทั่วไป</option>                          
-                    </select>
+
+                  <div class="col-form-label">เลือกประเภทสินค้า</div>
+ 
+                  <ng-select class="js-example-placeholder-multiple" 
+                  placeholder="เลือก" [(ngModel)]="selected_category" >                    
+                    <ng-option *ngFor="let cat of _category_list" 
+                      [value]="cat.group_id">{{cat.group_name}}
+                    </ng-option>
+                    <ng-option [value]="0" >ทั้งหมด</ng-option>
+                  </ng-select> 
+
                 </div>
 
               </div>
 
               <div class="col-sm-3">
-
                 <div class="mb-3 m-form__group">
-                    <label for="exampleFormControlSelect9">เลือกยี่ห้อสินค้า/Brand</label>
-                    <select class="form-control digits" id="exampleFormControlSelect9">
-                      <option>ทั้งหมด</option>
-                      <option>SAMSUNG</option>
-                      <option>SANDISK</option>
-                      <option>REALME</option>                          
-                    </select>
-                </div>
 
+                  <div class="col-form-label">เลือกยี่ห้อสินค้า/Brand</div>
+ 
+                  <ng-select class="js-example-placeholder-multiple" 
+                  placeholder="เลือก" [(ngModel)]="selected_brand" >
+                  <ng-option [value]="0" >ทั้งหมด</ng-option>
+                    <ng-option *ngFor="let brand of _brand_list" 
+                      [value]="brand.brand_id">{{brand.brand_name}}
+                    </ng-option>
+                  </ng-select> 
+
+
+                </div>
               </div>
 
               <div class="col-sm-3">
-                  <button class="btn btn-primary m-t-30 m-r-15" type="submit">Search</button>
+                  <button class="btn btn-primary m-t-30 m-r-15" type="submit" 
+                  (click)="onSearch()"
+                  >Search</button>
               </div>
 
             </div>
@@ -94,8 +100,16 @@
       </div>
   </div>
   
-    
-    
+  <!-- <div class="row">
+    <h1> TEST </h1>
+    <ul class="list-group">
+      <li 
+          *ngFor="let post of posts"
+          class="list-group-item">
+          {{ post.bar_code }}
+      </li>
+    </ul>    
+  </div>   -->
 
     <div class="row">
         <div class="col-sm-12">
@@ -116,7 +130,7 @@
                             </thead>
                             <tbody>
 
-                              <tr *ngFor="let product of products; index as i">
+                              <tr *ngFor="let product of _vstockcard_list; index as i">
                                 <td>
                                   {{ product.group_name }} 
                                 </td>  

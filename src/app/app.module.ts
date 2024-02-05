@@ -9,6 +9,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // // for HttpClient import:
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    NgSelectModule,
     //InventoryModule,
     ToastrModule.forRoot(),
     TranslateModule.forRoot({

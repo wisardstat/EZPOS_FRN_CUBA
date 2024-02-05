@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select2.component.scss']
 })
 export class Select2Component implements OnInit {
+
   public defaultBindingsList = [
     { value: "1", label: "Alabama", job: "Developer" },
     { value: "2", label: "Wyoming", job: "Developer" },
@@ -23,6 +24,7 @@ export class Select2Component implements OnInit {
   public multipleSelectedCity: string[];
   public multipleSelectedCity1: string[];
   public rtl: string[];
+  
 public dropdowns=[
   {
     buttonColor:"primary",

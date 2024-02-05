@@ -1,16 +1,31 @@
-import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { SharedModule } from '../../shared/shared.module';
+
 
 import { InventoryRoutingModule } from './inventory-routing.module'; 
-import { SharedModule } from "../../shared/shared.module";
+// import { RpBymodelComponents } from './rp-bymodel/rp-bymodel.component'
 
 @NgModule({
-  declarations: [  ],
+  declarations: [   ],
 
   imports: [
-    CommonModule,
-    InventoryRoutingModule,
+    
+    CommonModule,    
+    
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgbModule,
     SharedModule,
+    NgSelectModule,   
+    FormsModule,
+
+    InventoryRoutingModule,
   ]
 })
 export class InventoryModule {
