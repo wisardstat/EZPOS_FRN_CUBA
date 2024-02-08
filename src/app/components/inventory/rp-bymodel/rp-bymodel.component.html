@@ -25,11 +25,16 @@
 
                   <div class="mb-3 m-form__group">
                       <label for="exampleFormControlSelect9">เลือกคลังสินค้า</label>
-                      <select class="form-control digits" id="exampleFormControlSelect9"  >
+                     
+                     
+                      <select class="form-control digits" id="selected_wh" 
+                      placeholder="เลือก"
+                      [(ngModel)]="selected_wh" 
+                      >
                         <option value="0" selected>ทั้งหมด</option>  
                         <option *ngFor="let wh of _inventory_list" [value]="wh.wh_id">
                           {{ wh.wh_name }}
-                        </option>                      -->
+                        </option>                      
                       </select>
                   </div>
 
@@ -37,12 +42,18 @@
 
               <div class="col-sm-3">
                   <div class="mb-3 m-form__group">
+                 
                       <label for="exampleFormControlSelect9">ตัวเลือกเพิ่มเติม</label>
-                      <select class="form-control digits" id="exampleFormControlSelect9">
-                          <option value="" selected>แสดงจำนวนสินค้า/Select Qty</option>
-                          <option value="EXISTS" >  เฉพาะที่มีสินค้าคงเหลือ (Qty > 0) </option>
-                          <option value="NONE">  ไม่มีสินค้าในคลัง (Qty = 0)</option>                         
-                      </select>
+
+                     <ng-select class="js-example-placeholder-multiple" 
+                       id="selected_type_rp"
+                      [(ngModel)]="selected_type_rp" 
+                      placeholder="ระบุการแสดงจำนวนสินค้า"
+                      >
+                          <ng-option value=""  selected>แสดงทั้งหมด</ng-option>
+                          <ng-option value="EXISTS" >  เฉพาะที่มีสินค้าคงเหลือ (Qty > 0) </ng-option>
+                          <ng-option value="NONE">  ไม่มีสินค้าในคลัง (Qty = 0)</ng-option>                         
+                    </ng-select>
                   </div>
               </div>
 
@@ -57,11 +68,14 @@
                   <div class="col-form-label">เลือกประเภทสินค้า</div>
  
                   <ng-select class="js-example-placeholder-multiple" 
-                  placeholder="เลือก" [(ngModel)]="selected_category" >                    
+                  placeholder="เลือก" id="selected_category"
+                  [(ngModel)]="selected_category" >                    
+
+                    <ng-option [value]="0" >ทั้งหมด</ng-option>
                     <ng-option *ngFor="let cat of _category_list" 
                       [value]="cat.group_id">{{cat.group_name}}
                     </ng-option>
-                    <ng-option [value]="0" >ทั้งหมด</ng-option>
+                    
                   </ng-select> 
 
                 </div>
@@ -74,14 +88,18 @@
                   <div class="col-form-label">เลือกยี่ห้อสินค้า/Brand</div>
  
                   <ng-select class="js-example-placeholder-multiple" 
-                  placeholder="เลือก" [(ngModel)]="selected_brand" >
-                  <ng-option [value]="0" >ทั้งหมด</ng-option>
+                  id="selected_brand"
+                  placeholder="เลือก" [(ngModel)]="selected_brand"
+                  dropdownPosition = "top"
+                  >
+                    <ng-option [value]="0"  selected>ทั้งหมด</ng-option>
                     <ng-option *ngFor="let brand of _brand_list" 
                       [value]="brand.brand_id">{{brand.brand_name}}
                     </ng-option>
+                    
                   </ng-select> 
 
-
+                  
                 </div>
               </div>
 
@@ -99,22 +117,20 @@
         </div>
       </div>
   </div>
-  
-  <!-- <div class="row">
-    <h1> TEST </h1>
-    <ul class="list-group">
-      <li 
-          *ngFor="let post of posts"
-          class="list-group-item">
-          {{ post.bar_code }}
-      </li>
-    </ul>    
-  </div>   -->
+   
+  <div class="center_div" >
+    
+  <div class="loader-box" 
+  [style.display]="(numberOfUnreadAlerts == 0) ? 'none' : 'block' ">
+    <div class="loader-4"></div>
+  </div> 
+</div>
 
     <div class="row">
         <div class="col-sm-12">
             <div class="card">              
                 <div class="card-body">
+                      
 
                     <div class="product-list-custom custom-datatable">
                         <div class="table-responsive">

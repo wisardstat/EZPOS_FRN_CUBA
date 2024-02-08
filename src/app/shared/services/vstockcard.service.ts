@@ -16,8 +16,14 @@ export class vstockcard_list {
     return this.httpClient.get(url);
   }
 
-  getListReport(_brand_id:string){    
-    var url = 'http://localhost:8000/v1/vstockcard/report?brand_id='+ _brand_id +'&skip=0&limit=100';
+  getListReport(_wh_id:string,_category_id:string,_brand_id:string,_type_rp:string){    
+
+    var url = ( `http://localhost:8000/v1/vstockcard/report?`
+              +`brand_id=`+ _brand_id 
+              +`&categoty_id=`+_category_id
+              +`&wh_id=`+_wh_id
+              +`&type_rp=`+_type_rp
+              +`&skip=0&limit=8000`);
 
     console.log('url >> ',url);
     return this.httpClient.get(url);
