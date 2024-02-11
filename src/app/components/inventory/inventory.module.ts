@@ -9,6 +9,10 @@ import { SharedModule } from '../../shared/shared.module';
 
 
 import { InventoryRoutingModule } from './inventory-routing.module'; 
+
+
+
+// import { DashboardModule } from '../../components/dashboard/dashboard.module';
 // import { RpBymodelComponents } from './rp-bymodel/rp-bymodel.component'
 
 @NgModule({
@@ -26,9 +30,13 @@ import { InventoryRoutingModule } from './inventory-routing.module';
     FormsModule,
 
     InventoryRoutingModule,
-  ]
+    
+    // DashboardModule,
+  ],
+
+  exports: [  ]
+
 })
 export class InventoryModule {
-
-
+ 
  }

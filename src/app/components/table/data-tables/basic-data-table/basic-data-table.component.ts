@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { NgbdSortableHeader, SortEvent } from 'src/app/shared/directives/NgbdSortableHeader';
 import { TableService } from 'src/app/shared/services/table.service';
 import { COMPANYDB, CompanyDB } from '../../../../shared/data/tables/company';
+
 import { STOCKCARDDB,StockcardDB } from '../../../../shared/data/tables/stockcard';
 
 @Component({

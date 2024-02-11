@@ -147,7 +147,9 @@ import { SaleStatusComponent } from './ecommerce/left-content/order-board/sale-s
     CoursesComponent,
     SaleStatusComponent,
   ],
-  imports: [CommonModule, ChartistModule, CarouselModule, NgChartsModule, NgApexchartsModule, SharedModule, GoogleMapsModule, NgbModule, FormsModule, DashboardRoutingModule],
+  imports: [CommonModule, ChartistModule, CarouselModule, NgChartsModule
+            , NgApexchartsModule, SharedModule, GoogleMapsModule, NgbModule
+            , FormsModule, DashboardRoutingModule],
   exports: [
     CoinComponent,
     ProductStatusChartBoxComponent,

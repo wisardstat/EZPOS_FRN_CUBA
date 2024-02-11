@@ -4,6 +4,7 @@
 
 export const environment = {
   production: true,
+  api_row_limit :1000,
 };
 
 /*

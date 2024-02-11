@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as data from '../data/tasks/task';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment'
+
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class vstockcard_list {
   
-   
+  public api_row_limit = String(environment.api_row_limit); 
   constructor(private httpClient: HttpClient) { }
   
   getListAll(){
@@ -23,7 +25,7 @@ export class vstockcard_list {
               +`&categoty_id=`+_category_id
               +`&wh_id=`+_wh_id
               +`&type_rp=`+_type_rp
-              +`&skip=0&limit=8000`);
+              +`&skip=0&limit=`+this.api_row_limit);
 
     console.log('url >> ',url);
     return this.httpClient.get(url);

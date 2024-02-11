@@ -33,6 +33,9 @@ import { StrCreateComponent } from './components/transaction/stock-receive/str-c
 import { StrListComponent } from './components/transaction/stock-receive/str-list/str-list.component';
 import { StmCreateComponent } from './components/transaction/stock-move/stm-create/stm-create.component';
 import { StmListComponent } from './components/transaction/stock-move/stm-list/stm-list.component';
+import { RpBybrandComponent } from './components/inventory/rp-bybrand/rp-bybrand.component';
+import { RpByitemComponent } from './components/inventory/rp-byitem/rp-byitem.component';
+import { SaleStatusComponent } from './components/inventory/sale-status/sale-status.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -49,7 +52,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     StrListComponent,
     StmCreateComponent,
     StmListComponent,
+    RpBybrandComponent,
+    RpByitemComponent,
+    SaleStatusComponent,
   ],
+  
   imports: [
     BrowserModule,
     FormsModule,

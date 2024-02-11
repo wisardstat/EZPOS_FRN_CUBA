@@ -89,7 +89,9 @@ export class NavService implements OnDestroy {
       type: "sub", 
       active: true,
       children: [
-        { path: "/inventory/rpbymodel", title: "แยกตามประเภท/By Type", type: "link" },   
+        { path: "/inventory/rpbymodel", title: "แยกตามรุ่น/ByModel", type: "link" },   
+        { path: "/inventory/rpbybrand", title: "แยกตามยี่ห้อ/ByBrand", type: "link" },   
+        { path: "/inventory/rpbyitem", title: "แยกตามสินค้า/ByItem", type: "link" },   
         { path: "/inventory/report", title: "ประวัติ", type: "link" },   
       ],
     },

@@ -9,16 +9,17 @@ import { inventory_list } from '../../../shared/services/inventory.service'
 import { brand_list } from '../../../shared/services/brand.service'
 import { category_list } from '../../../shared/services/categpry.service'
 
-import { STOCKCARDDB,StockcardDB } from '../../../shared/data/tables/stockcard';
 
 @Component({
-  selector: 'app-rp-bymodel',
-  templateUrl: './rp-bymodel.component.html',
-  styleUrls: ['./rp-bymodel.component.scss']
+  selector: 'app-rp-bybrand',
+  templateUrl: './rp-bybrand.component.html',
+  styleUrls: ['./rp-bybrand.component.scss']
 })
 
-export class RpBymodelComponent implements OnInit{  
-   
+
+export class RpBybrandComponent {
+
+     
   public _vstockcard_list: any;
   public _inventory_list:any;
   public _category_list:any;
@@ -34,6 +35,7 @@ export class RpBymodelComponent implements OnInit{
 
   public numberOfUnreadAlerts : number ; 
 
+  
   constructor(
     private sv_vStockDaily:vStockDaily,
     private inventory_list_sv:inventory_list,
@@ -43,8 +45,6 @@ export class RpBymodelComponent implements OnInit{
     // this.products = productDB.product;
   }
 
-
-  
   ngOnInit() { 
 
     // Set default control search
@@ -64,11 +64,11 @@ export class RpBymodelComponent implements OnInit{
 
     this.select_date = this.formatDate(today)
     // run search 
-    this.onSearch();
+    //this.onSearch();
 
   }
 
- 
+  
   public formatDate(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -77,6 +77,7 @@ export class RpBymodelComponent implements OnInit{
     //return `${day}-${month}-${year}`;
   }
 
+  
   public onSearch(){
 
     // Show spinner 
@@ -130,9 +131,5 @@ export class RpBymodelComponent implements OnInit{
     }, 2000); // Adjust the timeout value as per your requirement
     
   }
-
-  // changeFn(val) {
-  //   console.log("Dropdown selection:", val);
-  // }
 
 }
