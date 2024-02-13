@@ -16,8 +16,8 @@ export class CustomizerComponent implements OnInit {
   public MIXLayout: string = "default";
   public icon: string = "stroke-svg";
 
-  public primary_color: string = "#7366ff";
-  public secondary_color: string = "#f73164";
+  public primary_color: string =  "#2F9599" ;
+  public secondary_color: string = "#F26B38";
 
   constructor(private modalService: NgbModal, public layout: LayoutService) {}
 
@@ -86,7 +86,9 @@ export class CustomizerComponent implements OnInit {
   }
 
   applyColor() {
+   
     this.layout.setColor(this.primary_color, this.secondary_color);
+
   }
 
   resetColor() {

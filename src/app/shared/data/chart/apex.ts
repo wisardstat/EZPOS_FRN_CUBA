@@ -1,7 +1,7 @@
 import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexFill, ApexLegend, ApexPlotOptions, ApexStroke, ApexTooltip, ApexXAxis, ApexYAxis, ApexResponsive, ApexNonAxisChartSeries, ApexTitleSubtitle, ApexTheme, ApexMarkers, ApexAnnotations, ApexGrid } from "ng-apexcharts";
 
-let primary_color = localStorage.getItem('primary_color') || '#7366ff';
-let secondary_color = localStorage.getItem('secondary_color') || '#f73164';
+let primary_color = localStorage.getItem('primary_color') || '#2F9599';
+let secondary_color = localStorage.getItem('secondary_color') || '#F26B38';
 
 export type ChartOptions = {
     series?: ApexAxisChartSeries;

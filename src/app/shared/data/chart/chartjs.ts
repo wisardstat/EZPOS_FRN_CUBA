@@ -1,5 +1,5 @@
-let primary_color = localStorage.getItem('primary_color') || '#7366ff';
-let secondary_color = localStorage.getItem('secondary_color') || '#f73164';
+let primary_color = localStorage.getItem('primary_color') || '#2F9599';
+let secondary_color = localStorage.getItem('secondary_color') || '#F26B38';
 
 // barChart
 export var barChartOptions: any = {
@@ -16,12 +16,12 @@ export var barChartData: any[] = [
 export var barChartColors: Array<any> = [
   {
     backgroundColor: "rgba(145, 46, 252, 0.6)",
-    borderColor: '#7366ff',
+    borderColor: '#2F9599',
     borderWidth: 1,
   },
   {
     backgroundColor: "rgba(247, 49, 100, 0.6)",
-    borderColor: '#f73164',
+    borderColor: '#F26B38',
     borderWidth: 1,
   },
 ];
@@ -54,12 +54,12 @@ export var lineGraphData: any[] = [
 export var lineGraphColors: Array<any> = [
   {
     backgroundColor: "rgba(247, 49, 100, 0.3)",
-    borderColor: '#f73164',
+    borderColor: '#2F9599',
     borderWidth: 2,
   },
   {
     backgroundColor: "rgba(145, 46, 252, 0.3)",
-    borderColor: '#7366ff',
+    borderColor: '#F26B38',
     borderWidth: 2,
   },
 ];

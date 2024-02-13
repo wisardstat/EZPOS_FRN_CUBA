@@ -116,12 +116,12 @@ export class RpBybrandComponent {
     console.log('select_date_post =>',select_date_post);          
 
     // connect API 
-    this.sv_vStockDaily.getListReport(sel_wh_post
-                                      ,sel_category_post
-                                      ,sel_brand_post
-                                      ,sel_type_rp_post
-                                      ,select_date_post
-                                      ).subscribe(response =>{this._vstockcard_list = response;});
+    // this.sv_vStockDaily.getListReport(sel_wh_post
+    //                                   ,sel_category_post
+    //                                   ,sel_brand_post
+    //                                   ,sel_type_rp_post
+    //                                   ,select_date_post
+    //                                   ).subscribe(response =>{this._vstockcard_list = response;});
 
    
     // Hide spinner 

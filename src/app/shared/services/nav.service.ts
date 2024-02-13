@@ -87,10 +87,10 @@ export class NavService implements OnDestroy {
       title: "คลังสินค้า/Inventory",
       icon: "bonus-kit",
       type: "sub", 
-      active: true,
+      active: false,
       children: [
         { path: "/inventory/rpbymodel", title: "แยกตามรุ่น/ByModel", type: "link" },   
-        { path: "/inventory/rpbybrand", title: "แยกตามยี่ห้อ/ByBrand", type: "link" },   
+        // { path: "/inventory/rpbybrand", title: "แยกตามยี่ห้อ/ByBrand", type: "link" },   
         { path: "/inventory/rpbyitem", title: "แยกตามสินค้า/ByItem", type: "link" },   
         { path: "/inventory/report", title: "ประวัติ", type: "link" },   
       ],
@@ -99,7 +99,7 @@ export class NavService implements OnDestroy {
       title: "รายการประจำวัน/Transaction",
       icon: "ecommerce",
       type: "sub", 
-      active: true,
+      active: false,
       children: [
         { path: "/transaction/str_list", title: "รับสินค้าเข้าคลัง/Reeceive", type: "link" },           
         { path: "/transaction/stm_list", title: "โอนย้ายสินค้า/Move", type: "link" },           

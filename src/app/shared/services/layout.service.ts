@@ -19,21 +19,25 @@ public config = {
   */
 
 export class LayoutService {
+
   public config = {
     settings: {
-      layout: "Dubai",
+      layout: "Singapore",
       layout_type: 'ltr',
-      layout_version: 'dark-sidebar',
+
+      layout_version: "light-only",
       icon: "stroke-svg",
    },
    color: {
-      primary_color: '#28b84c',
-      secondary_color: '#f73164'
+    layout_version: 'light', 
+      primary_color: '#2F9599', //'#2F9599',
+      secondary_color: '#F26B38', // '#f73164'
    },
 
   };
 
   constructor() {
+
     if (this.config.settings.layout_type == "rtl") document.getElementsByTagName("html")[0].setAttribute("dir", this.config.settings.layout_type);
 
     document.documentElement.style.setProperty("--theme-deafult", localStorage.getItem("primary_color"));
@@ -47,20 +51,26 @@ export class LayoutService {
   }
 
   setColor(primary_color, secondary_color) {
+
     this.config.color.primary_color = primary_color;
     this.config.color.secondary_color = secondary_color;
     localStorage.setItem("primary_color", this.config.color.primary_color);
     localStorage.setItem("secondary_color", this.config.color.secondary_color);
     window.location.reload();
+
   }
 
   resetColor() {
-    document.documentElement.style.setProperty("--theme-deafult", "#7366ff");
-    document.documentElement.style.setProperty("--theme-secondary", "#f73164");
-    (<HTMLInputElement>document.getElementById("ColorPicker1")).value = "#7366ff";
-    (<HTMLInputElement>document.getElementById("ColorPicker2")).value = "#f73164";
-    localStorage.setItem("primary_color", "#7366ff");
-    localStorage.setItem("secondary_color", " #f73164");
+
+    console.log('color=>'+this.config.color.primary_color)
+
+    document.documentElement.style.setProperty("--theme-deafult", this.config.color.primary_color);
+    document.documentElement.style.setProperty("--theme-secondary",this.config.color.secondary_color);
+    (<HTMLInputElement>document.getElementById("ColorPicker1")).value = this.config.color.primary_color;
+    (<HTMLInputElement>document.getElementById("ColorPicker2")).value = this.config.color.secondary_color;
+    localStorage.setItem("primary_color", this.config.color.primary_color);
+    localStorage.setItem("secondary_color", this.config.color.secondary_color);
     window.location.reload();
+
   }
 }

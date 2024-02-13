@@ -87,6 +87,8 @@ export class RpByitemComponent implements OnInit {
     this.models_sv.getList().subscribe(response => { this._model_list = response; });
 
     this.resetFind();
+     // run search 
+     this.onSearch();
     
   }
 
@@ -107,7 +109,7 @@ export class RpByitemComponent implements OnInit {
     this.selected_brand = this.selected_category
     this.selected_model = this.selected_category
     this.find_pdname = ""
-    const today = new Date(2021, 8, 27);
+    const today = new Date(2024, 1, 13);
     this.select_date = this.formatDate(today)
     this.LoadingShow = 0
 

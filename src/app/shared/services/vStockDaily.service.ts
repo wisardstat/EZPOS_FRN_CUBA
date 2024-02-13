@@ -21,7 +21,12 @@ export class vStockDaily {
     return this.httpClient.get(url);
   }
 
-  getListReport(_wh_id: string, _category_id: string, _brand_id: string, _type_rp: string, _stock_date: string) {
+  getListByModel( _wh_id: string
+                , _category_id: string
+                , _brand_id: string
+                , _type_rp: string
+                , _stock_date: string) {
+
 
     var url = (`http://localhost:8000/v1/stockDailys/GroupByModel?`
       + `brand_id=` + _brand_id
