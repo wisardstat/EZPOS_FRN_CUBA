@@ -25,7 +25,9 @@ export class vStockDaily {
                 , _category_id: string
                 , _brand_id: string
                 , _type_rp: string
-                , _stock_date: string) {
+                , _stock_date: string
+                , _find_pdname: string
+                ) {
 
 
     var url = (`http://localhost:8000/v1/stockDailys/GroupByModel?`
@@ -34,6 +36,7 @@ export class vStockDaily {
       + `&wh_id=` + _wh_id
       + `&type_rp=` + _type_rp
       + `&stock_date=` + _stock_date
+      + `&find_pdname=` + _find_pdname
       + `&skip=0&limit=1000`);
 
     console.log('url >> ', url);

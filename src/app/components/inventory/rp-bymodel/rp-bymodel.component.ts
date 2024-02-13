@@ -161,6 +161,7 @@ export class RpBymodelComponent implements OnInit{
                                       ,sel_brand_post
                                       ,sel_type_rp_post
                                       ,select_date_post
+                                      ,find_pdname_post
                                       ).subscribe(response =>{
                                                                 this._vstockcard_list = response;
                                                                 setTimeout(() => { this.LoadingShow = 0 }, 1000);

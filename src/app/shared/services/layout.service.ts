@@ -22,7 +22,7 @@ export class LayoutService {
 
   public config = {
     settings: {
-      layout: "Singapore",
+      layout: "Dubai",
       layout_type: 'ltr',
 
       layout_version: "light-only",
