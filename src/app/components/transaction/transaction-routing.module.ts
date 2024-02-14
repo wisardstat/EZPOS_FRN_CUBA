@@ -6,6 +6,8 @@ import { StrListComponent } from './stock-receive/str-list/str-list.component'
 
 import { StmCreateComponent } from './stock-move/stm-create/stm-create.component'
 import { StmListComponent } from './stock-move/stm-list/stm-list.component'
+
+import { RpBydocComponent } from './rp-bydoc/rp-bydoc.component'
  
 const routes: Routes = [
   {
@@ -26,6 +28,10 @@ const routes: Routes = [
           {
             path: 'stm_create',
             component: StmCreateComponent
+          },  
+          {
+            path: 'transaction_bydoc',
+            component: RpBydocComponent
           },  
       ],
   }

@@ -95,7 +95,7 @@ export class NavService implements OnDestroy {
         { path: "/inventory/report", title: "ประวัติ", type: "link" },   
       ],
     },
-    {
+    {  // RpBydocComponent
       title: "รายการประจำวัน/Transaction",
       icon: "ecommerce",
       type: "sub", 
@@ -103,6 +103,7 @@ export class NavService implements OnDestroy {
       children: [
         { path: "/transaction/str_list", title: "รับสินค้าเข้าคลัง/Reeceive", type: "link" },           
         { path: "/transaction/stm_list", title: "โอนย้ายสินค้า/Move", type: "link" },           
+        { path: "/transaction/transaction_bydoc", title: "แสดงตามเอกสาร", type: "link" },           
       ],
     },
     {

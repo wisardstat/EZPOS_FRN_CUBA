@@ -13,7 +13,7 @@ import { InventoryRoutingModule } from './inventory-routing.module';
 
 
 // import { DashboardModule } from '../../components/dashboard/dashboard.module';
-// import { RpBymodelComponents } from './rp-bymodel/rp-bymodel.component'
+ 
 
 @NgModule({
   declarations: [   ],

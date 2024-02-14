@@ -36,6 +36,7 @@ import { StmListComponent } from './components/transaction/stock-move/stm-list/s
 import { RpBybrandComponent } from './components/inventory/rp-bybrand/rp-bybrand.component';
 import { RpByitemComponent } from './components/inventory/rp-byitem/rp-byitem.component';
 import { SaleStatusComponent } from './components/inventory/sale-status/sale-status.component';
+import { RpBydocComponent } from './components/transaction/rp-bydoc/rp-bydoc.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RpBybrandComponent,
     RpByitemComponent,
     SaleStatusComponent,
+    RpBydocComponent,
   ],
   
   imports: [

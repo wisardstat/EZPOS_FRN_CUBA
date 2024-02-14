@@ -5,31 +5,54 @@ import { environment } from '../../../environments/environment'
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 
-export class vstockcard_list {
-  
-  public api_row_limit = String(environment.api_row_limit); 
+export class vStockCard {
+
+  public api_row_limit = String(environment.api_row_limit);
   constructor(private httpClient: HttpClient) { }
-  
-  getListAll(){
+
+  getListAll() {
     var url = 'http://127.0.0.1:8000/v1/vstockcard/?skip=0&limit=10';
     return this.httpClient.get(url);
   }
 
-  getListReport(_wh_id:string,_category_id:string,_brand_id:string,_type_rp:string){    
 
-    var url = ( `http://localhost:8000/v1/vstockcard/report?`
-              +`brand_id=`+ _brand_id 
-              +`&categoty_id=`+_category_id
-              +`&wh_id=`+_wh_id
-              +`&type_rp=`+_type_rp
-              +`&skip=0&limit=`+this.api_row_limit);
+  getListByDoc(
+    _doc_date_st: string
+    ,_doc_date_en: string
+    , _wh_id: string
+    , _type_doc_id: string) {
 
-    console.log('url >> ',url);
+    var url = (`http://localhost:8000/v1/vstockcard/getListByDoc?`
+      + `doc_date_st=` + _doc_date_st
+      + `&doc_date_en=` + _doc_date_en
+      + `&wh_id=` + _wh_id
+      + `&type_doc_id=` + _type_doc_id
+      + `&skip=0&limit=` + this.api_row_limit);
+
+    console.log('url >> ', url);
     return this.httpClient.get(url);
 
   }
 
+
+  getListByDocTotal(
+    _doc_date_st: string
+    ,_doc_date_en: string
+    , _wh_id: string
+    , _type_doc_id: string) {
+
+    var url = (`http://localhost:8000/v1/vstockcard/getListByDoc_Total?`
+      + `doc_date_st=` + _doc_date_st
+      + `&doc_date_en=` + _doc_date_en
+      + `&wh_id=` + _wh_id
+      + `&type_doc_id=` + _type_doc_id
+      + `&skip=0&limit=` + this.api_row_limit);
+
+    console.log('url >> ', url);
+    return this.httpClient.get(url);
+
+  }
 }
