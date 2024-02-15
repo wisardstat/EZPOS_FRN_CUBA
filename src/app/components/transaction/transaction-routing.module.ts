@@ -8,6 +8,7 @@ import { StmCreateComponent } from './stock-move/stm-create/stm-create.component
 import { StmListComponent } from './stock-move/stm-list/stm-list.component'
 
 import { RpBydocComponent } from './rp-bydoc/rp-bydoc.component'
+import { RpBytxnitemComponent } from './rp-bytxnitem/rp-bytxnitem.component'
  
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
           {
             path: 'transaction_bydoc',
             component: RpBydocComponent
+          },  
+          {
+            path: 'transaction_byitem',
+            component: RpBytxnitemComponent
           },  
       ],
   }

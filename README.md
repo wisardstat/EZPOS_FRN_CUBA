@@ -9,6 +9,8 @@ ng g component  components/inventory/rp-bybrand --module app
 ng g component  components/inventory/rp-byitem --module app
 
 ng g component  components/transaction/rp-bydoc --module app
+
+ng g component  components/transaction/rp-bytxnitem --module app
 ```
 
 ## Run

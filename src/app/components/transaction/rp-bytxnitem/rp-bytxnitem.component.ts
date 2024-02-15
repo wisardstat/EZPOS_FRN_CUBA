@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable } from 'rxjs';
-
+ 
 // ****  Service  *****
-import { vStockDaily } from '../../../shared/services/vStockDaily.service'
 import { vStockCard } from '../../../shared/services/vstockcard.service'
 import { inventory_list } from '../../../shared/services/inventory.service'
 import { brand_list } from '../../../shared/services/brand.service'
 import { category_list } from '../../../shared/services/categpry.service'
 import { type_doc } from '../../../shared/services/type_doc.service'
+import { models } from '../../../shared/services/model.service'
 
 import { environment } from '../../../../environments/environment'
 
-
 @Component({
-  selector: 'app-rp-bydoc',
-  templateUrl: './rp-bydoc.component.html',
-  styleUrls: ['./rp-bydoc.component.scss']
+  selector: 'app-rp-bytxnitem',
+  templateUrl: './rp-bytxnitem.component.html',
+  styleUrls: ['./rp-bytxnitem.component.scss']
 })
-export class RpBydocComponent {
+export class RpBytxnitemComponent {
 
   public _vstockcard_list: any;
   public _inventory_list:any;
   public _category_list:any;
   public _brand_list:any;
   public _typedoc_list:any;
+  public _model_list: any;
 
   public _QtyAll: any;
   public api_row_limit = String(environment.api_row_limit);  
@@ -32,13 +32,15 @@ export class RpBydocComponent {
 
   public selected_category: string;
   public selected_brand: string;
+  public selected_model: string;
   public selected_wh: string;
   public selected_type_rp: string;
   public selected_typeDoc:string;
   public select_date_st : string;
   public select_date_en : string;
   public find_cust_name: string;
-  
+  public find_pdname: string;
+
   public LoadingShow: number;
 
 
@@ -70,13 +72,13 @@ export class RpBydocComponent {
     orders: "0",
   };
 
-  constructor(
-    private sv_vStockDaily:vStockDaily,
+  constructor(    
     private sv_vStockCard:vStockCard,
     private inventory_list_sv:inventory_list,
     private category_list_sv:category_list,
     private brand_list_sv:brand_list,
     private type_doc_sv:type_doc,
+    private models_sv: models,
     ) {
     // this.products = productDB.product;
   }
@@ -88,6 +90,7 @@ export class RpBydocComponent {
     this.inventory_list_sv.getValue().subscribe(response => {this._inventory_list = response;});
     this.category_list_sv.getValue().subscribe(response => {this._category_list = response;});
     this.brand_list_sv.getValue().subscribe(response => {this._brand_list = response;});
+    this.models_sv.getList().subscribe(response => { this._model_list = response; });
     this.type_doc_sv.getList().subscribe(response =>{this._typedoc_list = response;});
     
     this.resetFind();
@@ -96,7 +99,7 @@ export class RpBydocComponent {
 
   }
 
- 
+   
   public formatDate(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -104,6 +107,7 @@ export class RpBydocComponent {
     return `${year}-${month}-${day}`;
     //return `${day}-${month}-${year}`;
   }
+
 
   public resetFind()
   {
@@ -113,6 +117,7 @@ export class RpBydocComponent {
     this.selected_category = "ทั้งหมด"
     this.selected_brand = this.selected_category    
     this.find_cust_name = ""
+
     const today = new Date(2024,1,13);
     this.select_date_st = this.formatDate(today)
     this.select_date_en = this.formatDate(today)
@@ -131,6 +136,10 @@ export class RpBydocComponent {
     console.log('Clicked onSearch');
         
     // Get value from control search 
+    var sel_brand_post = this.selected_brand
+    var sel_model_post = this.selected_model
+    var sel_category_post = this.selected_category
+    var find_pdname_post = this.find_pdname
 
     var  sel_wh_post       = this.selected_wh
     var  selected_typeDoc_post  = this.selected_typeDoc
@@ -149,14 +158,36 @@ export class RpBydocComponent {
     if (this.find_cust_name == null) {
         find_cust_name_post = ""
         }
-                
+
+    if (this.selected_brand == 'ทั้งหมด' || this.selected_brand == null) {
+      sel_brand_post = "0"
+      this.selected_brand = "ทั้งหมด"
+    }
+
+    if (this.selected_category == 'ทั้งหมด' || this.selected_category == null) {
+      sel_category_post = "0"
+      this.selected_category = "ทั้งหมด"
+    }        
+    
+    if (this.selected_model == 'ทั้งหมด' || this.selected_model == null) {
+      sel_model_post = "0"
+      this.selected_model = "ทั้งหมด"
+    }
+
+    if (this.find_pdname == null) {
+      find_pdname_post = ""
+  }    
 
     // connect API 
-    this.sv_vStockCard.getListByDoc(  select_date_st_post
+    this.sv_vStockCard.getListByItem(  select_date_st_post
                                       ,select_date_en_post
                                       ,sel_wh_post                                                                            
-                                      ,selected_typeDoc_post    
-                                      ,find_cust_name_post                              
+                                      ,selected_typeDoc_post                                          
+                                      , sel_category_post
+                                      , sel_brand_post
+                                      , sel_model_post
+                                      ,find_cust_name_post      
+                                      ,find_pdname_post                        
                                       ).subscribe(response =>{
                                                                 this._vstockcard_list = response;
                                                                 setTimeout(() => { this.LoadingShow = 0 }, 1000);

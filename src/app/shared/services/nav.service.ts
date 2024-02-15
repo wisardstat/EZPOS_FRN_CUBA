@@ -84,7 +84,7 @@ export class NavService implements OnDestroy {
       headTitle1: "POSEZ2",
     },
     {
-      title: "คลังสินค้า/Inventory",
+      title: "คลังสินค้า",
       icon: "bonus-kit",
       type: "sub", 
       active: false,
@@ -96,14 +96,15 @@ export class NavService implements OnDestroy {
       ],
     },
     {  // RpBydocComponent
-      title: "รายการประจำวัน/Transaction",
+      title: "รายการประจำวัน",
       icon: "ecommerce",
       type: "sub", 
       active: false,
       children: [
         { path: "/transaction/str_list", title: "รับสินค้าเข้าคลัง/Reeceive", type: "link" },           
         { path: "/transaction/stm_list", title: "โอนย้ายสินค้า/Move", type: "link" },           
-        { path: "/transaction/transaction_bydoc", title: "แสดงตามเอกสาร", type: "link" },           
+        { path: "/transaction/transaction_bydoc", title: "แสดงเอกสาร", type: "link" },           
+        { path: "/transaction/transaction_byitem", title: "แสดงรายการสินค้า", type: "link" },           
       ],
     },
     {

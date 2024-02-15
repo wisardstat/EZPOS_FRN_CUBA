@@ -1,7 +1,7 @@
 <app-breadcrumb
-  [title]="'รายการประจำวันแสดงตามเอกสาร'"
+  [title]="'รายการประจำวันแสดงตามรายการสินค้า'"
   [items]="['รายการประจำวัน']"
-  [active_item]="'แสดงจามรายการเอกสาร'"></app-breadcrumb>
+  [active_item]="'แสดงตามรายการสินค้า'"></app-breadcrumb>
 
 <div class="container-fluid">
 
@@ -182,12 +182,15 @@
               <table class="table pos_table">
                 <thead >
                   <tr > 
-                    <th scope="col" >วันที่เอกสาร/DocDate</th>                                                      
-                    <th scope="col" >คลัง/ร้าน/Shop</th>                    
+                    <th scope="col"  style="width:180px;">วันที่เอกสาร/DocDate</th>                                                                                          
                     <th scope="col" >ประเภทเอกสาร/TypeDoc</th>
-                    <th scope="col" >เลขที่เอกสาร/DocId</th>
-                    <th scope="col" >ชื่อลูกค้า/Customer</th>
-                    <th class="text-end" scope="col" >จำนวนรายการ</th>                    
+                    <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
+                    <th scope="col" >row_key</th>
+                    <th scope="col" >ประเภทสินค้า</th>
+                    <th scope="col" >ยี่ห้อ/brand</th>
+                    <th scope="col" >รุ่น/model</th>
+                    <th scope="col" > ชื่อสินค้า </th>
+                                        
                     <th class="text-end" scope="col">จำนวนสินค้า/Qty</th>
                     <th class="text-end" scope="col">ต้นทุนรวม/Cost</th>
                     <th class="text-end" scope="col">ยอดขาย/Amount</th>
@@ -196,16 +199,21 @@
                 <tbody>
                   <tr
                     *ngFor="let product of _vstockcard_list; index as i"
-                    [class]="(product.amt_price > 0) ? 'bg_iv' : 'none'"
+                    [class]="(product.row_key%2==0) ? 'bg_iv' : 'none'"
                     >                                        
-                    <td class="robo">{{ product.date_in| date:'dd-MM-yyyy hh:mm' }}</td>                    
-                    <td>{{ product.wh_name }}</td>                    
-                    <td >                       
+                    <td class="robo">{{ product.date_in| date:'dd-MM-yyyy hh:mm' }}
+                        <br/><span class="table_row_sub"> <i class="fa fa-home"></i> {{ product.wh_name }} </span>
+                    </td>                    
+                    <td>
                         {{ product.type_doc }}                      
-                    </td>
-                    <td style="font-size: 12px;">{{ product.doc_id }}</td>
-                    <td>{{ product.cust_fname }}</td>
-                    <td class="text-end robo">{{ product.count }}</td>                    
+                        <br/><span class="table_row_sub"><i class="icofont icofont-ebook"></i> {{ product.doc_id }} </span>
+                    </td>                    
+                    <!-- <td>{{ product.cust_fname }}</td> -->
+                    <td>{{ product.row_key }}</td>  
+                    <td>{{ product.group_name }}</td>                    
+                    <td>{{ product.brand_name }}</td>                    
+                    <td>{{ product.model_name }}</td>                    
+                    <td>{{ product.pd_name }}</td> 
                     <td class="text-end robo">{{ product.qty | number }}</td>
                     <td class="text-end robo">{{ product.amt_cost | number }}</td>
                     <td class="text-end robo">{{ product.amt_price | number }}</td>
