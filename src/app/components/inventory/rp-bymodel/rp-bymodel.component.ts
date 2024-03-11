@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgSelectModule } from '@ng-select/ng-select';
-
-import { Observable } from 'rxjs';
-
+ 
 // ****  Service  *****
 import { vStockDaily } from '../../../shared/services/vStockDaily.service'
 import { inventory_list } from '../../../shared/services/inventory.service'

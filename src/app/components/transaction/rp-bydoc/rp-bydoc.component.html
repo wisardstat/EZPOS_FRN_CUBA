@@ -104,22 +104,25 @@
                &nbsp;
            </div>
 
-            <div class="col-sm-3">
-              <div class="row">
-                <div class="col-md-12 col-lg-6 p-r-0">
-                  <button class="btn btn-primary m-t-30  col-12"
-                    type="submit" (click)="onSearch()">
-                    ค้นหา
-                  </button>
-                </div>
-                <div class="col-md-12 col-lg-6 p-l-1">
-                  <button class="btn btn-light m-t-30  col-12"
-                    type="button" (click)="resetFind()">
-                    เริ่มใหม่
-                  </button>
-                </div>
+           <div class="col-sm-3">
+            <div class="row">
+              <div class="col-md-12 col-lg-6 p-r-0"> 
+                <a class="btn btn-primary m-t-30 w-100" type="button" title=""  
+                (click)="onSearch()">
+                  <i class="icofont icofont-search"></i> Search
+                </a> 
+              </div>
+              <div class="col-md-12 col-lg-6 p-l-1">
+
+                <a class="btn btn-light m-t-30  " type="button" title=""  
+                (click)="resetFind()">
+                  <i class="icon-reload"></i> Reset
+                </a> 
               </div>
             </div>
+          </div>
+
+
           </div>
         </div>
 
@@ -186,8 +189,7 @@
                     <th scope="col" >คลัง/ร้าน/Shop</th>                    
                     <th scope="col" >ประเภทเอกสาร/TypeDoc</th>
                     <th scope="col" >เลขที่เอกสาร/DocId</th>
-                    <th scope="col" >ชื่อลูกค้า/Customer</th>
-                    <th class="text-end" scope="col" >จำนวนรายการ</th>                    
+                    <th scope="col" >ชื่อลูกค้า/Customer</th>                    
                     <th class="text-end" scope="col">จำนวนสินค้า/Qty</th>
                     <th class="text-end" scope="col">ต้นทุนรวม/Cost</th>
                     <th class="text-end" scope="col">ยอดขาย/Amount</th>
@@ -205,7 +207,7 @@
                     </td>
                     <td style="font-size: 12px;">{{ product.doc_id }}</td>
                     <td>{{ product.cust_fname }}</td>
-                    <td class="text-end robo">{{ product.count }}</td>                    
+                    
                     <td class="text-end robo">{{ product.qty | number }}</td>
                     <td class="text-end robo">{{ product.amt_cost | number }}</td>
                     <td class="text-end robo">{{ product.amt_price | number }}</td>

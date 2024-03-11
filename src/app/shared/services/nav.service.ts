@@ -101,7 +101,8 @@ export class NavService implements OnDestroy {
       type: "sub", 
       active: false,
       children: [
-        { path: "/transaction/str_list", title: "รับสินค้าเข้าคลัง/Reeceive", type: "link" },           
+        { path: "/transaction/str_create", title: "รับสินค้า", type: "link" },           
+        { path: "/transaction/str_list", title: "เอกสารรับสินค้า", type: "link" },           
         { path: "/transaction/stm_list", title: "โอนย้ายสินค้า/Move", type: "link" },           
         { path: "/transaction/transaction_bydoc", title: "แสดงเอกสาร", type: "link" },           
         { path: "/transaction/transaction_byitem", title: "แสดงรายการสินค้า", type: "link" },           

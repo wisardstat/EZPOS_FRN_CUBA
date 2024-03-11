@@ -1,1 +1,351 @@
-<p>str-create works!</p>
+<app-breadcrumb
+  [title]="'รับสินค้าเข้าคลัง : LMT Officer'"
+  [items]="['คลังสินค้า','รับสินค้า']"
+  [active_item]="'สร้างเอกสาร'"></app-breadcrumb>
+
+<div class="row">
+
+  <div class="col-xl-12 col-md-12 box-col-12 m-b-20">
+    <div class="file-content">
+
+      <div class="media">
+        <div class="media-body text-end">
+
+          <div
+            class="btn btn-air btn-primary me-2"
+            onclick>
+            <app-feather-icons [icon]="'save'"></app-feather-icons>
+            บันทึกเอกสาร / SAVE
+          </div>
+
+          <div
+            class="btn btn-air btn-warning me-2"
+            onclick>
+            <app-feather-icons [icon]="'refresh-ccw'"></app-feather-icons>
+            เริ่มใหม่ / Reset
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- ./ file-content -->
+  </div>
+</div>
+<!-- ./row -->
+
+<div class="container-fluid">
+
+  <!-- Card-Supplier -->
+  <div class="card">
+    <div class="card-header p-t-20 p-b-5">
+      <h6 class="pos_title p-0">กรอกข้อมูลผู้จำหน่าย (Supplier) </h6>
+    </div>
+    <div class="card-body p-t-15">
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ชื่อผู้จำหน่าย
+          </label>
+          <input
+            class="form-control"
+            id="validationCustom01"
+            type="text"
+            placeholder="First name"
+            required>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-md-3">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            เลขผู้เสียภาษี
+          </label>
+          <input
+            class="form-control"
+            id="validationCustom01"
+            type="text"
+            placeholder="First name"
+            required>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="col-md-3">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            เบอร์ติดต่อ
+          </label>
+          <input
+            class="form-control"
+            id="validationCustom01"
+            type="text"
+            placeholder="First name"
+            required>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="col-md-12">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ที่อยู่
+          </label>
+          <input
+            class="form-control"
+            id="validationCustom01"
+            type="text"
+            placeholder="First name"
+            required>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- ./ Card-Supplier -->
+
+  <!-- Card-Product detail -->
+  <div class="card">
+    <div class="card-header p-t-20 p-b-5">
+      <h6 class="pos_title p-0">ระบุรายละเอียดสินค้า </h6>
+    </div>
+    <div class="card-body p-t-15">
+
+      <div class="row g-3">
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ประเภทสินค้า
+          </label>
+          <ng-select
+            class="js-example-placeholder-multiple"
+            placeholder="เลือก"
+            id="selected_category"
+            [(ngModel)]="selected_category">
+
+            <ng-option [value]="0">ทั้งหมด</ng-option>
+            <ng-option
+              *ngFor="let cat of _category_list"
+              [value]="cat.group_id">
+              {{cat.group_name}}
+            </ng-option>
+
+          </ng-select>
+        </div>
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ยี่ห้อสินค้า
+          </label>
+
+          <ng-select
+            class="js-example-placeholder-multiple"
+            placeholder="เลือก"
+            id="selected_brand"
+            editable="true"
+            (keyup)="onKeyDownEvent($event)"
+            [(ngModel)]="selected_brand">
+
+            <ng-option [value]="0">ทั้งหมด</ng-option>
+            <ng-option
+              *ngFor="let cat of _brand_list"
+              [value]="cat.brand_id">
+              {{cat.brand_name}}
+            </ng-option>
+
+            <ng-template ng-footer-tmp>
+              
+                <div class="row">
+                <div class="col-8 p-r-0">
+                  <input
+                    class="form-control digits col-12"
+                    type="text"
+                    [(ngModel)]="brand_new">
+                </div>
+                <div class="col-4 ">
+                <a
+                  class="btn btn-primary col-12"
+                  type="button">
+                  <i class="icofont icofont-plus"></i>
+                   
+                </a>
+              </div>
+            </div>
+            </ng-template>
+
+          </ng-select>
+        </div>
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            รุ่น/Model
+          </label>
+          <ng-select
+            class="js-example-placeholder-multiple"
+            placeholder="เลือก"
+            id="selected_category"
+            [(ngModel)]="selected_category">
+
+            <ng-option [value]="0">ทั้งหมด</ng-option>
+            <ng-option
+              *ngFor="let cat of _category_list"
+              [value]="cat.group_id">
+              {{cat.group_name}}
+            </ng-option>
+
+          </ng-select>
+        </div>
+
+         
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            color/สี
+          </label>
+          <div class="col-sm-12">
+            <input
+              class="form-control digits"
+              type="text"
+              [ngModel]>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ต้นทุน/Cost
+          </label>
+          <div class="col-sm-12">
+            <input
+              class="form-control digits"
+              type="text"
+              [ngModel]>
+          </div>
+        </div>
+
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            จำนวนสินค้า/Qty
+          </label>
+          <div class="col-sm-12">
+            <input
+              class="form-control digits"
+              type="text"
+              [ngModel]>
+          </div>
+        </div>        
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            Barcode/Emei
+          </label>
+          <div class="col-sm-12">
+            <input
+              class="form-control digits"
+              type="text"
+              [ngModel]>
+          </div>
+        </div>
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-4">
+          <div class="row">
+
+            <div class="col-md-12 col-lg-6 p-r-0">
+              <a
+                class="btn btn-primary m-t-30 col-12"
+                type="button">
+                <i class="icofont icofont-plus"></i>
+                เพิ่ม/Add
+              </a>
+            </div>
+
+            <div class="col-md-12 col-lg-6 p-l-1">
+              <a
+                class="btn btn-light m-t-30 col-12"
+                type="button">
+                <i class="icon-reload"></i>
+                Reset
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- ./ Card-Product detail -->
+
+  <!-- Card-item-list -->
+  <div class="card">
+    <div class="card-header p-t-20 p-b-5">
+      <h6 class="p-0"> รายการสินค้าที่รับเข้า (Item-List) </h6>
+    </div>
+    <div class="card-body p-t-15">
+
+      <div class="product-list-custom custom-datatable">
+        <div class="table-responsive">
+          <table class="table pos_table">
+            <thead>
+              <tr>
+
+                <th scope="col">ประเภทเอกสาร/TypeDoc</th>
+                <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
+                <!-- <th scope="col" >row_key</th> -->
+                <th scope="col">ประเภทสินค้า</th>
+                <th scope="col">ยี่ห้อ/brand</th>
+                <th scope="col">รุ่น/model</th>
+                <th
+                  class="text-end"
+                  scope="col">
+                  จำนวนสินค้า/Qty
+                </th>
+                <th
+                  class="text-end"
+                  scope="col">
+                  ต้นทุนรวม/Cost
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-end robo"></td>
+                <td class="text-end robo"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ./product-list -->
+
+    </div>
+  </div>
+
+</div>
+<!-- container-fluid -->

@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { Observable } from 'rxjs';
 
 // ****  Service  *****
-import { vStockDaily } from '../../../shared/services/vStockDaily.service'
 import { vStockCard } from '../../../shared/services/vstockcard.service'
 import { inventory_list } from '../../../shared/services/inventory.service'
 import { brand_list } from '../../../shared/services/brand.service'
@@ -50,7 +47,7 @@ export class RpBydocComponent {
   };
 
   public stockCountSKU = {
-    title: "จำนวนรายการ",
+    title: "จำนวนเลขที่เอกสาร",
     colorClass: "warning",
     icon: "new-order",
     orders: "0",
@@ -71,7 +68,7 @@ export class RpBydocComponent {
   };
 
   constructor(
-    private sv_vStockDaily:vStockDaily,
+    
     private sv_vStockCard:vStockCard,
     private inventory_list_sv:inventory_list,
     private category_list_sv:category_list,

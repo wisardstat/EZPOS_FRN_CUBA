@@ -1,3 +1,5 @@
+
+
 <app-breadcrumb [title]="'File Manager'" [items]="['Apps']" [active_item]="'File Manager'"></app-breadcrumb>
 <div class="container-fluid">
   <div class="row">
@@ -70,6 +72,8 @@
         </div>
       </div>
     </div>
+
+
     <div class="col-xl-9 col-md-12 box-col-12">
       <div class="file-content">
         <div class="card">
@@ -81,14 +85,18 @@
                   <input class="form-control-plaintext" type="text" placeholder="Search..." />
                 </div>
               </form>
+              
               <div class="media-body text-end">
                 <form class="d-inline-flex" action="#" method="POST" enctype="multipart/form-data" name="myForm">
-                  <div class="btn btn-primary me-2" onclick="getFile()"><app-feather-icons [icon]="'plus-square'"></app-feather-icons>Add New</div>
+                  <div class="btn btn-primary me-2" onclick="getFile()">
+                    <app-feather-icons [icon]="'plus-square'"></app-feather-icons>
+                    Add New</div>
                   <div style="height: 0px; width: 0px; overflow: hidden">
                     <input id="upfile" type="file" onchange="sub(this)" />
                   </div>
                 </form>
-                <div class="btn btn-outline-primary"><app-feather-icons [icon]="'upload'"> </app-feather-icons>Upload</div>
+                <div class="btn btn-outline-primary"><app-feather-icons [icon]="'upload'"> 
+                </app-feather-icons>Upload</div>
               </div>
             </div>
           </div>
