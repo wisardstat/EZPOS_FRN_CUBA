@@ -13,6 +13,7 @@
 
           <div
             class="btn btn-air btn-primary me-2"
+            (click)="saveStock()"
             onclick>
             <app-feather-icons [icon]="'save'"></app-feather-icons>
             บันทึกเอกสาร / SAVE
@@ -20,6 +21,7 @@
 
           <div
             class="btn btn-air btn-warning me-2"
+            (click)="resetStockInForm()"
             onclick>
             <app-feather-icons [icon]="'refresh-ccw'"></app-feather-icons>
             เริ่มใหม่ / Reset
@@ -53,6 +55,7 @@
             class="form-control"
             id="validationCustom01"
             type="text"
+            [(ngModel)]="supply_name"
             placeholder="First name"
             required>
           <div class="valid-feedback">Looks good!</div>
@@ -66,6 +69,7 @@
           <input
             class="form-control"
             id="validationCustom01"
+            [(ngModel)]="supply_tax_id"
             type="text"
             placeholder="First name"
             required>
@@ -80,6 +84,7 @@
           <input
             class="form-control"
             id="validationCustom01"
+            [(ngModel)]="supply_tel"
             type="text"
             placeholder="First name"
             required>
@@ -95,6 +100,7 @@
           <input
             class="form-control"
             id="validationCustom01"
+            [(ngModel)]="supply_addr"
             type="text"
             placeholder="First name"
             required>
@@ -131,7 +137,7 @@
             <ng-option [value]="0">ทั้งหมด</ng-option>
             <ng-option
               *ngFor="let cat of _category_list"
-              [value]="cat.group_id">
+              [value]="cat">
               {{cat.group_name}}
             </ng-option>
 
@@ -155,9 +161,9 @@
 
             <ng-option [value]="0">ทั้งหมด</ng-option>
             <ng-option
-              *ngFor="let cat of _brand_list"
-              [value]="cat.brand_id">
-              {{cat.brand_name}}
+              *ngFor="let brand of _brand_list"
+              [value]="brand">
+              {{brand.brand_name}}
             </ng-option>
 
             <ng-template ng-footer-tmp>
@@ -192,14 +198,14 @@
           <ng-select
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
-            id="selected_category"
-            [(ngModel)]="selected_category">
+            id="selected_model"
+            [(ngModel)]="selected_model">
 
             <ng-option [value]="0">ทั้งหมด</ng-option>
             <ng-option
-              *ngFor="let cat of _category_list"
-              [value]="cat.group_id">
-              {{cat.group_name}}
+              *ngFor="let model of _model_list"
+              [value]="model">
+              {{model.model_name}}
             </ng-option>
 
           </ng-select>
@@ -215,6 +221,7 @@
           </label>
           <div class="col-sm-12">
             <input
+              [(ngModel)]="color"
               class="form-control digits"
               type="text"
               [ngModel]>
@@ -229,6 +236,7 @@
           </label>
           <div class="col-sm-12">
             <input
+              [(ngModel)]="cost"
               class="form-control digits"
               type="text"
               [ngModel]>
@@ -244,6 +252,7 @@
           </label>
           <div class="col-sm-12">
             <input
+              [(ngModel)]="qty"
               class="form-control digits"
               type="text"
               [ngModel]>
@@ -258,6 +267,7 @@
           </label>
           <div class="col-sm-12">
             <input
+              [(ngModel)]="barcode"
               class="form-control digits"
               type="text"
               [ngModel]>
@@ -272,7 +282,7 @@
             <div class="col-md-12 col-lg-6 p-r-0">
               <a
                 class="btn btn-primary m-t-30 col-12"
-                type="button">
+                type="button" (click)="addItem()">
                 <i class="icofont icofont-plus"></i>
                 เพิ่ม/Add
               </a>
@@ -281,7 +291,7 @@
             <div class="col-md-12 col-lg-6 p-l-1">
               <a
                 class="btn btn-light m-t-30 col-12"
-                type="button">
+                type="button" (click)="resetProductDetailForm()">
                 <i class="icon-reload"></i>
                 Reset
               </a>
@@ -309,7 +319,7 @@
           <table class="table pos_table">
             <thead>
               <tr>
-
+                <th>Action</th>
                 <th scope="col">ประเภทเอกสาร/TypeDoc</th>
                 <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
                 <!-- <th scope="col" >row_key</th> -->
@@ -329,14 +339,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="text-end robo"></td>
-                <td class="text-end robo"></td>
+              <tr *ngFor="let item of itemList; let i = index">
+                <td>
+                  <div class="action">
+                    <li class="delete">
+                      <a (click)="removeItem(i)"> <i class="icon-trash"></i>
+                      </a>
+                    </li>
+                  </div>
+                </td>                
+                <td>{{ item.doc_type_name }}</td>
+                <td>{{ item.group_name }}</td> 
+                <td>{{ item.brand_name }}</td>
+                <td>{{ item.model_name }}</td>
+                <td class="text-end robo">{{ item.qty }}</td>
+                <td class="text-end robo">{{ item.cost }}</td>
               </tr>
             </tbody>
           </table>
