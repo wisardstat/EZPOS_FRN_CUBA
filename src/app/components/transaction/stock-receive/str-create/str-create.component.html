@@ -131,7 +131,7 @@
           <ng-select
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
-            id="selected_category"
+            id="selected_category"            
             [(ngModel)]="selected_category">
 
             <ng-option [value]="0">ทั้งหมด</ng-option>
@@ -151,7 +151,7 @@
             ยี่ห้อสินค้า
           </label>
 
-          <ng-select
+          <ng-select 
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
             id="selected_brand"
@@ -259,6 +259,7 @@
           </div>
         </div>        
 
+        <!---  /*******  Barcode *******/  -->
         <div class="col-md-4">
           <label
             class="form-label"
@@ -266,11 +267,15 @@
             Barcode/Emei
           </label>
           <div class="col-sm-12">
-            <input
-              [(ngModel)]="barcode"
-              class="form-control digits"
+
+            <input id="barcode_input"
+              [(ngModel)]="barcode" 
+              class="form-control digits barcode"
               type="text"
-              [ngModel]>
+              (keyup.enter)="addItem()"
+              [ngModel]   
+              toUppercase
+              >
           </div>
         </div>
 

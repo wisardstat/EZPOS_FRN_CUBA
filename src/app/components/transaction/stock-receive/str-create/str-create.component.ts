@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Renderer2 } from '@angular/core';
 
 import { category_list } from '../../../../shared/services/categpry.service'
 import { inventory_list } from '../../../../shared/services/inventory.service'
@@ -41,7 +41,7 @@ export class StrCreateComponent {
   qty: number;
   cost: number = 0;
   barcode: string;
-
+  
   supplierDetail: SupplierDetail;
   stockItem: StockItem;
   itemList: StockItem[] = [];
@@ -51,7 +51,9 @@ export class StrCreateComponent {
     private category_list_sv: category_list,
     private brand_list_sv: brand_list,
     private models_sv: models,
-    private stockIn_sv: stockIn
+    private stockIn_sv: stockIn,
+    private renderer: Renderer2,
+    
   ) {
   }
 
@@ -61,7 +63,8 @@ export class StrCreateComponent {
     this.category_list_sv.getValue().subscribe(response => { this._category_list = response; });
     this.brand_list_sv.getValue().subscribe(response => { this._brand_list = response; });
     this.models_sv.getList().subscribe(response => { this._model_list = response; });
-
+    
+    this.qty = 1;
   }
 
   onKeyDownEvent(event: any) {
@@ -69,6 +72,7 @@ export class StrCreateComponent {
   }
 
   addItem() {
+
     this.stockItem = {
       doc_type_name: this.doc_type_name,
       color: this.color,
@@ -86,11 +90,16 @@ export class StrCreateComponent {
       DEDIT: "DEDIT",
       cc_id: this.cc_id,
     }
+
     this.itemList.push(this.stockItem);
+    this.barcode = '';
+    
+    this.renderer.selectRootElement('#barcode_input').focus();    
+
     console.log("addItem")
     console.log(this.itemList)
   }
-
+ 
   removeItem(index: number) {
     this.itemList.splice(index, 1);
     console.log("removeItem")
