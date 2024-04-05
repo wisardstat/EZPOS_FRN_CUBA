@@ -1,18 +1,25 @@
-<app-breadcrumb [title]="'Modal'" [items]="['Bonus UI', 'Base']" [active_item]="'Modal'"></app-breadcrumb>
+<app-breadcrumb [title]="'Modal'" [items]="['Bonus UI', 'Base']"
+ [active_item]="'Modal'"></app-breadcrumb>
+ 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12 col-xl-6">
+
       <div class="card">
         <div class="card-header">
           <h5>Modal with default options</h5>
         </div>
         <div class="card-body">
+
           <ng-template #content let-modal>
+
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+              <button type="button" class="btn-close" aria-label="Close" 
+              (click)="modal.dismiss('Cross click')"></button>
             </div>
             <div class="modal-body">
+
               <form class="custom-datepicker custom-datepicker-dropdown">
                 <div class="form-group">
                   <label for="dateOfBirth">Date of birth</label>
@@ -30,6 +37,8 @@
               <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
             </div>
           </ng-template>
+
+
           <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
           <hr>
           <pre class="mb-0">Result : {{closeResult}}</pre>
@@ -74,9 +83,11 @@
             <div class="modal-body">
               <p>Hello, World!</p>
             </div>
+
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
             </div>
+            
           </ng-template>
           <button class="btn btn-lg btn-outline-primary" (click)="openCustomModal(content)">Launch demo modal</button>
         </div>

@@ -1,4 +1,5 @@
-import { Component,Renderer2 } from '@angular/core';
+import { Component,Renderer2,OnInit, } from '@angular/core';
+import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { category_list } from '../../../../shared/services/categpry.service'
 import { inventory_list } from '../../../../shared/services/inventory.service'
@@ -9,13 +10,14 @@ import { models } from '../../../../shared/services/model.service'
 import { StockInRequest, StockItem, SupplierDetail } from '../str-interface/stock-in-request.model'
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-str-create',
   templateUrl: './str-create.component.html',
   styleUrls: ['./str-create.component.scss']
 })
 
-export class StrCreateComponent {
+export class StrCreateComponent implements OnInit{
 
   public _category_list: any;
   public _brand_list: any;
@@ -25,22 +27,26 @@ export class StrCreateComponent {
   public selected_brand: any;
   public brand_new: string;
   public selected_model: any;
+  
+  public alert_txt: string = ""
 
-  vendor_id: string = "S000";
-  wh_id: string = "W001";
-  cc_id: string = "A01"
-  doc_type_name: string = "รับเข้าเพื่อขาย"
-  DOC_STATUS: string = "Y"
-  type_doc: string = "1"
+  public wh_id: string = "W001";
+  public cc_id: string = "A01"
+  public doc_type_name: string = "รับเข้าเพื่อขาย"
+  public DOC_STATUS: string = "Y"
+  public type_doc: string = "1"
 
-  supply_name: string;
-  supply_addr: string;
-  supply_tel: string;
-  supply_tax_id: string
-  color: string;
-  qty: number;
-  cost: number = 0;
-  barcode: string;
+  public vendor_id: string = "" ;
+  public supply_name: string="";
+  public supply_addr: string="";
+  public supply_tel: string="";
+  public supply_tax_id: string="";
+  public color: string="";
+  public qty: number;
+  public cost: number = 0;
+  public barcode: string;
+
+  closeResult: string;
   
   supplierDetail: SupplierDetail;
   stockItem: StockItem;
@@ -53,10 +59,30 @@ export class StrCreateComponent {
     private models_sv: models,
     private stockIn_sv: stockIn,
     private renderer: Renderer2,
+    private modalService: NgbModal,
     
   ) {
   }
 
+  open(content) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+
+  
 
   ngOnInit() {
 
@@ -71,33 +97,92 @@ export class StrCreateComponent {
     this.brand_new = event.target.value;
   }
 
-  addItem() {
+  addItem(modal_alert) {
+    
+    console.log("addItem")
+    console.log(this.selected_category)
+    var bEmpty : Boolean = false
+    var Label : String =""
 
-    this.stockItem = {
-      doc_type_name: this.doc_type_name,
-      color: this.color,
-      bar_code: this.barcode,
-      pd_name: this.selected_brand.brand_name + this.selected_brand.brand_name + this.color,
-      group_id: this.selected_category.group_id,
-      brand_id: this.selected_brand.brand_id,
-      model_id: this.selected_model.model_id,
-      group_name: this.selected_category.group_name,
-      brand_name: this.selected_brand.brand_name,
-      model_name: this.selected_model.model_name,
-      cost: this.cost,
-      qty: this.qty,
-      UEDIT: "UEDIT",
-      DEDIT: "DEDIT",
-      cc_id: this.cc_id,
+    
+    if (this.selected_category === undefined)
+    {
+      bEmpty = true      
+      Label = "กรุณาระบุ "+"ประเภทสินค้า"
+    }
+    else if (this.selected_brand === undefined)
+    {
+      bEmpty = true      
+      Label = "กรุณาระบุ "+"ยี่ห้อสินค้า/Brand"
+    }
+    else if (this.selected_model === undefined)
+    {
+      bEmpty = true      
+      Label = "กรุณาระบุ "+"รุ่นสินค้า/Model"
+    }
+    else if (this.barcode === undefined)
+    {
+      bEmpty = true      
+      Label = "กรุณาระบุ "+"เลข Emei/Barcode/บาร์โค๊ด"
+    }
+    else if (this.barcode.length<5)
+    {
+      bEmpty = true      
+      Label = "ความยาว เลข Emei/Barcode/บาร์โค๊ด น้อยกว่า 5 หลัก"
     }
 
-    this.itemList.push(this.stockItem);
-    this.barcode = '';
-    
-    this.renderer.selectRootElement('#barcode_input').focus();    
+    if (this.cost === undefined)
+    {
+      this.cost = 0 
+    }
 
-    console.log("addItem")
-    console.log(this.itemList)
+    var _respond =  this.stockIn_sv.get_BarcodeExists(this.barcode,this.selected_category.group_id,this.cc_id)
+    
+    console.log(">>> respond="+String(_respond))
+
+    if (String(_respond)!=="")
+    {
+      bEmpty = true    
+      Label = String(_respond)
+      console.log(">>> Not undefined")
+    }
+
+
+    if (bEmpty===false)
+    {
+      console.log("+++++ None undefined ++++++")
+      this.stockItem = {
+        doc_type_name: this.doc_type_name,
+        color: this.color,
+        bar_code: this.barcode.toUpperCase(),
+        pd_name: this.selected_brand.brand_name + this.selected_brand.brand_name + this.color,
+        group_id: this.selected_category.group_id,
+        brand_id: this.selected_brand.brand_id,
+        model_id: this.selected_model.model_id,
+        group_name: this.selected_category.group_name,
+        brand_name: this.selected_brand.brand_name,
+        model_name: this.selected_model.model_name,
+        cost: this.cost,
+        qty: this.qty,
+        UEDIT: "UEDIT",
+        DEDIT: "DEDIT",
+        cc_id: this.cc_id,
+      }
+
+      this.itemList.push(this.stockItem);
+      this.barcode = '';      
+      this.renderer.selectRootElement('#barcode_input').focus();    
+
+      console.log("addItem")
+      console.log(this.itemList)
+    }
+    else 
+    {
+      console.log(Label)
+      this.alert_txt = Label+" !!"
+      this.open(modal_alert)
+    }
+ 
   }
  
   removeItem(index: number) {
@@ -117,17 +202,37 @@ export class StrCreateComponent {
     this.barcode = '';
   }
 
-  resetStockInForm() {
-    window.location.reload();
+  resetStockInForm(content) {
+   // window.location.reload();
+         /*********** Reset Form  ************* */
+         this.vendor_id =""
+         this.supply_name =""
+         this.supply_addr =""       
+         this.supply_tel =""
+         this.supply_tax_id=""
+         this.itemList = []
+
+         this.resetProductDetailForm()
+
+         this.modalService.dismissAll(content)
   }
 
 
-  saveStock() {
+  saveStock(modal_alert) {
 
     if (this.itemList.length > 0) {
+
+      if (this.supply_name=="")
+      {
+        this.supply_name = "ไม่ระบุ"
+        this.vendor_id =  "S000"
+        console.log("this.supply_name="+this.supply_name)
+      }
+      
       this.supplierDetail = {
+
         supply_id: this.vendor_id,
-        supply_name: this.supply_name,
+        supply_name:  this.supply_name,
         supply_addr: this.supply_addr,
         supply_addr1: '',
         supply_addr2: '',
@@ -138,6 +243,7 @@ export class StrCreateComponent {
         user_contact: '',
         user_date: '',
         cc_id: this.cc_id
+
       };
 
       const stockData: StockInRequest = {
@@ -156,18 +262,49 @@ export class StrCreateComponent {
 
       console.log("saveStock")
       console.log(stockData)
+
       this.stockIn_sv.saveStockIn(stockData).subscribe(response => {
+
         if (response.status == "success") {
           alert("บันทึกสำเร็จ")
+          //this.resetStockInForm()
+
         } else if (response.status == "alert") {
-          alert(response.message)
+
+          // alert(response.message)
+          this.modalService.dismissAll('confirm_save')
+          this.alert_txt = response.message
+          this.open(modal_alert)
+
         } else {
+
           alert(response.message)
+
         }
       });
+
+
+
     } else {
-      alert("กรุณา เพิ่มรายการสินค้าที่รับเข้า (Item-List)")
+
+      // alert("กรุณา เพิ่มรายการสินค้าที่รับเข้า (Item-List)")
+      this.modalService.dismissAll('confirm_save')
+      this.alert_txt = "กรุณา เพิ่มรายการสินค้าที่รับเข้า (Item-List)"
+      this.open(modal_alert)
     }
   }
+
+  NextToInput(input){
+    this.renderer.selectRootElement(input).focus();  
+    if (input=='#qty')
+    {
+      this.renderer.selectRootElement(input).value="1";  
+    }
+    else{
+      this.renderer.selectRootElement(input).value="";  
+    }
+  }
+
+
 
 }

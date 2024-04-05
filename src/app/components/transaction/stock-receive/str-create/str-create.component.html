@@ -3,6 +3,82 @@
   [items]="['คลังสินค้า','รับสินค้า']"
   [active_item]="'สร้างเอกสาร'"></app-breadcrumb>
 
+  <ng-template #confirm_save let-modal>
+    <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">แจ้งเตือน</h6>
+      <button type="button" class="btn-close" aria-label="Close" 
+      (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body ">
+
+      <div class="row  m-b-10">
+        <div class="col-12 text-center m-b-10">
+            <h5>ยืนยันที่จะบันทึกรับสินค้าเข้าร้าน?</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-air btn-primary me-2 col-12" 
+          (click)="saveStock(confirm_alert)">ยืนยัน/Confirm</button>
+        </div>
+        <div class="col-6">
+        <button type="button" class="btn btn-outline-dark  col-12"
+         (click)="modal.close('Save click')">ยกเลิก/Cancel</button>
+        </div>
+      </div>
+    </div>    
+  </ng-template>
+
+
+
+  <ng-template #confirm_reset let-modal>
+    <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">แจ้งเตือน</h6>
+      <button type="button" class="btn-close" aria-label="Close" 
+      (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body ">
+
+      <div class="row  m-b-10">
+        <div class="col-12 text-center m-b-10">
+            <h5>ยืนยันที่จะล้างข้อมูลในหน้านี้และเริ่มใหม่ ?</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-air btn-warning me-2 col-12" 
+          (click)="resetStockInForm(confirm_reset)">ยืนยัน/Confirm</button>
+        </div>
+        <div class="col-6">
+        <button type="button" class="btn btn-outline-dark  col-12"
+         (click)="modal.close('Save click')">ยกเลิก/Cancel</button>
+        </div>
+      </div>
+    </div>    
+  </ng-template>
+
+
+
+  <ng-template #confirm_alert let-modal>
+    <div class="modal-header">
+      <h6 class="modal-title" id="modal-basic-title">แจ้งเตือน</h6>
+      <button type="button" class="btn-close" aria-label="Close" 
+      (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body ">
+      <div class="row  m-b-0">
+        <div class="col-12 text-center m-b-10">
+            <h1> <i class="msg_error fa fa-warning"></i> </h1>
+            <h5>
+              <label id="alert_txt" class="msg_error"  [innerHTML]="alert_txt">Error Message</label>
+            </h5>
+        </div>        
+      </div>
+
+    </div>  
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" >Close</button>
+    </div>  
+  </ng-template>
+
+
+
 <div class="row">
 
   <div class="col-xl-12 col-md-12 box-col-12 m-b-20">
@@ -11,17 +87,17 @@
       <div class="media">
         <div class="media-body text-end">
 
-          <div
+          <button
             class="btn btn-air btn-primary me-2"
-            (click)="saveStock()"
+            (click)="open(confirm_save)"
             onclick>
             <app-feather-icons [icon]="'save'"></app-feather-icons>
             บันทึกเอกสาร / SAVE
-          </div>
+          </button>
 
           <div
             class="btn btn-air btn-warning me-2"
-            (click)="resetStockInForm()"
+            (click)="open(confirm_reset)"
             onclick>
             <app-feather-icons [icon]="'refresh-ccw'"></app-feather-icons>
             เริ่มใหม่ / Reset
@@ -56,7 +132,7 @@
             id="validationCustom01"
             type="text"
             [(ngModel)]="supply_name"
-            placeholder="First name"
+            placeholder="ไม่ระบุ"
             required>
           <div class="valid-feedback">Looks good!</div>
         </div>
@@ -113,6 +189,7 @@
   </div>
   <!-- ./ Card-Supplier -->
 
+
   <!-- Card-Product detail -->
   <div class="card">
     <div class="card-header p-t-20 p-b-5">
@@ -128,10 +205,10 @@
             for="validationCustom01">
             ประเภทสินค้า
           </label>
-          <ng-select
+          <ng-select  
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
-            id="selected_category"            
+            id="selected_category"                     
             [(ngModel)]="selected_category">
 
             <ng-option [value]="0">ทั้งหมด</ng-option>
@@ -151,10 +228,10 @@
             ยี่ห้อสินค้า
           </label>
 
-          <ng-select 
+          <ng-select             
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
-            id="selected_brand"
+            id="selected_brand"            
             editable="true"
             (keyup)="onKeyDownEvent($event)"
             [(ngModel)]="selected_brand">
@@ -199,7 +276,9 @@
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
             id="selected_model"
-            [(ngModel)]="selected_model">
+            [(ngModel)]="selected_model"
+            (keyup.enter)="NextToInput('#color')"
+            >
 
             <ng-option [value]="0">ทั้งหมด</ng-option>
             <ng-option
@@ -220,10 +299,12 @@
             color/สี
           </label>
           <div class="col-sm-12">
-            <input
+            <input id="color"
               [(ngModel)]="color"
               class="form-control digits"
+              (keyup.enter)="NextToInput('#cost')"
               type="text"
+              autocomplete="off"
               [ngModel]>
           </div>
         </div>
@@ -234,11 +315,14 @@
             for="validationCustom01">
             ต้นทุน/Cost
           </label>
-          <div class="col-sm-12">
-            <input
+          <div class="col-sm-12">            
+            <input id="cost"
               [(ngModel)]="cost"
               class="form-control digits"
-              type="text"
+              type="number"
+              min="0"
+              autocomplete="off"
+              (keyup.enter)="NextToInput('#qty')"
               [ngModel]>
           </div>
         </div>
@@ -251,10 +335,13 @@
             จำนวนสินค้า/Qty
           </label>
           <div class="col-sm-12">
-            <input
+            <input id="qty"
               [(ngModel)]="qty"
               class="form-control digits"
-              type="text"
+              type="number"
+              min="1"
+              autocomplete="off"
+              (keyup.enter)="NextToInput('#barcode_input')"
               [ngModel]>
           </div>
         </div>        
@@ -272,7 +359,8 @@
               [(ngModel)]="barcode" 
               class="form-control digits barcode"
               type="text"
-              (keyup.enter)="addItem()"
+              autocomplete="off"
+              (keyup.enter)="addItem(confirm_reset)"
               [ngModel]   
               toUppercase
               >
@@ -287,9 +375,9 @@
             <div class="col-md-12 col-lg-6 p-r-0">
               <a
                 class="btn btn-primary m-t-30 col-12"
-                type="button" (click)="addItem()">
+                type="button" (click)="addItem(confirm_alert)">
                 <i class="icofont icofont-plus"></i>
-                เพิ่ม/Add
+                เพิ่ม/Add 
               </a>
             </div>
 
@@ -325,12 +413,14 @@
             <thead>
               <tr>
                 <th>Action</th>
+                <th scope="col">Barcode/Emei</th>
                 <th scope="col">ประเภทเอกสาร/TypeDoc</th>
                 <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
                 <!-- <th scope="col" >row_key</th> -->
                 <th scope="col">ประเภทสินค้า</th>
                 <th scope="col">ยี่ห้อ/brand</th>
                 <th scope="col">รุ่น/model</th>
+                
                 <th
                   class="text-end"
                   scope="col">
@@ -353,6 +443,7 @@
                     </li>
                   </div>
                 </td>                
+                <td>{{ item.bar_code }}</td>
                 <td>{{ item.doc_type_name }}</td>
                 <td>{{ item.group_name }}</td> 
                 <td>{{ item.brand_name }}</td>
