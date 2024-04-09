@@ -11,6 +11,7 @@
         <ul class="bookmark-dropdown">
           <li>
             <div class="row bookmark-scroll">
+
               <div class="col-4 text-center" *ngFor="let item of bookmarkItems">
                 <div class="bookmark-content">
                   <a [routerLink]="item?.path" routerLinkActive="item?.active">
@@ -21,11 +22,13 @@
                   </a>
                 </div>
               </div>
+
             </div>
           </li>
         </ul>
         <div class="text-center pb-0" (click)="flipBookMark()"><a class="flip-btn f-w-700" id="flip-btn" href="javascript:void(0)">Add New Bookmark</a></div>
       </div>
+      
       <div class="back">
         <ul>
           <li>

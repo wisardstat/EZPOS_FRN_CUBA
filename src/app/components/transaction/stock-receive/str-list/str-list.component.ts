@@ -17,7 +17,10 @@ import { environment } from '../../../../../environments/environment'
 export class StrListComponent {
 
   public _vstockcard_list: any;
-  public _inventory_list:any;  
+  public _inventory_list:any; 
+  
+  public _show_filter_card: boolean = true;
+  public _label_btn_hide_filtercard: string = "ซ่อนตัวกรอง";
 
   public _QtyAll: any;
   public api_row_limit = String(environment.api_row_limit);  
@@ -159,5 +162,16 @@ export class StrListComponent {
     
   }
 
+  public HideFilterCard() {
+
+    this._show_filter_card = !this._show_filter_card
+    if (this._show_filter_card) {
+      this._label_btn_hide_filtercard = "ซ่อนตัวกรอง"
+    }
+    else {
+      this._label_btn_hide_filtercard = "แสดงตัวกรอง"
+    }
+    
+  }
 
 }

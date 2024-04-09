@@ -9,41 +9,32 @@
     <div class="col-sm-12">
 
       <div class="card">
-        <div class="card-body">
+        <div class="card-body"
+        [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'
+      , 'height': _show_filter_card ? '120px' : '1px' }"
+        >
           <div class="row">
-
-
             <div class="col-sm-3">
-              <label class="col-sm-12 col-form-label">วันที่เอกสาร/เริ่มต้น</label>
-              <div class="col-sm-12">
-
+              <label  >วันที่เอกสาร/เริ่มต้น</label>
                 <input
                   class="form-control digits"
                   type="date"
                   [ngModel]="select_date_st | date:'yyyy-MM-dd'"
                   (ngModelChange)="select_date_st = $event">
-              </div>
-
             </div>
 
             <div class="col-sm-3">
-              <label class="col-sm-12 col-form-label">วันที่เอกสาร/สิ้นสุด</label>
-              <div class="col-sm-12">
-
+              <label>วันที่เอกสาร/สิ้นสุด</label>
                 <input
                   class="form-control digits"
                   type="date"
                   [ngModel]="select_date_en | date:'yyyy-MM-dd'"
                   (ngModelChange)="select_date_en = $event">
-              </div>
-
+              
             </div>
 
             <div class="col-sm-3">
-
-              <div class="mb-3 m-form__group">
-                <label for="exampleFormControlSelect9">เลือกคลังสินค้า</label>
-
+                <label>เลือกคลังสินค้า</label>
                 <select
                   class="form-control digits"  id="selected_wh"
                   placeholder="เลือก" [(ngModel)]="selected_wh">
@@ -54,61 +45,55 @@
                     {{ wh.wh_name }}
                   </option>
                 </select>
-              </div>
-
             </div>
             
             <div class="col-sm-3">
-              <label class="col-sm-12 col-form-label">ค้นหาชื่อผู้จำหน่าย (Supplier)</label>
-              <div class="col-sm-12">
-
+              <label>ค้นหาชื่อผู้จำหน่าย</label>
                 <input
                   class="form-control digits"
                   type="text"
                   [ngModel]="find_cust_name"
                   (ngModelChange)="find_cust_name = $event">
-              </div>
-
+              
             </div>
           </div>
 
-          <div class="row">
-
-            <div class="col-sm-3">
-              &nbsp;
-           </div>
-
-            <div class="col-sm-3">
-              &nbsp;
-           </div>
-
-           <div class="col-sm-3">
-               &nbsp;
-           </div>
-
-           <div class="col-sm-3">
-            <div class="row">
-              <div class="col-md-12 col-lg-6 p-r-0"> 
-                <a class="btn btn-primary m-t-30 w-100" type="button" title=""  
-                (click)="onSearch()">
-                  <i class="icofont icofont-search"></i> Search
-                </a> 
-              </div>
-              <div class="col-md-12 col-lg-6 p-l-1">
-
-                <a class="btn btn-light m-t-30  " type="button" title=""  
-                (click)="resetFind()">
-                  <i class="icon-reload"></i> Reset
-                </a> 
-              </div>
-            </div>
-          </div>
-
-
-          </div>
+          
         </div>
 
+        <div class="card-footer  p-t-10 p-b-10">
+          <div class="row text-end">
+            <div class="col"> 
+              <a class="btn btn-primary m-r-5" type="button" title=""  
+              [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+              (click)="onSearch()">
+                <i class="icofont icofont-search"></i>                 
+              ค้นหา / Search
+              </a> 
+            
+              <a class="btn btn-light m-r-5  " type="button" title=""  
+              [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+              (click)="resetFind()">
+              <i class="icon-reload"></i>
+              เริ่มใหม่ / Reset
+              </a> 
+
+              <a class="btn btn-light"
+              type="button"                
+              (click)="HideFilterCard()">
+              <i
+                class="icon-arrow-up"
+                [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"></i>
+              <i
+                class="icon-arrows-vertical"
+                [ngStyle]="{'visibility':_show_filter_card ? 'hidden' : 'visible'}"></i>
+              {{_label_btn_hide_filtercard}}
+            </a>
+            </div>         
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -179,10 +164,14 @@
                     [class]="(product.amt_price > 0) ? 'bg_iv' : 'none'"
                     >                                        
                     <td>
-
-                      <a class="btn btn-primary p-y-1  " style="font-size:10px;" type="button" title="" >
-                        <i class="icofont icofont-search"></i> 
-                      </a> 
+                      <div class="action">
+                        <li class="add">
+                          <a href="#">
+                            <i class="icon-search"></i>
+                          </a>
+                        </li>
+                      </div>
+                      
 
                     </td>                    
                     <td class="robo">{{ product.date_in| date:'dd-MM-yyyy hh:mm' }}</td>                    
