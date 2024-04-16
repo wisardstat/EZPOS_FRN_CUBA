@@ -1,3 +1,4 @@
+
 export interface StockItem {
     doc_id?: string;
     doc_type_name:string;

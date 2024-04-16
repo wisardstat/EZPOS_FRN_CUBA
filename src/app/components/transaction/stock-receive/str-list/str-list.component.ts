@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 
 import { vStockCard } from '../../../../shared/services/vstockcard.service'
 import { inventory_list } from '../../../../shared/services/inventory.service'
+import { stockIn } from '../../../../shared/services/stockIn.service'
 import { environment } from '../../../../../environments/environment'
 
-
+import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 
@@ -15,7 +16,7 @@ import { environment } from '../../../../../environments/environment'
 })
 
 export class StrListComponent {
-
+  
   public _vstockcard_list: any;
   public _inventory_list:any; 
   
@@ -33,6 +34,21 @@ export class StrListComponent {
   
   public LoadingShow: number;
 
+  public doc_id : string = "A01-SI211010011"
+  public cc_id : string = "A01"
+  public stockinList :any
+  public stockinListDetail :any
+  public doc_date : Date
+  public wh_id : string
+  public wh_name : string
+  public vendor_name : string
+  public vendor_addr : string
+  public vendor_tel : string
+
+  public DetailTotalQty : number
+  public DetailTotalAmt : number
+
+  closeResult: string;
 
   public stockQtyAll = {
     title: "จำนวนสินค้าทั้งหมด",
@@ -65,7 +81,8 @@ export class StrListComponent {
   constructor(    
     private sv_vStockCard:vStockCard,
     private inventory_list_sv:inventory_list,
-    
+    private modalService: NgbModal,
+    private sv_stockIn:stockIn,    
     ) {
     // this.products = productDB.product;
   }
@@ -152,6 +169,7 @@ export class StrListComponent {
                                           this._QtyAll = response;
                                           if (this._QtyAll != null) {
                                             console.log(this._QtyAll)
+                                            
                                             this.stockQtyAll.orders = String(this._QtyAll['qty'].toLocaleString('en-US'))
                                             this.stockCountSKU.orders = String(this._QtyAll['count'].toLocaleString('en-US'))
                                             this.stockCost.orders = String(this._QtyAll['amt_cost'].toLocaleString('en-US'))
@@ -172,6 +190,68 @@ export class StrListComponent {
       this._label_btn_hide_filtercard = "แสดงตัวกรอง"
     }
     
+  }  
+
+  open_model(content,_doc_id) {
+
+    console.log("_doc_id= "+_doc_id)      
+
+    this.Show_DocumentDetail(_doc_id);
+
+    this.modalService.open(content, { size: 'xl'  }).result.then((result) => {
+
+      console.log("modalService - result ")      
+      this.closeResult = `Closed with: ${result}`;
+
+    }, (reason) => {
+      console.log("modalService - reason ")      
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
+
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  Show_DocumentDetail(_doc_id){
+
+      this.sv_stockIn.get_StockInHead(_doc_id,this.cc_id).subscribe(response => {
+
+          console.log("Load - get_StockInHead ")      
+          
+          this.doc_id = response['doc_id'];
+          this.doc_date = response['doc_date'];
+          this.wh_id = response['wh_id'];
+          this.wh_name = response['wh_name'];
+          this.vendor_name = response['vendor_name'];
+          this.vendor_addr = response['vendor_addr1'];
+          this.vendor_tel = response['vendor_tel'];
+      });
+
+      this.sv_stockIn.get_StockInDetail(_doc_id,this.cc_id).subscribe(response => {
+          
+          this.stockinListDetail = response
+          this.DetailTotalQty = 0
+          this.DetailTotalAmt = 0
+
+          for (let i = 0; i < Object.keys(response).length; i++) {
+            console.log((response[i].qty * response[i].cost))   
+
+            this.DetailTotalQty  += response[i].qty
+            this.DetailTotalAmt += (response[i].qty * response[i].cost)
+          }
+
+          
+      });
+
   }
 
 }

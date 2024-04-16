@@ -3,38 +3,28 @@
   [items]="['คลังสินค้า','รับสินค้า']"
   [active_item]="'สร้างเอกสาร'"></app-breadcrumb>
 
-<ng-template
-  #confirm_save
-  let-modal>
+  <!-- ***************************************************** -->
+<ng-template #confirm_save let-modal>
   <div class="modal-header">
-    <h6
-      class="modal-title"
-      id="modal-basic-title">แจ้งเตือน</h6>
-    <button
-      type="button"
-      class="btn-close"
-      aria-label="Close"
-      (click)="modal.dismiss('Cross click')"></button>
+    <h6 class="modal-title" id="modal-basic-title">ยืนยัน</h6>
+    <button  type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    </button>
   </div>
   <div class="modal-body">
-
     <div class="row  m-b-10">
+
       <div class="col-12 text-center m-b-10">
         <h5>ยืนยันที่จะบันทึกรับสินค้าเข้าร้าน?</h5>
       </div>
       <div class="col-6">
-        <button
-          type="button"
-          class="btn btn-air btn-primary me-2 col-12"
+        <button type="button" class="btn btn-air btn-primary me-2 col-12"
           (click)="saveStock(confirm_alert,alert_sucess)">
           ยืนยัน/Confirm
         </button>
       </div>
+
       <div class="col-6">
-        <button
-          type="button"
-          class="btn btn-outline-dark  col-12"
-          (click)="modal.close('Save click')">
+        <button type="button" class="btn btn-outline-dark  col-12" (click)="modal.close('Save click')">
           ยกเลิก/Cancel
         </button>
       </div>
@@ -42,13 +32,15 @@
   </div>
 </ng-template>
 
+<!-- ***************************************************** -->
+
 <ng-template
   #confirm_reset
   let-modal>
   <div class="modal-header">
     <h6
       class="modal-title"
-      id="modal-basic-title">แจ้งเตือน</h6>
+      id="modal-basic-title">ยืนยัน</h6>
     <button
       type="button"
       class="btn-close"
@@ -80,6 +72,8 @@
     </div>
   </div>
 </ng-template>
+
+<!-- ***************************************************** -->
 
 <ng-template
   #confirm_alert
@@ -119,6 +113,8 @@
     </button>
   </div>
 </ng-template>
+
+<!-- ***************************************************** -->
 
 <ng-template
   #alert_sucess
@@ -160,6 +156,8 @@
   </div>
 </ng-template>
 
+<!-- ***************************************************** -->
+
 <div class="row">
 
   <div class="col-xl-12 col-md-12 box-col-12 m-b-20">
@@ -193,7 +191,7 @@
 <!-- ./row -->
 
 <div class="container-fluid">
-
+  
   <!-- Card-Supplier -->
   <div class="card">
     <div class="card-header p-t-20 p-b-5">
@@ -393,7 +391,6 @@
                     class="btn btn-primary col-12"
                     type="button">
                     <i class="icofont icofont-plus"></i>
-
                   </a>
                 </div>
               </div>
@@ -521,7 +518,7 @@
                 Reset
               </a>              
             </div>
-            
+
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { brand_list } from '../../../../shared/services/brand.service'
 import { stockIn } from '../../../../shared/services/stockIn.service'
 import { supplys } from '../../../../shared/services/supply.service'
 
+
 import { models } from '../../../../shared/services/model.service'
 import { StockInRequest, StockItem, SupplierDetail } from '../str-interface/stock-in-request.model'
 import { HttpClient } from '@angular/common/http';
@@ -408,5 +409,8 @@ export class StrCreateComponent implements OnInit {
       console.log(e);
     }
   }
+
+
+  
 
 }

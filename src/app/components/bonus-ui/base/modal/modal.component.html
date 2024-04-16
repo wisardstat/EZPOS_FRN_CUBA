@@ -36,6 +36,8 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
             </div>
+
+            
           </ng-template>
 
 
@@ -65,19 +67,25 @@
           <h5>Stacked modals</h5>
         </div>
         <div class="card-body">
-          <button class="btn btn-lg btn-outline-primary" (click)="openStackedModal()">Launch demo modal</button>
+          <button class="btn btn-lg btn-outline-primary" 
+          (click)="openStackedModal()">Launch demo modal</button>
         </div>
       </div>
     </div>
+
+
+
     <div class="col-sm-12 col-xl-6">
       <div class="card">
         <div class="card-header">
           <h5>Global configuration of modals</h5>
         </div>
         <div class="card-body">
+
           <ng-template #content let-c="close" let-d="dismiss">
             <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+              <h4 class="modal-title" 
+              id="modal-basic-title">Hi there!</h4>
               <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
             </div>
             <div class="modal-body">
@@ -89,10 +97,13 @@
             </div>
             
           </ng-template>
+
           <button class="btn btn-lg btn-outline-primary" (click)="openCustomModal(content)">Launch demo modal</button>
         </div>
       </div>
     </div>
+
+
     <div class="col-sm-12 col-xl-12">
       <div class="card">
         <div class="card-header">

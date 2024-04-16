@@ -124,6 +124,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('user_name', response['user_name']);
           sessionStorage.setItem('group_user_id', response['group_user_id']);
           sessionStorage.setItem('group_user_name', response['group_user_name']);
+          sessionStorage.setItem('cc_id', response['cc_id']);
           sessionStorage.setItem('user_login', this.user);
 
           sessionStorage.setItem('user_avatar', "avartar_job.png");

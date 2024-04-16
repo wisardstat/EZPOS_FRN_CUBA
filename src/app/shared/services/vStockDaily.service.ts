@@ -43,7 +43,7 @@ export class vStockDaily {
       + `&find_pdname=` + _find_pdname
       + `&skip=0&limit=`+this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -67,7 +67,7 @@ export class vStockDaily {
       + `&find_pdname=` + _find_pdname
       + `&skip=0&limit=`+ this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -91,7 +91,7 @@ export class vStockDaily {
       + `&find_pdname=` + _find_pdname
       + `&skip=0&limit=`+this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }

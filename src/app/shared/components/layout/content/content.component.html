@@ -8,7 +8,8 @@
         <app-sidebar></app-sidebar>
       </div>
       <div class="page-body">
-        <main [@fadeInAnimation]="getRouterOutletState(o)">
+        <main >
+          <!-- <main [@fadeInAnimation]="getRouterOutletState(o)"> -->
           <router-outlet #o="outlet"></router-outlet>
         </main>
       </div>
@@ -23,10 +24,10 @@
 </div>
 <div class="bg-overlay1"></div>
 
-<span *ngIf="show_customizer"  >
+<!-- <span *ngIf="show_customizer"  >
    <app-customizer></app-customizer>
    
-</span>
+</span> -->
 
 
 <!-- page-wrapper End-->

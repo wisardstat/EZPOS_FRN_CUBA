@@ -38,9 +38,11 @@ export class MyAccountComponent implements OnInit {
     }
     else {
       console.log("Session have data")
+
       this.userName = sessionStorage.getItem('user_name');
       this.GroupUserName = sessionStorage.getItem('group_user_name');
       this.UserAvatar = sessionStorage.getItem('user_avatar');
+      
     }
 
     // user_avatar

@@ -64,7 +64,8 @@
                   class="form-control digits"
                   id="selected_typeDoc"
                   placeholder="เลือก"
-                  [(ngModel)]="selected_typeDoc">
+                  [(ngModel)]="selected_typeDoc"
+                  >
                   <option
                     value="0"
                     selected>
@@ -200,10 +201,8 @@
               <table class="table pos_table">
                 <thead>
                   <tr>
-                    <th scope="col">วันที่เอกสาร/DocDate</th>
-                    <th scope="col">คลัง/ร้าน/Shop</th>
-                    <th scope="col">ประเภทเอกสาร/TypeDoc</th>
-                    
+                    <th scope="col">วันที่เอกสาร/DocDate</th>                    
+                    <th scope="col">ประเภทเอกสาร/TypeDoc</th>                    
                     <th scope="col">ชื่อลูกค้า/Customer</th>
                     <th
                       class="text-end"
@@ -229,11 +228,21 @@
                     <td class="robo">
                       {{ product.date_in| date:'dd-MM-yyyy hh:mm' }}
                       <br/> 
-                      <span style="color:#FFB423;font-size:12px;">  
-                        {{ product.doc_id }} </span>
+                      <span class="badge badge-{{product.type_doc_id}}">  
+                        
+                        {{ product.type_doc }}
+                      </span>
                     </td>
-                    <td>{{ product.wh_name }}</td>
-                    <td>{{ product.type_doc }}</td>
+                    
+                    <td>
+                      <span style="font-size: 12px;">
+                        {{ product.doc_id }}
+                        </span>
+                        <br/>                    
+                        <span class="table_row_sub" style="font-size: 12px;">
+                          <i class="icofont icofont-ebook"></i>
+                           {{ product.wh_name }} </span>
+                    </td>
                     
                     <td>
                       {{ product.cust_fname }}

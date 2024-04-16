@@ -301,28 +301,29 @@
                           style="width:180px;">
                           วันที่เอกสาร/DocDate
                         </th>
-                        <th scope="col">ประเภทเอกสาร/TypeDoc</th>
+                        <th scope="col">ประเภทเอกสาร</th>
+                        
                         <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
                         <!-- <th scope="col" >row_key</th> -->
                         <!-- <th scope="col">ประเภทสินค้า</th>
                         <th scope="col">ยี่ห้อ/brand</th> -->
-                        <th scope="col">รุ่น/model</th>
-                        <th style="width:300px" scope="col">ชื่อสินค้า</th>
+                        <!-- <th scope="col">รุ่น/model</th> -->
+                        <th style="width:300px" scope="col">รายการ</th>
 
                         <th
                           class="text-end"
                           scope="col">
-                          จำนวนสินค้า/Qty
+                          จำนวน
                         </th>
                         <th
                           class="text-end"
                           scope="col">
-                          ต้นทุนรวม/Cost
+                          ต้นทุน
                         </th>
                         <th
                           class="text-end"
                           scope="col">
-                          ยอดขาย/Amount
+                          ยอดรวม
                         </th>
                       </tr>
                     </thead>
@@ -335,19 +336,21 @@
                           <br>
                           <span class="table_row_sub"> <i class="fa fa-home"></i> {{ product.wh_name }} </span>
                         </td>
-                        <td>
-                          {{ product.type_doc }}
-                          <br>
-                          <span class="table_row_sub"><i class="icofont icofont-ebook"></i> {{ product.doc_id }} </span>
+                        <td>{{ product.type_doc }}<br>
+                          <span class="table_row_sub" style="font-size: 10px;">
+                            <i class="icofont icofont-ebook"></i>
+                             {{ product.doc_id }} </span>
                         </td>
                         <!-- <td>{{ product.cust_fname }}</td> -->
                         <!-- <td>{{ product.row_key }}</td> -->
-                        <td>{{ product.group_name }}</td>
+                        <!-- <td>{{ product.group_name }}</td> -->
                         <!-- <td>{{ product.brand_name }}</td>
                         <td>{{ product.model_name }}</td> -->
                         <td>
+                          {{ product.group_name }}
+                          <br/>
                           {{ product.pd_name }}
-                          <br>
+                          <br/>
                           <span class="table_row_sub"><i class="icofont icofont-businessman"></i>{{ product.cust_fname }} </span>
                         </td>
                         <td class="text-end robo">{{ product.qty_abs | number }}</td>

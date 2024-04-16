@@ -210,7 +210,7 @@ export class RpBytxnitemComponent {
     ).subscribe(response => {
       this._QtyAll = response;
       if (this._QtyAll != null) {
-        console.log(this._QtyAll)
+        
         this.stockQtyAll.orders = String(this._QtyAll['qty_abs'].toLocaleString('en-US'))
         this.stockCountSKU.orders = String(this._QtyAll['count'].toLocaleString('en-US'))
         this.stockCost.orders = String(this._QtyAll['amt_cost'].toLocaleString('en-US'))

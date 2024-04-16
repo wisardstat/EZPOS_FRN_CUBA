@@ -73,5 +73,17 @@ export class stockIn {
 
   }
 
+  get_StockInHead(doc_id: string, cc_id: string)
+  {
+    var url = this.url+'stock_in/header?doc_id='+doc_id+'&cc_id='+cc_id
+    return this.httpClient.get(url);
+  }
+
+  get_StockInDetail(doc_id: string, cc_id: string)
+  {
+    var url = this.url+'stock_in/detail?doc_id='+doc_id+'&cc_id='+cc_id
+    return this.httpClient.get(url);
+  }
+
 
 }

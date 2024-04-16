@@ -1,7 +1,8 @@
 <app-breadcrumb
   [title]="'เอกสารรับสินค้าเข้าคลัง (Stock-In)'"
   [items]="['รายการประจำวัน']"
-  [active_item]="'แสดงจามรายการเอกสาร'"></app-breadcrumb>
+  [active_item]="'แสดงตามรายการเอกสาร'">
+</app-breadcrumb>
 
 <div class="container-fluid">
 
@@ -9,87 +10,99 @@
     <div class="col-sm-12">
 
       <div class="card">
-        <div class="card-body"
-        [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'
-      , 'height': _show_filter_card ? '120px' : '1px' }"
-        >
+        <div
+          class="card-body"
+          [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'
+      , 'height': _show_filter_card ? '120px' : '1px' }">
           <div class="row">
             <div class="col-sm-3">
-              <label  >วันที่เอกสาร/เริ่มต้น</label>
-                <input
-                  class="form-control digits"
-                  type="date"
-                  [ngModel]="select_date_st | date:'yyyy-MM-dd'"
-                  (ngModelChange)="select_date_st = $event">
+              <label>วันที่เอกสาร/เริ่มต้น</label>
+              <input
+                class="form-control digits"
+                type="date"
+                [ngModel]="select_date_st | date:'yyyy-MM-dd'"
+                (ngModelChange)="select_date_st = $event">
             </div>
 
             <div class="col-sm-3">
               <label>วันที่เอกสาร/สิ้นสุด</label>
-                <input
-                  class="form-control digits"
-                  type="date"
-                  [ngModel]="select_date_en | date:'yyyy-MM-dd'"
-                  (ngModelChange)="select_date_en = $event">
-              
+              <input
+                class="form-control digits"
+                type="date"
+                [ngModel]="select_date_en | date:'yyyy-MM-dd'"
+                (ngModelChange)="select_date_en = $event">
+
             </div>
 
             <div class="col-sm-3">
-                <label>เลือกคลังสินค้า</label>
-                <select
-                  class="form-control digits"  id="selected_wh"
-                  placeholder="เลือก" [(ngModel)]="selected_wh">
-                  <option value="0"selected> ทั้งหมด </option>
-                  <option
-                    *ngFor="let wh of _inventory_list"
-                    [value]="wh.wh_id">
-                    {{ wh.wh_name }}
-                  </option>
-                </select>
+              <label>เลือกคลังสินค้า</label>
+              <select
+                class="form-control digits"
+                id="selected_wh"
+                placeholder="เลือก"
+                [(ngModel)]="selected_wh">
+                <option
+                  value="0"
+                  selected>
+                  ทั้งหมด
+                </option>
+                <option
+                  *ngFor="let wh of _inventory_list"
+                  [value]="wh.wh_id">
+                  {{ wh.wh_name }}
+                </option>
+              </select>
             </div>
-            
+
             <div class="col-sm-3">
               <label>ค้นหาชื่อผู้จำหน่าย</label>
-                <input
-                  class="form-control digits"
-                  type="text"
-                  [ngModel]="find_cust_name"
-                  (ngModelChange)="find_cust_name = $event">
-              
+              <input
+                class="form-control digits"
+                type="text"
+                [ngModel]="find_cust_name"
+                (ngModelChange)="find_cust_name = $event">
+
             </div>
           </div>
 
-          
         </div>
 
         <div class="card-footer  p-t-10 p-b-10">
           <div class="row text-end">
-            <div class="col"> 
-              <a class="btn btn-primary m-r-5" type="button" title=""  
-              [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
-              (click)="onSearch()">
-                <i class="icofont icofont-search"></i>                 
-              ค้นหา / Search
-              </a> 
-            
-              <a class="btn btn-light m-r-5  " type="button" title=""  
-              [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
-              (click)="resetFind()">
-              <i class="icon-reload"></i>
-              เริ่มใหม่ / Reset
-              </a> 
+            <div class="col">
+              <a
+                class="btn btn-primary m-r-5"
+                type="button"
+                title
+                [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                (click)="onSearch()">
+                <i class="icofont icofont-search"></i>
+                ค้นหา / Search
+              </a>
 
-              <a class="btn btn-light"
-              type="button"                
-              (click)="HideFilterCard()">
-              <i
-                class="icon-arrow-up"
-                [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"></i>
-              <i
-                class="icon-arrows-vertical"
-                [ngStyle]="{'visibility':_show_filter_card ? 'hidden' : 'visible'}"></i>
-              {{_label_btn_hide_filtercard}}
-            </a>
-            </div>         
+              <a
+                class="btn btn-light m-r-5"
+                type="button"
+                title
+                [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                (click)="resetFind()">
+                <i class="icon-reload"></i>
+                เริ่มใหม่ / Reset
+              </a>
+
+              <a
+                class="btn btn-light"
+                type="button"
+                (click)="HideFilterCard()">
+                <i
+                  class="icon-arrow-up"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"></i>
+                <i
+                  class="icon-arrows-vertical"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'hidden' : 'visible'}"></i>
+                {{_label_btn_hide_filtercard}}
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -97,9 +110,7 @@
     </div>
   </div>
 
-
   <div class="center_div">
-
     <div
       class="loader-box"
       [style.display]="(LoadingShow == 0) ? 'none' : 'block'">
@@ -107,7 +118,7 @@
     </div>
   </div>
 
- <!----------------------- Start - this is data Table  ------------------------------------------>
+  <!-- --------------------- Start - this is data Table  ---------------------------------------- -->
 
   <div class="row">
 
@@ -117,21 +128,19 @@
       </div>
     </div>
 
-    
     <div class="col-sm-4 p-b-10">
       <div class="card small-widget mb-sm-0">
         <app-sale-status [data]="stockCountSKU"></app-sale-status>
       </div>
     </div>
-    
+
     <div class="col-sm-4 p-b-10">
       <div class="card small-widget mb-sm-0">
         <app-sale-status [data]="stockCost"></app-sale-status>
       </div>
     </div>
 
-
-  </div> 
+  </div>
 
   <div class="row">
     <div class="col-sm-12">
@@ -141,66 +150,203 @@
           <span> แสดงจำนวนสูงสุด {{api_row_limit}} รายการเท่านั้น </span>
         </div>
         <div class="card-body p-3">
- 
+
           <div class="product-list-custom custom-datatable">
             <div class="table-responsive">
-              <table class="table pos_table">
-                <thead >
-                  <tr > 
-                    <th scope="col" ></th>  
-                    <th scope="col" >วันที่เอกสาร/DocDate</th>                                                      
-                    <th scope="col" >คลัง/ร้าน/Shop</th>                    
-                    <th scope="col" >ประเภทเอกสาร/TypeDoc</th>
-                    <th scope="col" >เลขที่เอกสาร/DocId</th>
-                    <th scope="col" >ชื่อลูกค้า/Customer</th>                    
-                    <th class="text-end" scope="col">จำนวนสินค้า/Qty</th>
-                    <th class="text-end" scope="col">ต้นทุนรวม/Cost</th>
+              <table class="table table-hover pos_table"
+              style="cursor: pointer;"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">วันที่เอกสาร/DocDate</th>
+                    <th scope="col">เลขที่เอกสาร/DocId</th>
+                    <th scope="col">คลัง/ร้าน/Shop</th>
+                    <th scope="col">ประเภทเอกสาร/TypeDoc</th>
                     
+                    <th scope="col">ชื่อลูกค้า/Customer</th>
+                    <th
+                      class="text-end"
+                      scope="col">
+                      จำนวนสินค้า/Qty
+                    </th>
+                    <th
+                      class="text-end"
+                      scope="col">
+                      ต้นทุนรวม/Cost
+                    </th>
+
                   </tr>
                 </thead>
                 <tbody>
                   <tr
                     *ngFor="let product of _vstockcard_list; index as i"
-                    [class]="(product.amt_price > 0) ? 'bg_iv' : 'none'"
-                    >                                        
+                    [class]="(product.amt_price > 0) ? 'bg_iv' : 'none'">
                     <td>
-                      <div class="action">
-                        <li class="add">
-                          <a href="#">
-                            <i class="icon-search"></i>
-                          </a>
-                        </li>
-                      </div>
-                      
 
-                    </td>                    
-                    <td class="robo">{{ product.date_in| date:'dd-MM-yyyy hh:mm' }}</td>                    
-                    <td>{{ product.wh_name }}</td>                    
-                    <td >                       
-                        {{ product.type_doc }}                      
+                      <a (click)="open_model(Document_Detail,product.doc_id)"
+                        style="cursor: pointer;color:green;"
+                        >
+                        <i class="icon-search"></i>
+                      </a>
+
+                    </td>
+                    
+                    <td class="robo">
+                      {{ product.date_in| date:'dd-MM-yyyy hh:mm' }}
                     </td>
                     <td style="font-size: 12px;">{{ product.doc_id }}</td>
-                    <td>{{ product.cust_fname }}</td>
+                    <td>{{ product.wh_name }}</td>
+                    <td>{{ product.type_doc }}</td>
                     
+                    <td>{{ product.cust_fname }}</td>
+
                     <td class="text-end robo">{{ product.qty | number }}</td>
-                    <td class="text-end robo">{{ product.amt_cost | number }}</td>                    
+                    <td class="text-end robo">{{ product.amt_cost | number }}</td>
                   </tr>
- 
+
                 </tbody>
               </table>
             </div>
           </div>
           <!-- ./product-list -->
-
         </div>
         <!-- ./card-body -->
-
       </div>
       <!-- ./card -->
     </div>
     <!-- ./col-sm-12 -->
-
   </div>
   <!-- ./row -->
 </div>
 <!-- ./container-fluid -->
+
+<!-- Document - Detail ./ Start -->
+
+<ng-template
+  #Document_Detail
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">เอกสารรับสินค้า  </h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body  p-l-30 p-r-30 p-b-30">
+
+    <div class="row kanit">
+      <div class="row">
+        <div class="col-sm-4">
+          <label>เลขที่เอกสาร</label>
+          <input
+            class="form-control digits"
+            type="text"
+            readonly
+            [ngModel]="doc_id">
+        </div>
+
+        <div class="col-sm-4">
+          <label>วันที่สร้างเอกสาร</label>
+          <input
+            class="form-control digits"
+            type="date"
+            readonly
+            [ngModel]="doc_date | date:'yyyy-MM-dd'">
+        </div>
+        <div class="col-sm-4">
+          <label>ร้าน/คลัง/สาขา</label>
+          <input
+            class="form-control digits"
+            type="text"
+            readonly
+            [ngModel]="wh_name">
+        </div>
+        
+      </div>
+
+      <div class="row m-t-10">
+        <div class="col-sm-4">
+          <label>ผู้จำหน่าย</label>
+          <input
+            class="form-control digits"
+            type="text"
+            readonly
+            [ngModel]="vendor_name">
+        </div>
+        <div class="col-sm-6">
+          <label>ที่อยู่</label>
+          <input
+            class="form-control digits"
+            type="text"
+            readonly
+            [ngModel]="vendor_addr">
+        </div>
+        <div class="col-sm-2">
+          <label>เบอร์โทร</label>
+          <input
+            class="form-control digits"
+            type="text"
+            readonly
+            [ngModel]="vendor_tel">
+        </div>
+      </div>
+    </div>
+
+    <div class="row m-t-10">      
+        <div class="product-list-custom custom-datatable">
+            <div class="table-responsive">
+              <table class="table pos_table" style="font-size: 12px;">
+                <thead class="kanit" >
+                  <tr >                             
+                    <th scope="col" >No.</th>                                                                                                     
+                    <th scope="col robo" >Barcode/Emei</th>                                                                                                     
+                    <th scope="col" >ประเภทสินค้า</th>
+                    <th scope="col" >ชื่อสินค้า</th>                            
+                    <th scope="col" >สี</th>                            
+                    <th class="text-end" scope="col">จำนวน</th>
+                    <th class="text-end" scope="col">ต้นทุน/หน่วย</th>                            
+                    <th class="text-end" scope="col">ยอดเงินรวม</th>                            
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of stockinListDetail; index as i">
+                    <td>{{i+1}} </td>                    
+                    <td>{{ product.bar_code }} </td>                    
+                    <td>{{ product.group_name }}</td>                    
+                    <td >                       
+                        {{ product.pd_name }}                      
+                    </td>
+                    <td>{{ product.color }}</td>                    
+                    
+                    <td class="text-end robo">{{ product.qty | number }}</td>
+                    <td class="text-end robo">{{ product.cost | number }}</td>                    
+                    <td class="text-end robo">{{ product.qty*product.cost | number }}</td>                    
+                  </tr>
+  
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>รวม</td>
+                    <td></td>
+                    <td class="text-end robo"> {{DetailTotalQty | number}} </td>
+                    <td></td>
+                    <td class="text-end robo"> {{DetailTotalAmt  | number}} </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div> 
+    </div>
+
+  </div>
+</ng-template>
+
+<!-- Document - Detail ./ end -->

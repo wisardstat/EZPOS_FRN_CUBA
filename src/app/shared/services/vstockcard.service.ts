@@ -43,7 +43,7 @@ export class vStockCard {
       + `&find_cust_name=` + _find_cust_name
       + `&skip=0&limit=` + this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -66,7 +66,7 @@ export class vStockCard {
       + `&find_cust_name=` + _find_cust_name
       + `&skip=0&limit=` + this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -98,7 +98,7 @@ export class vStockCard {
     + `&find_pd_name=` + _find_pd_name
     + `&skip=0&limit=` + this.limit);
 
-  console.log('url >> ', url);
+  
   return this.httpClient.get(url);
 
 }
@@ -129,7 +129,7 @@ var url = (this.url+`vstockcard/getListByItem_Total?`
   + `&find_pd_name=` + _find_pd_name
   + `&skip=0&limit=` + this.limit);
 
-console.log('url >> ', url);
+
 return this.httpClient.get(url);
 
 }
