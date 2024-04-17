@@ -14,7 +14,6 @@
         <div class="media">
           <div class="media-body text-end">
 
-            
             <button
               class="btn btn-air btn-warning me-2"
               (click)="printToSlip('printToSlip')">
@@ -39,10 +38,8 @@
 
             <div
               class="btn btn-air btn-warning me-2"
-              (click)="modal_open(confirm_reset)"
-              >
-              <app-feather-icons [icon]="'refresh-ccw'">
-              </app-feather-icons>
+              (click)="modal_open(confirm_reset)">
+              <app-feather-icons [icon]="'refresh-ccw'"></app-feather-icons>
             </div>
 
           </div>
@@ -52,77 +49,89 @@
     </div>
   </div>
 
-  <div id="printToSlip" >
-    
-    <div style="width:216px;border: 1px solid grey;" 
-      class="text-center" >
+  <div id="printToSlip" 
+  [style]="{'visibility': '', 'height': '250px'}">
 
-    <div style="text-align: center;">
-      <label style="font-size: 16px;">{{wh_name}} </label> <br/>
-      <label style="font-size: 14px;">ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ</label>  <br/>
+    <div
+      style="width:216px;border: 1px solid grey;"
+      class="text-center">
+
+      <div style="text-align: center;">
+        <label style="font-size: 16px;">{{wh_name}}</label>
+        <br>
+        <label style="font-size: 14px;">ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ</label>
+        <br>
 
         <div style="font-size: 14px;">
-          <label class="m-b-0">Tax id : 0115562022370</label> <br/>
-          <label class="m-b-0">Doc-id: A01-IV121024555</label> <br/>
-          <label class="m-b-0">Print time: 15/04/2024 19:27</label> <br/>
-          <label class="m-b-0"><b>ชื่อลูกค้า :</b> ทดสอบการทำงาน </label> <br/>
-          <label class="m-b-0"><b>โทร :</b> 084-3889704 </label> <br/>
-          <label class="m-b-0">พนักงาน : บอล </label> <br/>
+          <label class="m-b-0">Tax id : 0115562022370</label>
+          <br>
+          <label class="m-b-0">Doc-id: A01-IV121024555</label>
+          <br>
+          <label class="m-b-0">Print time: 15/04/2024 19:27</label>
+          <br>
+          <label class="m-b-0">
+            <b>ชื่อลูกค้า :</b>
+            ทดสอบการทำงาน
+          </label>
+          <br>
+          <label class="m-b-0">
+            <b>โทร :</b>
+            084-3889704
+          </label>
+          <br>
+          <label class="m-b-0">พนักงาน : บอล</label>
+          <br>
         </div>
-    </div>
-  
+      </div>
+
       <table style="font-size: 12px;">
-        <thead >
-          <td class="slip_th"> สินค้า </td>
-          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;"> ราคา </td>
-          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;"> จน. </td>
-          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;"> รวม </td>
+        <thead>
+          <td class="slip_th">สินค้า</td>
+          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;">ราคา</td>
+          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;">จน.</td>
+          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;">รวม</td>
         </thead>
         <tbody>
           <tr>
-            <td style="text-align: left;"> Premium <br/> กระเป๋าล้อลาก </td>
-            <td style="text-align: right;"> 500 </td>
-            <td style="text-align: right;"> 1 </td>
-            <td style="text-align: right;"> 2000 </td>
+            <td style="text-align: left;">
+              Premium
+              <br>
+              กระเป๋าล้อลาก
+            </td>
+            <td style="text-align: right;">500</td>
+            <td style="text-align: right;">1</td>
+            <td style="text-align: right;">2000</td>
           </tr>
           <tr>
-            <td style="text-align: left;"> 
-                มือถือ/Mobile <br/>  
-                OPPO RENO 11 Pro 5G - Gray
+            <td style="text-align: left;">
+              มือถือ/Mobile
+              <br>
+              OPPO RENO 11 Pro 5G - Gray
             </td>
-            <td style="text-align: right;"> 19,999 </td>
-            <td style="text-align: right;"> 1 </td>
-            <td style="text-align: right;"> 19,999 </td>
+            <td style="text-align: right;">19,999</td>
+            <td style="text-align: right;">1</td>
+            <td style="text-align: right;">19,999</td>
           </tr>
 
           <tr>
-            <td style="text-align: left;"> 
-               จำนวนสินค้า
-            </td>
-            <td style="text-align: right;">  </td>
-            <td style="text-align: right;">  </td>
-            <td style="text-align: right;"> 2 </td>
+            <td style="text-align: left;">จำนวนสินค้า</td>
+            <td style="text-align: right;"></td>
+            <td style="text-align: right;"></td>
+            <td style="text-align: right;">2</td>
           </tr>
         </tbody>
       </table>
-   
-    
-
-    
-      
     </div>
-  
     <div>
-      <br/>
-     </div>
-  
+      <br>
+    </div>
+
   </div>
 
   <div class="center_div">
     <div
       class="loader-box"
-      [style.display]="(LoadingShow) ? 'none' : 'block'"
-      >     
+      [style.display]="(LoadingShow) ? 'none' : 'block'">
       <div class="loader-2"></div>
     </div>
   </div>
@@ -176,9 +185,7 @@
         </div>
 
         <div class="col-md-3">
-          <label class="form-label">
-            เลขที่ใบกำกับภาษี
-          </label>
+          <label class="form-label">เลขที่ใบกำกับภาษี</label>
           <input
             class="form-control"
             type="text"
@@ -188,44 +195,39 @@
 
         <div class="col-md-4">
           <label class="form-label">สถานะชำระเงิน</label>
-            <select
-              class="form-control digits"
-              id="selectChkPay"
-              placeholder="เลือก"
-              [(ngModel)]="selectChkPay">
-              <option value="Y" selected>
-                ชำระเงินแล้ว
-              </option>
-              <option value="N" >
-                ค้างชำระ
-              </option>                
+          <select
+            class="form-control digits"
+            id="selectChkPay"
+            placeholder="เลือก"
+            [(ngModel)]="selectChkPay">
+            <option
+              value="Y"
+              selected>
+              ชำระเงินแล้ว
+            </option>
+            <option value="N">ค้างชำระ</option>
           </select>
         </div>
 
         <div class="col-md-4">
           <label class="form-label">ประเภทภาษี</label>
-            <select
-              class="form-control digits"
-              id="selectVATType"
-              placeholder="เลือก"
-              [(ngModel)]="selectVATType">
-              <option value="NO_VAT" selected>                
-                ไม่มีภาษี
-              </option>
-              <option value="INCLUDE_VAT">                
-                ภาษีใน(include-Tax)
-              </option>
-              <option value="EXCLUDE_VAT">                
-                ภาษีนอก(Exclude-Tax)
-              </option>
+          <select
+            class="form-control digits"
+            id="selectVATType"
+            placeholder="เลือก"
+            [(ngModel)]="selectVATType">
+            <option
+              value="NO_VAT"
+              selected>
+              ไม่มีภาษี
+            </option>
+            <option value="INCLUDE_VAT">ภาษีใน(include-Tax)</option>
+            <option value="EXCLUDE_VAT">ภาษีนอก(Exclude-Tax)</option>
           </select>
         </div>
 
         <div class="col-md-4">
-          <label
-            class="form-label">
-            หมายเหตุ
-          </label>
+          <label class="form-label">หมายเหตุ</label>
           <input
             class="form-control"
             type="text"
@@ -369,7 +371,9 @@
   </div>
 
   <div class="card">
-    <div class="card-body p-b-5" style="height:140px">
+    <div
+      class="card-body p-b-5"
+      style="height:140px">
 
       <div class="row">
         <div class="col-4 text-end">
@@ -384,7 +388,7 @@
           <input
             class="form-control"
             id="barcode"
-            type="text"            
+            type="text"
             (keydown.enter)="AddItem(alert_warning)"
             [(ngModel)]="barcode"
             autocomplete="off">
@@ -447,13 +451,13 @@
         </div>
       </div>
 
-      <div class="row p-t-10"
-      [ngStyle]="{ 'visibility':!ShowAlert ? 'hidden' : 'visible'}"
-      >
-        <ngb-alert [type]="'success'" [dismissible]="false"
-        class="pos_alert_warning kanit"
-        
-        >
+      <div
+        class="row p-t-10"
+        [ngStyle]="{ 'visibility':!ShowAlert ? 'hidden' : 'visible'}">
+        <ngb-alert
+          [type]="'success'"
+          [dismissible]="false"
+          class="pos_alert_warning kanit">
           {{alert_txt}}
         </ngb-alert>
       </div>
@@ -545,6 +549,7 @@
                     id="item_qty"
                     type="number"
                     [min]="1"
+                    
                     [max]="item.qty_limit"
                     [disabled]="item.disable"
                     (keyup)="Keyup_inputQty(item.bar_code)"
@@ -590,7 +595,6 @@
 
 </div>
 
-
 <!-- ***************************************************** -->
 
 <ng-template
@@ -634,7 +638,7 @@
             <div class="col">
               <input
                 class="form-control  text-end"
-                type="number"                
+                type="number"
                 [min]="0"
                 (keyup)="Calculate_TotalNet()"
                 [(ngModel)]="DiscountCash"
@@ -644,42 +648,40 @@
 
           <div class="col-md-12 m-t-5">
             <div class="col text-end">ประเภทการชำระ</div>
-              <select
-                  class="form-control digits"
-                  id="selected_wh"
-                  placeholder="เลือก"
-                  [(ngModel)]="selectPayType">
-                  <option value="CASH" selected>
-                    เงินสด
-                  </option>
-                  <option value="TRANS" >
-                    โอนเงิน
-                  </option>
-                  <option value="CREDIT" >
-                    บัตรเครดิต
-                  </option> 
+            <select
+              class="form-control digits"
+              id="selected_wh"
+              placeholder="เลือก"
+              [(ngModel)]="selectPayType">
+              <option
+                value="CASH"
+                selected>
+                เงินสด
+              </option>
+              <option value="TRANS">โอนเงิน</option>
+              <option value="CREDIT">บัตรเครดิต</option>
             </select>
           </div>
 
           <div class="col-md-12 m-t-10">
             <div class="col text-end">รับเงิน</div>
             <input
-                class="form-control  text-end"
-                type="number"                
-                [min]="0"   
-                (keyup)="Calculate_ReceiveAmt()"
-                [(ngModel)]="ReceiveAmt"
-                id="ReceiveAmt">            
+              class="form-control  text-end"
+              type="number"
+              [min]="0"
+              (keyup)="Calculate_ReceiveAmt()"
+              [(ngModel)]="ReceiveAmt"
+              id="ReceiveAmt">
           </div>
 
           <div class="col-md-12 m-t-10">
-            <div class="col text-end">ทอนเงิน</div>            
-              <input
-                class="form-control  text-end"
-                type="text"     
-                disabled                                           
-                [(ngModel)]="ReturnAmtShow"
-                id="ReturnAmt">            
+            <div class="col text-end">ทอนเงิน</div>
+            <input
+              class="form-control  text-end"
+              type="text"
+              disabled
+              [(ngModel)]="ReturnAmtShow"
+              id="ReturnAmt">
           </div>
 
         </div>
@@ -693,7 +695,8 @@
             <input
               class="form-control  text-end"
               type="text"
-              value="1500" disabled
+              value="1500"
+              disabled
               [(ngModel)]="TotalGrand"
               id="grand_total">
           </div>
@@ -702,8 +705,9 @@
             <div class="text-end">รวมส่วนลด</div>
             <div class>
               <input
-                class="form-control  text-end"                
-                type="text" disabled
+                class="form-control  text-end"
+                type="text"
+                disabled
                 [(ngModel)]="TotalDiscount"
                 id="total_discount">
             </div>
@@ -714,7 +718,8 @@
             <div class>
               <input
                 class="form-control  text-end"
-                type="text" disabled
+                type="text"
+                disabled
                 [(ngModel)]="TotalBeforeTax"
                 id="total_before_tax">
             </div>
@@ -724,7 +729,8 @@
           <div class="col-md-12 m-t-5">
             <input
               class="form-control  text-end"
-              type="text" disabled
+              type="text"
+              disabled
               [(ngModel)]="TotalTax"
               id="tax_amount">
           </div>
@@ -733,7 +739,8 @@
           <div class="col-md-12 m-t-5">
             <input
               class="form-control  text-end"
-              type="text" disabled
+              type="text"
+              disabled
               [(ngModel)]="TotalNet"
               id="total_net">
           </div>
@@ -743,36 +750,34 @@
     </div>
   </div>
 
-  <div class="modal-footer kanit ">
-    
+  <div class="modal-footer kanit">
+
     <button class="btn btn-air btn-light me-1">
       <i class="icon-shopping-cart-full"></i>
       พิมพ์ใบเสร็จ
     </button>
-
 
     <button class="btn btn-air btn-light  me-1">
       <i class="icon-shopping-cart-full"></i>
       พิมพ์ใบกำกับภาษี
     </button>
 
-    
-    <button class="btn btn-air btn-light  me-1"
-    (click)="SaveInvoice(alert_sucess,alert_warning)"
-    >
+    <button
+      class="btn btn-air btn-light  me-1"
+      (click)="SaveInvoice(alert_sucess,alert_warning)">
       <i class="icon-shopping-cart-full"></i>
       ชำระเงิน
     </button>
- 
+
   </div>
 
 </ng-template>
-
 
 <!-- ***************************************************** -->
 
 <ng-template
   #confirm_reset
+  
   let-modal>
   <div class="modal-header">
     <h6
@@ -811,7 +816,6 @@
 </ng-template>
 
 <!-- ***************************************************** -->
-
 
 <ng-template
   #alert_sucess
@@ -853,7 +857,6 @@
   </div>
 </ng-template>
 
-
 <!-- ***************************************************** -->
 
 <ng-template
@@ -894,6 +897,3 @@
     </button>
   </div>
 </ng-template>
-
-
-
