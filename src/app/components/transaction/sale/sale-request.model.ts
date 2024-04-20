@@ -38,4 +38,16 @@ export interface SaleHeader {
   }
 
 
-  
+  export interface InvDetail {    
+    seq : BigInteger
+    doc_id?: string;
+    bar_code?: string;    
+    pd_name?: string;
+    cost?: number;
+    price?: number;
+    qty?: number;    
+    unit_id?: string;
+    UEDIT?: string;
+    DEDIT?:string;
+    cc_id: string;    
+  }

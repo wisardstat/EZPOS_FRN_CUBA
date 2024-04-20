@@ -19,6 +19,8 @@ export class saleService {
 
   constructor(private httpClient: HttpClient) { }
 
+
+
   Add_SaleDocument(request: any): Observable<any> {
 
     var urlSaveStockIn = this.url+'sales/add';
@@ -36,5 +38,13 @@ export class saleService {
         })
       );
   }
+
+
+  get_invoicePrint(doc_id: string, cc_id: string)
+  {    
+    var url = this.url+'sales/print?doc_id='+doc_id+'&cc_id='+cc_id
+    return this.httpClient.get(url);
+  }
+
  
 }

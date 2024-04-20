@@ -8,10 +8,14 @@ import { Component } from '@angular/core';
 export class SlipComponent {
 
   onPrint(){
+
     window.print();
+
+
+
 }
 
-printToCart(printSectionId: string){
+public printToCart(printSectionId: string){
   console.log('Print')
   let popupWinindow
   let innerContents = document.getElementById(printSectionId).innerHTML;

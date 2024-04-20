@@ -6,11 +6,12 @@ import { ProductService } from '../../../../shared/services/product.service'
 import { saleService } from '../../../../shared/services/sale.service'
 
 import { environment } from '../../../../../environments/environment'
-import { SaleHeader, SaleDetail, Customer } from '../../sale/sale-request.model'
+import { SaleHeader, SaleDetail, Customer ,InvDetail} from '../../sale/sale-request.model'
 
 import { NgSelectModule, NgOption } from '@ng-select/ng-select';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { Console, error } from 'console';
+ 
 
 @Component({
   selector: 'app-sale-create',
@@ -107,8 +108,7 @@ export class SaleCreateComponent {
     private sv_product: ProductService,
     private sv_sales: saleService,
     private renderer: Renderer2,
-    private modalService: NgbModal,
-    
+    private modalService: NgbModal, 
   ) {
     // this.products = productDB.product;
   }
@@ -129,6 +129,7 @@ export class SaleCreateComponent {
 
     const today = new Date();
     this.select_doc_date = this.formatDate(today)
+
 
     // this.input_price['A'] ="A"
     // this.input_price['B'] ="B"
@@ -585,16 +586,104 @@ export class SaleCreateComponent {
     }
   }
 
+  print(){
+    
+  }
+
+  public p_wh_id   : string =""
+  public p_wh_name : string =""
+  public p_wh_commpanyName : string =""
+  public p_wh_addr1 : string =""
+  public p_wh_addr2 : string =""
+  public p_wh_tel  : string =""
+  public p_wh_tax  : string =""
+
+  public p_doc_id  : string =""
+  public p_doc_date  : string =""
+  public p_cust_name  : string =""
+  public p_cust_tel  : string =""
+  public p_officer  : string =""
+
+  public p_pay_type  : string =""
+  public p_print_date  : string
+
+  public p_cmm_slip  : string
+
+  public p_curr_date  : string
+
+  public p_totalQty  : number = 0 
+  public p_GrandTotal  : number = 0 
+  public p_discount  : number = 0 
+  public p_TotalBeforeTax  : number = 0 
+  public p_netTotal  : number = 0 
   
-  printToSlip(printSectionId: string){
-    console.log('Print')
-    let popupWinindow
-    let innerContents = document.getElementById(printSectionId).innerHTML;
-    popupWinindow = window.open('', '_blank', 'width=900,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-    popupWinindow.document.open();
-    popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="../style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
-    popupWinindow.document.close();
+  public InvDetail : InvDetail;
+  public p_ItemList : InvDetail[] = [];
+  
+// cust_tel
+  printToSlip(printSectionId: string)
+  {
+    var _doc_id = "A01-IV2202100022"
+    var _cc_id = this.cc_id
+    this.sv_sales.get_invoicePrint(_doc_id,_cc_id).subscribe(response => {
+      
+      console.log('>> get_invoicePrint ')
+      console.log(response['warehouse'][0].wh_name)              
+      
+      var wh = response['warehouse'][0]
+      var invh = response['saleHeader'][0]
+      var invd = response['saleDetail']
+      var user = response['user'][0]      
+
+      this.p_doc_id = invh.doc_id
+      this.p_wh_name         = wh.wh_name
+      this.p_wh_commpanyName = wh.company_name
+      this.p_wh_addr1 = wh.addr1
+      this.p_wh_addr2 = wh.addr2
+      this.p_wh_tel = wh.tel
+      this.p_wh_tax = wh.tax_no
+      this.p_doc_date = invh.doc_date
+      this.p_cust_name = invh.cust_name
+      this.p_officer = user.user_name
+
+      this.p_ItemList = invd
+      this.p_cust_tel = invh.cust_tel
+
+      this.p_totalQty=0
+      this.p_GrandTotal =invh.GrandTotal
+      this.p_discount =invh.discount
+      this.p_TotalBeforeTax = invh.TotalBeforeTax
+      this.p_netTotal = invh.total
+      this.p_pay_type = invh.pay_type
+     
+      this.p_cmm_slip = wh.cmm_slip_bill1
+      this.p_curr_date = response['current_date']
+
+      for (var i=0; i<invd.length; i++)
+        {
+          console.log(invd[i].bar_code)
+          
+          this.p_totalQty += invd[i].qty
+
+        }
+
+      setTimeout(() => {
+        let popupWinindow
+        let innerContents = document.getElementById(printSectionId).innerHTML;
+        popupWinindow = window.open('', '_blank', 'width=900,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+        popupWinindow.document.open();
+        popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="/assets/scss/print_style.css" /></head><body style="padding:0px;margin:0px;" onload="window.print()">' + innerContents + '</html>');
+        popupWinindow.document.close();
+      }, 500);  
+
+
+
+  });
+
+      
   }
 
 }
+
+
 

@@ -50,77 +50,98 @@
   </div>
 
   <div id="printToSlip" 
-  [style]="{'visibility': '', 'height': '250px'}">
+  [style]="{'visibility': 'hidden', 'height': '0px' }">
 
     <div
-      style="width:216px;border: 1px solid grey;"
-      class="text-center">
+      style="width:180px;border: 0px solid grey;padding: 0px;;"
+      class="text-center kanit">
 
-      <div style="text-align: center;">
-        <label style="font-size: 16px;">{{wh_name}}</label>
+      <div class="main_title">
+        <label>{{p_wh_commpanyName}}</label>
         <br>
-        <label style="font-size: 14px;">ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ</label>
+        <label class="lb_addr">
+          {{p_wh_addr1}}
+          <br/>        
+          {{p_wh_addr2}}
+        </label>
         <br>
-
-        <div style="font-size: 14px;">
-          <label class="m-b-0">Tax id : 0115562022370</label>
+        <label>ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ</label>
+        <br>
+          <label class="m-b-0">Tax id : {{p_wh_tax}}</label>
           <br>
-          <label class="m-b-0">Doc-id: A01-IV121024555</label>
+          <label class="m-b-0">Doc-id: {{p_doc_id}} </label>
           <br>
-          <label class="m-b-0">Print time: 15/04/2024 19:27</label>
+          <label class="content">วันที่เอกสาร : {{p_doc_date}} </label>
           <br>
-          <label class="m-b-0">
-            <b>ชื่อลูกค้า :</b>
-            ทดสอบการทำงาน
-          </label>
-          <br>
-          <label class="m-b-0">
-            <b>โทร :</b>
-            084-3889704
-          </label>
-          <br>
-          <label class="m-b-0">พนักงาน : บอล</label>
+          <label class="content">Print time: {{p_curr_date}} </label>
           <br>
         </div>
-      </div>
+        <div class="sub_title">
+         <label> ชื่อลูกค้า : {{p_cust_name}} </label>
+          <br>
+          <label>  โทร :  {{p_cust_tel}}  </label>
+          <br>
+          <label>  พนักงาน  : {{p_officer}} </label>
+          <br>
 
-      <table style="font-size: 12px;">
-        <thead>
-          <td class="slip_th">สินค้า</td>
-          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;">ราคา</td>
-          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;">จน.</td>
-          <td style="border-top: 1px dashed gray;border-bottom: 1px dashed gray;text-align: right;">รวม</td>
-        </thead>
+        </div>  
+      
+
+      <table style="font-size: 10px;" class="kanit">        
+          <th class="tbh text_left" style="width:100px;">สินค้า</th>          
+          <th class="tbh text_end" style="width:30px ;">จน.</th>
+          <th class="tbh text_end" style="width:30px ;">รวม</th>        
         <tbody>
-          <tr>
-            <td style="text-align: left;">
-              Premium
-              <br>
-              กระเป๋าล้อลาก
-            </td>
-            <td style="text-align: right;">500</td>
-            <td style="text-align: right;">1</td>
-            <td style="text-align: right;">2000</td>
-          </tr>
-          <tr>
-            <td style="text-align: left;">
-              มือถือ/Mobile
-              <br>
-              OPPO RENO 11 Pro 5G - Gray
-            </td>
-            <td style="text-align: right;">19,999</td>
-            <td style="text-align: right;">1</td>
-            <td style="text-align: right;">19,999</td>
-          </tr>
+          <!-- 
+            <span *ngFor="let item of custList"> 
+            -->
 
+          <tr *ngFor="let item of p_ItemList">
+            <td class="col_pd">
+                {{item.bar_code}}
+              <br/>              
+              {{item.pd_name}}
+              
+            </td>            
+            <td class="col_num">{{item.qty}}</td>
+            <td class="col_num">{{item.qty * item.price|number}}</td>
+          </tr>
+           
           <tr>
-            <td style="text-align: left;">จำนวนสินค้า</td>
-            <td style="text-align: right;"></td>
-            <td style="text-align: right;"></td>
-            <td style="text-align: right;">2</td>
+            <td colspan="2" class="text_end">จำนวนสินค้า</td>                        
+            <td class="text_end"> {{p_totalQty}} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text_end">ยอดรวม</td>                        
+            <td class="text_end"> {{p_GrandTotal|number}} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text_end">รวมส่วนลด</td>                        
+            <td class="text_end"> {{p_discount|number}} </td>
+          </tr>          
+          <tr>
+            <td colspan="2" class="text_end">ยอดรวมก่อนหักภาษี</td>                        
+            <td class="text_end"> {{p_TotalBeforeTax|number}} </td>
+          </tr>          
+          <tr>
+            <td colspan="2" class="text_end"> <b> ยอดสุทธิ </b> </td>                        
+            <td class="text_end"> <b> {{p_netTotal| number}} </b> </td>
           </tr>
         </tbody>
       </table>
+
+      <hr class="dott">
+    <div class="content text_center"> 
+       วิธีการชำระเงิน  
+       <b> {{p_pay_type}} </b>
+    </div>
+
+    <div class="content text_center"> 
+       {{p_cmm_slip}} 
+   </div>
+
+
+
     </div>
     <div>
       <br>
