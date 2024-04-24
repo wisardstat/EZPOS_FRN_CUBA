@@ -38,6 +38,7 @@ import { RpByitemComponent } from './components/inventory/rp-byitem/rp-byitem.co
 import { SaleStatusComponent } from './components/inventory/sale-status/sale-status.component';
 import { RpBydocComponent } from './components/transaction/rp-bydoc/rp-bydoc.component';
 import { RpBytxnitemComponent } from './components/transaction/rp-bytxnitem/rp-bytxnitem.component';
+import { RpBysellComponent } from './components/transaction/rp-bysell/rp-bysell.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SaleStatusComponent,
     RpBydocComponent,
     RpBytxnitemComponent,
+    RpBysellComponent,
   ],
   
   imports: [

@@ -1,0 +1,233 @@
+<app-breadcrumb
+  [title]="'รายการขายประจำวันแสดงตามเอกสาร'"
+  [items]="['รายการขายประจำวัน']"
+  [active_item]="'แสดงตามรายการเอกสาร'"></app-breadcrumb>
+
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+
+
+            <div class="col-sm-3">
+              <label class="col-sm-12 col-form-label">วันที่เอกสาร/เริ่มต้น</label>
+              <div class="col-sm-12">
+
+                <input
+                  class="form-control digits"
+                  type="date"
+                  [ngModel]="select_date_st | date:'yyyy-MM-dd'"
+                  (ngModelChange)="select_date_st = $event">
+              </div>
+
+            </div>
+
+            <div class="col-sm-3">
+              <label class="col-sm-12 col-form-label">วันที่เอกสาร/สิ้นสุด</label>
+              <div class="col-sm-12">
+
+                <input
+                  class="form-control digits"
+                  type="date"
+                  [ngModel]="select_date_en | date:'yyyy-MM-dd'"
+                  (ngModelChange)="select_date_en = $event">
+              </div>
+
+            </div>
+
+            <div class="col-sm-3">
+
+              <div class="mb-3 m-form__group">
+                <label for="exampleFormControlSelect9">เลือกคลังสินค้า</label>
+
+                <select
+                  class="form-control digits"  id="selected_wh"
+                  placeholder="เลือก" [(ngModel)]="selected_wh">
+                  <option value="0"selected> ทั้งหมด </option>
+                  <option
+                    *ngFor="let wh of _inventory_list"
+                    [value]="wh.wh_id">
+                    {{ wh.wh_name }}
+                  </option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="col-sm-3">
+            <div class="mb-3 m-form__group">
+
+                <label for="exampleFormControlSelect9">ประเภทเอกสาร</label>
+
+                <select
+                  class="form-control digits"  id="selected_typeDoc"
+                  placeholder="เลือก" [(ngModel)]="selected_typeDoc">
+                <!--<option value="0"selected> ทั้งหมด </option> -->
+                  <option
+                    *ngFor="let tp of _typedoc_list"
+                    [value]="tp.type_doc_id">
+                    {{ tp.type_doc_name }}
+                  </option>
+                </select>
+
+              </div>
+            </div>
+
+           
+
+          </div>
+
+          <div class="row select2-drpdwn">
+
+            <div class="col-sm-3">
+              <label class="col-sm-12 col-form-label">ค้นหาชื่อลูกค้า</label>
+              <div class="col-sm-12">
+
+                <input
+                  class="form-control digits"
+                  type="text"
+                  [ngModel]="find_cust_name"
+                  (ngModelChange)="find_cust_name = $event">
+              </div>
+
+            </div>
+
+            <div class="col-sm-3">
+              &nbsp;
+           </div>
+
+           <div class="col-sm-3">
+               &nbsp;
+           </div>
+
+           <div class="col-sm-3">
+            <div class="row">
+              <div class="col-md-12 col-lg-6 p-r-0"> 
+                <a class="btn btn-primary m-t-30 w-100" type="button" title=""  
+                (click)="onSearch()">
+                  <i class="icofont icofont-search"></i> Search
+                </a> 
+              </div>
+              <div class="col-md-12 col-lg-6 p-l-1">
+
+                <a class="btn btn-light m-t-30  " type="button" title=""  
+                (click)="resetFind()">
+                  <i class="icon-reload"></i> Reset
+                </a> 
+              </div>
+            </div>
+          </div>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="center_div">
+
+    <div
+      class="loader-box"
+      [style.display]="(LoadingShow == 0) ? 'none' : 'block'">
+      <div class="loader-4"></div>
+    </div>
+  </div>
+
+ <!----------------------- Start - this is data Table  ------------------------------------------>
+
+  <div class="row">
+
+    <div class="col-sm-3 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="stockQtyAll"></app-sale-status>
+      </div>
+    </div>
+
+    
+    <div class="col-sm-3 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="stockCountSKU"></app-sale-status>
+      </div>
+    </div>
+    
+    <div class="col-sm-3 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="stockCost"></app-sale-status>
+      </div>
+    </div>
+
+    <div class="col-sm-3 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="stockQtyZero"></app-sale-status>
+      </div>
+    </div>
+
+  </div> 
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header p-4">
+          <h5 class="pos_title"> รายการสินค้า </h5>
+          <span> แสดงจำนวนสูงสุด {{api_row_limit}} รายการเท่านั้น </span>
+        </div>
+        <div class="card-body p-3">
+ 
+          <div class="product-list-custom custom-datatable">
+            <div class="table-responsive">
+              <table class="table pos_table">
+                <thead >
+                  <tr > 
+                    <th scope="col" >วันที่เอกสาร/DocDate</th>                                                      
+                    <th scope="col" >คลัง/ร้าน/Shop</th>                    
+                    <th scope="col" >ประเภทเอกสาร/TypeDoc</th>
+                    <th scope="col" >เลขที่เอกสาร/DocId</th>
+                    <th scope="col" >ชื่อลูกค้า/Customer</th>                    
+                    <th class="text-end" scope="col">จำนวนสินค้า/Qty</th>
+                    <th class="text-end" scope="col">ต้นทุนรวม/Cost</th>
+                    <th class="text-end" scope="col">ยอดขาย/Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let product of _vstockcard_list; index as i"
+                    [class]="(product.amt_price > 0) ? 'bg_iv' : 'none'"
+                    >                                        
+                    <td class="robo">{{ product.date_in| date:'dd-MM-yyyy hh:mm' }}</td>                    
+                    <td>{{ product.wh_name }}</td>                    
+                    <td >                       
+                        {{ product.type_doc }}                      
+                    </td>
+                    <td style="font-size: 12px;">{{ product.doc_id }}</td>
+                    <td>{{ product.cust_fname }}</td>
+                    
+                    <td class="text-end robo">{{ product.qty | number }}</td>
+                    <td class="text-end robo">{{ product.amt_cost | number }}</td>
+                    <td class="text-end robo">{{ product.amt_price | number }}</td>
+                  </tr>
+ 
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ./product-list -->
+
+        </div>
+        <!-- ./card-body -->
+
+      </div>
+      <!-- ./card -->
+    </div>
+    <!-- ./col-sm-12 -->
+
+  </div>
+  <!-- ./row -->
+</div>
+<!-- ./container-fluid -->
