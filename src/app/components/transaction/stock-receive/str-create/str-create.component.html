@@ -3,81 +3,160 @@
   [items]="['คลังสินค้า','รับสินค้า']"
   [active_item]="'สร้างเอกสาร'"></app-breadcrumb>
 
-  <ng-template #confirm_save let-modal>
-    <div class="modal-header">
-      <h6 class="modal-title" id="modal-basic-title">แจ้งเตือน</h6>
-      <button type="button" class="btn-close" aria-label="Close" 
-      (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body ">
+  <!-- ***************************************************** -->
+<ng-template #confirm_save let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-basic-title">ยืนยัน</h6>
+    <button  type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row  m-b-10">
 
-      <div class="row  m-b-10">
-        <div class="col-12 text-center m-b-10">
-            <h5>ยืนยันที่จะบันทึกรับสินค้าเข้าร้าน?</h5>
-        </div>
-        <div class="col-6">
-          <button type="button" class="btn btn-air btn-primary me-2 col-12" 
-          (click)="saveStock(confirm_alert)">ยืนยัน/Confirm</button>
-        </div>
-        <div class="col-6">
-        <button type="button" class="btn btn-outline-dark  col-12"
-         (click)="modal.close('Save click')">ยกเลิก/Cancel</button>
-        </div>
+      <div class="col-12 text-center m-b-10">
+        <h5>ยืนยันที่จะบันทึกรับสินค้าเข้าร้าน?</h5>
       </div>
-    </div>    
-  </ng-template>
-
-
-
-  <ng-template #confirm_reset let-modal>
-    <div class="modal-header">
-      <h6 class="modal-title" id="modal-basic-title">แจ้งเตือน</h6>
-      <button type="button" class="btn-close" aria-label="Close" 
-      (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body ">
-
-      <div class="row  m-b-10">
-        <div class="col-12 text-center m-b-10">
-            <h5>ยืนยันที่จะล้างข้อมูลในหน้านี้และเริ่มใหม่ ?</h5>
-        </div>
-        <div class="col-6">
-          <button type="button" class="btn btn-air btn-warning me-2 col-12" 
-          (click)="resetStockInForm(confirm_reset)">ยืนยัน/Confirm</button>
-        </div>
-        <div class="col-6">
-        <button type="button" class="btn btn-outline-dark  col-12"
-         (click)="modal.close('Save click')">ยกเลิก/Cancel</button>
-        </div>
+      <div class="col-6">
+        <button type="button" class="btn btn-air btn-primary me-2 col-12"
+          (click)="saveStock(confirm_alert,alert_sucess)">
+          ยืนยัน/Confirm
+        </button>
       </div>
-    </div>    
-  </ng-template>
 
-
-
-  <ng-template #confirm_alert let-modal>
-    <div class="modal-header">
-      <h6 class="modal-title" id="modal-basic-title">แจ้งเตือน</h6>
-      <button type="button" class="btn-close" aria-label="Close" 
-      (click)="modal.dismiss('Cross click')"></button>
+      <div class="col-6">
+        <button type="button" class="btn btn-outline-dark  col-12" (click)="modal.close('Save click')">
+          ยกเลิก/Cancel
+        </button>
+      </div>
     </div>
-    <div class="modal-body ">
-      <div class="row  m-b-0">
-        <div class="col-12 text-center m-b-10">
-            <h1> <i class="msg_error fa fa-warning"></i> </h1>
-            <h5>
-              <label id="alert_txt" class="msg_error"  [innerHTML]="alert_txt">Error Message</label>
+  </div>
+</ng-template>
+
+<!-- ***************************************************** -->
+
+<ng-template
+  #confirm_reset
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">ยืนยัน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row  m-b-10">
+      <div class="col-12 text-center m-b-10">
+        <h5>ยืนยันที่จะล้างข้อมูลในหน้านี้และเริ่มใหม่ ?</h5>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="btn btn-air btn-warning me-2 col-12"
+          (click)="resetStockInForm(confirm_reset)">
+          ยืนยัน/Confirm
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="btn btn-outline-dark  col-12"
+          (click)="modal.close('Save click')">
+          ยกเลิก/Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- ***************************************************** -->
+
+<ng-template
+  #confirm_alert
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">แจ้งเตือน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row  m-b-0">
+      <div class="col-12 text-center m-b-10">
+        <h1> <i class="msg_error fa fa-warning"></i> </h1>
+        <h5>
+              <label
+            id="alert_txt"
+            class="msg_error"
+            [innerHTML]="alert_txt">
+            Error Message
+          </label>
             </h5>
-        </div>        
       </div>
+    </div>
 
-    </div>  
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" >Close</button>
-    </div>  
-  </ng-template>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">
+      Close
+    </button>
+  </div>
+</ng-template>
 
+<!-- ***************************************************** -->
 
+<ng-template
+  #alert_sucess
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">แจ้งเตือน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row  m-b-0">
+      <div class="col-12 text-center m-b-10">
+
+        <h1> <i class="icon-save tx_success"></i> </h1>
+        <h5>
+              <label
+            id="alert_txt"
+            class="tx_success"
+            [innerHTML]="alert_txt">
+            Error Message
+          </label>
+            </h5>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<!-- ***************************************************** -->
 
 <div class="row">
 
@@ -112,15 +191,31 @@
 <!-- ./row -->
 
 <div class="container-fluid">
-
+  
   <!-- Card-Supplier -->
   <div class="card">
     <div class="card-header p-t-20 p-b-5">
       <h6 class="pos_title p-0">กรอกข้อมูลผู้จำหน่าย (Supplier) </h6>
     </div>
-    <div class="card-body p-t-15">
+    <div class="card-body p-t-15 p-b-10">
 
       <div class="row g-3">
+
+        <div class="col-md-2">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            Supply Code
+          </label>
+          <input
+            class="form-control"
+            type="text"
+            disabled="true"
+            id="vendor_id"
+            [(ngModel)]="vendor_id">
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
         <div class="col-md-6">
           <label
             class="form-label"
@@ -129,14 +224,18 @@
           </label>
           <input
             class="form-control"
-            id="validationCustom01"
+            id="supply_name"
             type="text"
             [(ngModel)]="supply_name"
+            (keyup)="supply_name_onKeydown()"
             placeholder="ไม่ระบุ"
+            autocomplete="off"
+            (keyup.enter)="NextToInput('#supply_tax_id')"
             required>
           <div class="valid-feedback">Looks good!</div>
         </div>
-        <div class="col-md-3">
+
+        <div class="col-md-4">
           <label
             class="form-label"
             for="validationCustom01">
@@ -144,30 +243,15 @@
           </label>
           <input
             class="form-control"
-            id="validationCustom01"
+            id="supply_tax_id"
             [(ngModel)]="supply_tax_id"
             type="text"
-            placeholder="First name"
-            required>
-          <div class="valid-feedback">Looks good!</div>
-        </div>
-        <div class="col-md-3">
-          <label
-            class="form-label"
-            for="validationCustom01">
-            เบอร์ติดต่อ
-          </label>
-          <input
-            class="form-control"
-            id="validationCustom01"
-            [(ngModel)]="supply_tel"
-            type="text"
-            placeholder="First name"
-            required>
+            (keyup.enter)="NextToInput('#supply_addr')"
+            autocomplete="off">
           <div class="valid-feedback">Looks good!</div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-8">
           <label
             class="form-label"
             for="validationCustom01">
@@ -175,20 +259,66 @@
           </label>
           <input
             class="form-control"
-            id="validationCustom01"
+            id="supply_addr"
             [(ngModel)]="supply_addr"
             type="text"
+            (keyup.enter)="NextToInput('#supply_tel')"
+            autocomplete="off">
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="col-md-4">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            เบอร์ติดต่อ
+          </label>
+          <input
+            class="form-control"
+            id="supply_tel"
+            [(ngModel)]="supply_tel"
+            type="text"
             placeholder="First name"
-            required>
+            autocomplete="off">
           <div class="valid-feedback">Looks good!</div>
         </div>
 
       </div>
 
+      <div class="row g-3 p-t-10">
+        <div class="col-12">
+
+          <span *ngFor="let item of _supply_list">
+
+            <button
+              type="button"
+              class="btn btn-xs btn-outline-success m-r-5"
+              (click)="supply_getinfo(item.supply_id)">
+              {{item.supply_name}}
+            </button>
+
+          </span>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer p-t-10 p-b-10">
+      <div class="row">
+        <div class="col-md-12 text-end">
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="supply_reset()">
+            ล้างข้อมูลผู้จำหน่าย / Reset
+          </button>
+
+        </div>
+      </div>
     </div>
   </div>
-  <!-- ./ Card-Supplier -->
 
+  <!-- ./ Card-Supplier -->
 
   <!-- Card-Product detail -->
   <div class="card">
@@ -205,13 +335,15 @@
             for="validationCustom01">
             ประเภทสินค้า
           </label>
-          <ng-select  
+
+          <ng-select
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
-            id="selected_category"                     
+            (change)="Category_OnChange()"
+            id="selected_category"
+            ng-model="selected"
             [(ngModel)]="selected_category">
-
-            <ng-option [value]="0">ทั้งหมด</ng-option>
+            
             <ng-option
               *ngFor="let cat of _category_list"
               [value]="cat">
@@ -228,15 +360,17 @@
             ยี่ห้อสินค้า
           </label>
 
-          <ng-select             
+          <ng-select
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
-            id="selected_brand"            
+            id="selected_brand"
             editable="true"
+            (change)="Brand_OnChange()"
             (keyup)="onKeyDownEvent($event)"
-            [(ngModel)]="selected_brand">
-
-            <ng-option [value]="0">ทั้งหมด</ng-option>
+            [(ngModel)]="selected_brand"
+            
+            >
+            
             <ng-option
               *ngFor="let brand of _brand_list"
               [value]="brand">
@@ -244,23 +378,22 @@
             </ng-option>
 
             <ng-template ng-footer-tmp>
-              
-                <div class="row">
+
+              <div class="row">
                 <div class="col-8 p-r-0">
                   <input
                     class="form-control digits col-12"
                     type="text"
                     [(ngModel)]="brand_new">
                 </div>
-                <div class="col-4 ">
-                <a
-                  class="btn btn-primary col-12"
-                  type="button">
-                  <i class="icofont icofont-plus"></i>
-                   
-                </a>
+                <div class="col-4">
+                  <a
+                    class="btn btn-primary col-12"
+                    type="button">
+                    <i class="icofont icofont-plus"></i>
+                  </a>
+                </div>
               </div>
-            </div>
             </ng-template>
 
           </ng-select>
@@ -273,14 +406,12 @@
             รุ่น/Model
           </label>
           <ng-select
+            #combo_model
             class="js-example-placeholder-multiple"
             placeholder="เลือก"
             id="selected_model"
             [(ngModel)]="selected_model"
-            (keyup.enter)="NextToInput('#color')"
-            >
-
-            <ng-option [value]="0">ทั้งหมด</ng-option>
+            (keyup.enter)="NextToInput('#color')">
             <ng-option
               *ngFor="let model of _model_list"
               [value]="model">
@@ -290,8 +421,6 @@
           </ng-select>
         </div>
 
-         
-
         <div class="col-md-4">
           <label
             class="form-label"
@@ -299,7 +428,8 @@
             color/สี
           </label>
           <div class="col-sm-12">
-            <input id="color"
+            <input
+              id="color"
               [(ngModel)]="color"
               class="form-control digits"
               (keyup.enter)="NextToInput('#cost')"
@@ -315,8 +445,9 @@
             for="validationCustom01">
             ต้นทุน/Cost
           </label>
-          <div class="col-sm-12">            
-            <input id="cost"
+          <div class="col-sm-12">
+            <input
+              id="cost"
               [(ngModel)]="cost"
               class="form-control digits"
               type="number"
@@ -327,7 +458,6 @@
           </div>
         </div>
 
-
         <div class="col-md-4">
           <label
             class="form-label"
@@ -335,8 +465,10 @@
             จำนวนสินค้า/Qty
           </label>
           <div class="col-sm-12">
-            <input id="qty"
+            <input
+              id="qty"
               [(ngModel)]="qty"
+              [disabled]="input_qty_disable"
               class="form-control digits"
               type="number"
               min="1"
@@ -344,9 +476,9 @@
               (keyup.enter)="NextToInput('#barcode_input')"
               [ngModel]>
           </div>
-        </div>        
+        </div>
 
-        <!---  /*******  Barcode *******/  -->
+        <!-- -  /*******  Barcode *******/ -->
         <div class="col-md-4">
           <label
             class="form-label"
@@ -355,48 +487,41 @@
           </label>
           <div class="col-sm-12">
 
-            <input id="barcode_input"
-              [(ngModel)]="barcode" 
+            <input
+              id="barcode_input"
+              [(ngModel)]="barcode"
               class="form-control digits barcode"
               type="text"
               autocomplete="off"
               (keyup.enter)="addItem(confirm_reset)"
-              [ngModel]   
-              toUppercase
-              >
+              [ngModel]
+              toUppercase>
           </div>
         </div>
 
-        <div class="col-md-4"></div>
+        <div class="col-md-8">
 
-        <div class="col-md-4">
-          <div class="row">
-
-            <div class="col-md-12 col-lg-6 p-r-0">
+            <div class="text-end">
               <a
-                class="btn btn-primary m-t-30 col-12"
-                type="button" (click)="addItem(confirm_alert)">
+                class="btn btn-primary m-t-30 wd-150 m-r-10"
+                type="button"
+                (click)="addItem(confirm_alert)">
                 <i class="icofont icofont-plus"></i>
-                เพิ่ม/Add 
+                เพิ่ม/Add
               </a>
-            </div>
 
-            <div class="col-md-12 col-lg-6 p-l-1">
               <a
-                class="btn btn-light m-t-30 col-12"
-                type="button" (click)="resetProductDetailForm()">
+                class="btn btn-light m-t-30"
+                type="button"
+                (click)="resetProductDetailForm()">
                 <i class="icon-reload"></i>
                 Reset
-              </a>
+              </a>              
             </div>
 
-          </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
   <!-- ./ Card-Product detail -->
 
@@ -414,22 +539,22 @@
               <tr>
                 <th>Action</th>
                 <th scope="col">Barcode/Emei</th>
-                <th scope="col">ประเภทเอกสาร/TypeDoc</th>
+
                 <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
                 <!-- <th scope="col" >row_key</th> -->
                 <th scope="col">ประเภทสินค้า</th>
                 <th scope="col">ยี่ห้อ/brand</th>
                 <th scope="col">รุ่น/model</th>
-                
+
                 <th
                   class="text-end"
                   scope="col">
-                  จำนวนสินค้า/Qty
+                  จำนวน/Qty
                 </th>
                 <th
                   class="text-end"
                   scope="col">
-                  ต้นทุนรวม/Cost
+                  ต้นทุน/Cost
                 </th>
               </tr>
             </thead>
@@ -438,14 +563,14 @@
                 <td>
                   <div class="action">
                     <li class="delete">
-                      <a (click)="removeItem(i)"> <i class="icon-trash"></i>
+                      <a (click)="removeItem(i)"><i class="icon-trash"></i>
                       </a>
                     </li>
                   </div>
-                </td>                
+                </td>
                 <td>{{ item.bar_code }}</td>
-                <td>{{ item.doc_type_name }}</td>
-                <td>{{ item.group_name }}</td> 
+
+                <td>{{ item.group_name }}</td>
                 <td>{{ item.brand_name }}</td>
                 <td>{{ item.model_name }}</td>
                 <td class="text-end robo">{{ item.qty }}</td>

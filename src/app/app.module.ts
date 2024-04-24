@@ -30,8 +30,11 @@ import { InventoryModule } from './components/inventory/inventory.module';
 import { RpBymodelComponent } from './components/inventory/rp-bymodel/rp-bymodel.component';
  
 import { StrCreateComponent } from './components/transaction/stock-receive/str-create/str-create.component';
-import { StrListComponent } from './components/transaction/stock-receive/str-list/str-list.component';
+import { StrListComponent }   from './components/transaction/stock-receive/str-list/str-list.component';
+import { StrDetailComponent } from './components/transaction/stock-receive/str-detail/str-detail.component';
 import { StmCreateComponent } from './components/transaction/stock-move/stm-create/stm-create.component';
+
+
 import { StmListComponent } from './components/transaction/stock-move/stm-list/stm-list.component';
 import { RpBybrandComponent } from './components/inventory/rp-bybrand/rp-bybrand.component';
 import { RpByitemComponent } from './components/inventory/rp-byitem/rp-byitem.component';
@@ -39,6 +42,9 @@ import { SaleStatusComponent } from './components/inventory/sale-status/sale-sta
 import { RpBydocComponent } from './components/transaction/rp-bydoc/rp-bydoc.component';
 import { RpBytxnitemComponent } from './components/transaction/rp-bytxnitem/rp-bytxnitem.component';
 import { RpBysellComponent } from './components/transaction/rp-bysell/rp-bysell.component';
+import { SaleCreateComponent } from './components/transaction/sale/sale-create/sale-create.component';
+import { SlipComponent } from './components/transaction/sale/slip/slip.component';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -61,6 +67,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     RpBydocComponent,
     RpBytxnitemComponent,
     RpBysellComponent,
+    StrDetailComponent,
+    SaleCreateComponent,
+    SlipComponent,
   ],
   
   imports: [

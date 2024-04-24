@@ -1,0 +1,920 @@
+<app-breadcrumb
+  [title]="'POS-ขายสินค้าหน้าร้าน'"
+  [items]="['รายการประจำวัน']"
+  [active_item]="'ขายสินค้าหน้าร้าน'">
+</app-breadcrumb>
+
+<div class="container-fluid">
+
+  <div class="row">
+
+    <div class="col-xl-12 col-md-12 box-col-12 m-b-20">
+      <div class="file-content">
+
+        <div class="media">
+          <div class="media-body text-end">
+
+            <button
+              class="btn btn-air btn-warning me-2"
+              (click)="printToSlip('printToSlip')">
+              <i class="icofont icofont-user-alt-7 m-r-5"></i>
+              พิมพ์ใบเสร็จ
+            </button>
+
+            <button
+              class="btn btn-air btn-secondary me-2"
+              (click)="BtnCustClick()">
+              <i class="icofont icofont-user-alt-7 m-r-5"></i>
+              {{btnCustLabel}}
+            </button>
+
+            <button
+              class="btn btn-air btn-primary me-2"
+              [disabled]="BtnPayDisable"
+              (click)="ShowPay(pay_page)">
+              <i class="icon-shopping-cart"></i>
+              ชำระเงิน
+            </button>
+
+            <div
+              class="btn btn-air btn-warning me-2"
+              (click)="modal_open(confirm_reset)">
+              <app-feather-icons [icon]="'refresh-ccw'"></app-feather-icons>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- ./ file-content -->
+    </div>
+  </div>
+
+  <div id="printToSlip" 
+  [style]="{'visibility': 'hidden', 'height': '0px' }">
+
+    <div
+      style="width:180px;border: 0px solid grey;padding: 0px;;"
+      class="text-center kanit">
+
+      <div class="main_title">
+        <label>{{p_wh_commpanyName}}</label>
+        <br>
+        <label class="lb_addr">
+          {{p_wh_addr1}}
+          <br/>        
+          {{p_wh_addr2}}
+        </label>
+        <br>
+        <label>ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ</label>
+        <br>
+          <label class="m-b-0">Tax id : {{p_wh_tax}}</label>
+          <br>
+          <label class="m-b-0">Doc-id: {{p_doc_id}} </label>
+          <br>
+          <label class="content">วันที่เอกสาร : {{p_doc_date}} </label>
+          <br>
+          <label class="content">Print time: {{p_curr_date}} </label>
+          <br>
+        </div>
+        <div class="sub_title">
+         <label> ชื่อลูกค้า : {{p_cust_name}} </label>
+          <br>
+          <label>  โทร :  {{p_cust_tel}}  </label>
+          <br>
+          <label>  พนักงาน  : {{p_officer}} </label>
+          <br>
+
+        </div>  
+      
+
+      <table style="font-size: 10px;" class="kanit">        
+          <th class="tbh text_left" style="width:100px;">สินค้า</th>          
+          <th class="tbh text_end" style="width:30px ;">จน.</th>
+          <th class="tbh text_end" style="width:30px ;">รวม</th>        
+        <tbody>
+          <!-- 
+            <span *ngFor="let item of custList"> 
+            -->
+
+          <tr *ngFor="let item of p_ItemList">
+            <td class="col_pd">
+                {{item.bar_code}}
+              <br/>              
+              {{item.pd_name}}
+              
+            </td>            
+            <td class="col_num">{{item.qty}}</td>
+            <td class="col_num">{{item.qty * item.price|number}}</td>
+          </tr>
+           
+          <tr>
+            <td colspan="2" class="text_end">จำนวนสินค้า</td>                        
+            <td class="text_end"> {{p_totalQty}} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text_end">ยอดรวม</td>                        
+            <td class="text_end"> {{p_GrandTotal|number}} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text_end">รวมส่วนลด</td>                        
+            <td class="text_end"> {{p_discount|number}} </td>
+          </tr>          
+          <tr>
+            <td colspan="2" class="text_end">ยอดรวมก่อนหักภาษี</td>                        
+            <td class="text_end"> {{p_TotalBeforeTax|number}} </td>
+          </tr>          
+          <tr>
+            <td colspan="2" class="text_end"> <b> ยอดสุทธิ </b> </td>                        
+            <td class="text_end"> <b> {{p_netTotal| number}} </b> </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr class="dott">
+    <div class="content text_center"> 
+       วิธีการชำระเงิน  
+       <b> {{p_pay_type}} </b>
+    </div>
+
+    <div class="content text_center"> 
+       {{p_cmm_slip}} 
+   </div>
+
+
+
+    </div>
+    <div>
+      <br>
+    </div>
+
+  </div>
+
+  <div class="center_div">
+    <div
+      class="loader-box"
+      [style.display]="(LoadingShow) ? 'none' : 'block'">
+      <div class="loader-2"></div>
+    </div>
+  </div>
+
+  <!-- Card-document -->
+  <div class="card">
+    <div class="card-body p-t-15 p-b-20">
+
+      <div class="row g-3">
+
+        <div class="col-md-3">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            วันที่เอกสาร
+          </label>
+
+          <input
+            class="form-control digits"
+            type="date"
+            [(ngModel)]="select_doc_date"
+            id="doc_date">
+        </div>
+
+        <div class="col-md-3">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ร้าน/คลัง/สาขา
+          </label>
+          <input
+            class="form-control"
+            type="text"
+            disabled="true"
+            [(ngModel)]="wh_name"
+            id="wh_name">
+        </div>
+
+        <div class="col-md-3">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            พนักงานขาย
+          </label>
+          <input
+            class="form-control"
+            type="text"
+            disabled="true"
+            [(ngModel)]="user_name"
+            id="user_name">
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">เลขที่ใบกำกับภาษี</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="doc_tax_id"
+            id="doc_tax_id">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">สถานะชำระเงิน</label>
+          <select
+            class="form-control digits"
+            id="selectChkPay"
+            placeholder="เลือก"
+            [(ngModel)]="selectChkPay">
+            <option
+              value="Y"
+              selected>
+              ชำระเงินแล้ว
+            </option>
+            <option value="N">ค้างชำระ</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">ประเภทภาษี</label>
+          <select
+            class="form-control digits"
+            id="selectVATType"
+            placeholder="เลือก"
+            [(ngModel)]="selectVATType">
+            <option
+              value="NO_VAT"
+              selected>
+              ไม่มีภาษี
+            </option>
+            <option value="INCLUDE_VAT">ภาษีใน(include-Tax)</option>
+            <option value="EXCLUDE_VAT">ภาษีนอก(Exclude-Tax)</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label">หมายเหตุ</label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="comment"
+            id="comment">
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- ./ Card-document -->
+
+  <!-- Card-customer -->
+  <div class="card">
+    <div class="card-header p-t-20 p-b-5">
+      <h6 class="pos_title p-0">กรอกข้อมูลลูกค้า (Customer) </h6>
+    </div>
+    <div
+      class="card-body p-t-15 p-b-10"
+      [ngStyle]="{ 'visibility':btnCustHide ? 'hidden' : 'visible' ,
+                'height':btnCustHide ? '1px' : '260px' }">
+
+      <div class="row g-3">
+
+        <div class="col-md-3 m-t-5">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            Customer Code
+          </label>
+          <input
+            class="form-control"
+            type="text"
+            disabled="true"
+            [(ngModel)]="cust_id"
+            id="cust_id">
+        </div>
+
+        <div class="col-md-9  m-t-5">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            ชื่อลุกค้า
+          </label>
+          <input
+            class="form-control"
+            id="cust_name"
+            type="text"
+            placeholder="ไม่ระบุ"
+            autocomplete="off"
+            [(ngModel)]="cust_fname"
+            (keyup)="get_CustomerListByName()"
+            required>
+
+        </div>
+
+        <div class="col-md-6  m-t-10">
+          <label class="form-label">ที่อยู่ บรรทัด 1</label>
+          <input
+            class="form-control"
+            id="cust_addr1"
+            type="text"
+            [(ngModel)]="cust_adr1"
+            autocomplete="off">
+        </div>
+
+        <div class="col-md-6  m-t-10">
+          <label class="form-label">ที่อยู่ บรรทัด 2</label>
+          <input
+            class="form-control"
+            id="cust_addr2"
+            type="text"
+            [(ngModel)]="cust_adr2"
+            autocomplete="off">
+        </div>
+
+        <div class="col-md-4 m-t-10">
+          <label class="form-label">เบอร์ติดต่อ</label>
+          <input
+            class="form-control"
+            id="supply_tel"
+            type="text"
+            placeholder
+            [(ngModel)]="cust_tel"
+            autocomplete="off">
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="col-md-4 m-t-10">
+          <label
+            class="form-label"
+            for="validationCustom01">
+            เลขผู้เสียภาษี
+          </label>
+          <input
+            class="form-control"
+            id="TaxInv_id"
+            type="text"
+            [(ngModel)]="tax_id"
+            autocomplete="off">
+        </div>
+
+      </div>
+
+      <div class="row g-3 p-t-10">
+        <div class="col-12">
+
+          <span *ngFor="let item of custList">
+
+            <button
+              type="button"
+              class="btn btn-xs btn-outline-success m-r-5"
+              (click)="get_CustomerInfo(item.cust_id)">
+              {{item.cust_fname}}
+            </button>
+
+          </span>
+
+        </div>
+      </div>
+
+    </div>
+    <div
+      class="card-footer p-t-10 p-b-10"
+      [ngStyle]="{ 'visibility':btnCustHide ? 'hidden' : 'visible' ,
+                'height':btnCustHide ? '1px' : '60px' }">
+      <div class="row">
+        <div class="col-md-12 text-end">
+          <button
+            type="button"
+            (click)="ResetCustomer()"
+            class="btn btn-light">
+            ล้างข้อมูลลูกค้า / Reset
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div
+      class="card-body p-b-5"
+      style="height:140px">
+
+      <div class="row">
+        <div class="col-4 text-end">
+          <label
+            class="form-label p-t-10"
+            for="validationCustom01">
+            กรอกเลข Barcode/Emei :
+          </label>
+        </div>
+
+        <div class="col-4">
+          <input
+            class="form-control"
+            id="barcode"
+            type="text"
+            (keydown.enter)="AddItem(alert_warning)"
+            [(ngModel)]="barcode"
+            autocomplete="off">
+        </div>
+
+        <div class="col-4">
+          <button
+            type="button"
+            (click)="AddItem(alert_warning)"
+            class="btn btn-light m-r-5">
+            <i class="icon-plus"></i>
+          </button>
+
+          <button
+            type="button"
+            (click)="reset_barcode()"
+            class="btn btn-light m-r-5">
+            <i class="icon-reload"></i>
+          </button>
+
+        </div>
+
+      </div>
+
+      <div class="row g-3 p-t-10">
+        <div class="col-12">
+          <button
+            type="button"
+            class="btn btn-xs btn-outline-success m-r-5"
+            (click)="test_addbarcode('863957058049468')">
+            863957058049468
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-xs btn-outline-success m-r-5"
+            (click)="test_addbarcode('869327079253198')">
+            869327079253198
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-xs btn-outline-success m-r-5"
+            (click)="test_addbarcode('860517060884881')">
+            860517060884881
+          </button>
+          <button
+            type="button"
+            class="btn btn-xs btn-outline-success m-r-5"
+            (click)="test_addbarcode('350538281902663')">
+            350538281902663
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-xs btn-outline-success m-r-5"
+            (click)="test_addbarcode('00000338')">
+            00000338 -PREMIUM ลำโพงดิจิตอล-VIVO
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="row p-t-10"
+        [ngStyle]="{ 'visibility':!ShowAlert ? 'hidden' : 'visible'}">
+        <ngb-alert
+          [type]="'success'"
+          [dismissible]="false"
+          class="pos_alert_warning kanit">
+          {{alert_txt}}
+        </ngb-alert>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-4 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="CardCount"></app-sale-status>
+      </div>
+    </div>
+
+    <div class="col-sm-4 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="CardQty"></app-sale-status>
+      </div>
+    </div>
+
+    <div class="col-sm-4 p-b-10">
+      <div class="card small-widget mb-sm-0">
+        <app-sale-status [data]="CardAmount"></app-sale-status>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Card-item-list -->
+  <div class="card">
+    <div class="card-header p-t-20 p-b-5">
+      <h6 class="p-0 pos_title"> รายการสินค้าที่รับเข้า (Item-List) </h6>
+    </div>
+    <div class="card-body p-t-15">
+
+      <div class="product-list-custom custom-datatable">
+        <div class="table-responsive">
+          <table class="table pos_table table_item_size_md">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th scope="col">Barcode/Emei</th>
+                <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
+                <!-- <th scope="col" >row_key</th> -->
+
+                <th scope="col">รายการ</th>
+
+                <th
+                  class="text-end"
+                  scope="col">
+                  จำนวน
+                </th>
+                <th
+                  class="text-end"
+                  scope="col">
+                  ราคา
+                </th>
+                <th
+                  class="text-end"
+                  scope="col">
+                  รวม
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of itemList; let i = index">
+                <td>
+                  <div class="action">
+                    <li class="delete">
+                      <a
+                        (click)="removeItem(i)"
+                        class="item_remove"><i class="icon-trash"></i>
+                      </a>
+                    </li>
+                  </div>
+                </td>
+                <td>{{ item.bar_code }}</td>
+
+                <td>
+                  {{ item.group_name }}
+                  <br>
+                  {{ item.pd_name }}
+                </td>
+                <td class="text-end robo">
+                  <input
+                    class="form-control p-0 text-end table_item_size_md"
+                    style="width: 80px; font-size: 14px;"
+                    id="item_qty"
+                    type="number"
+                    [min]="1"
+                    
+                    [max]="item.qty_limit"
+                    [disabled]="item.disable"
+                    (keyup)="Keyup_inputQty(item.bar_code)"
+                    [(ngModel)]="input_qty[item.bar_code]"
+                    autocomplete="off">
+
+                </td>
+                <td class="text-end robo">
+
+                  <input
+                    class="form-control p-0 text-end table_item_size_md"
+                    style="width: 80px; font-size: 14px;"
+                    id="item_price"
+                    type="number"
+                    [min]="0"
+                    (keyup)="Keyup_inputQty(item.bar_code)"
+                    [(ngModel)]="input_price[item.bar_code]"
+                    autocomplete="off">
+
+                </td>
+                <td class="text-end robo">
+
+                  <input
+                    class="form-control p-0 text-end table_item_size_md"
+                    style="width: 80px; font-size: 14px;"
+                    id="item_price"
+                    type="number"
+                    disabled
+                    [min]="0"
+                    [(ngModel)]="input_amt[item.bar_code]"
+                    autocomplete="off">
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- ./product-list -->
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ***************************************************** -->
+
+<ng-template
+  #pay_page
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">ยืนยัน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body kanit">
+
+    <div class="row g-3 p-t-10">
+
+      <div class="col-md-4">
+
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="col text-end">ส่วนลด %</div>
+            <div class="col">
+              <input
+                class="form-control  text-end"
+                type="number"
+                [max]="100"
+                [min]="0"
+                (keyup)="Calculate_TotalNet()"
+                [(ngModel)]="DiscountPercent"
+                id="DiscountPercent">
+            </div>
+          </div>
+
+          <div class="col-md-12 m-t-5">
+            <div class="col text-end">ส่วนลดเงินสด</div>
+            <div class="col">
+              <input
+                class="form-control  text-end"
+                type="number"
+                [min]="0"
+                (keyup)="Calculate_TotalNet()"
+                [(ngModel)]="DiscountCash"
+                id="DiscountCash">
+            </div>
+          </div>
+
+          <div class="col-md-12 m-t-5">
+            <div class="col text-end">ประเภทการชำระ</div>
+            <select
+              class="form-control digits"
+              id="selected_wh"
+              placeholder="เลือก"
+              [(ngModel)]="selectPayType">
+              <option
+                value="CASH"
+                selected>
+                เงินสด
+              </option>
+              <option value="TRANS">โอนเงิน</option>
+              <option value="CREDIT">บัตรเครดิต</option>
+            </select>
+          </div>
+
+          <div class="col-md-12 m-t-10">
+            <div class="col text-end">รับเงิน</div>
+            <input
+              class="form-control  text-end"
+              type="number"
+              [min]="0"
+              (keyup)="Calculate_ReceiveAmt()"
+              [(ngModel)]="ReceiveAmt"
+              id="ReceiveAmt">
+          </div>
+
+          <div class="col-md-12 m-t-10">
+            <div class="col text-end">ทอนเงิน</div>
+            <input
+              class="form-control  text-end"
+              type="text"
+              disabled
+              [(ngModel)]="ReturnAmtShow"
+              id="ReturnAmt">
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+
+          <div class="col-md-12  text-end">ยอดรวมทั้งสิ้น</div>
+          <div class="col-md-12">
+            <input
+              class="form-control  text-end"
+              type="text"
+              value="1500"
+              disabled
+              [(ngModel)]="TotalGrand"
+              id="grand_total">
+          </div>
+
+          <div class="col-md-12  m-t-5">
+            <div class="text-end">รวมส่วนลด</div>
+            <div class>
+              <input
+                class="form-control  text-end"
+                type="text"
+                disabled
+                [(ngModel)]="TotalDiscount"
+                id="total_discount">
+            </div>
+          </div>
+
+          <div class="col-md-12 m-t-5">
+            <div class="text-end">ยอดก่อนหักภาษี</div>
+            <div class>
+              <input
+                class="form-control  text-end"
+                type="text"
+                disabled
+                [(ngModel)]="TotalBeforeTax"
+                id="total_before_tax">
+            </div>
+          </div>
+
+          <div class="col-md-12 m-t-5 text-end">ภาษี</div>
+          <div class="col-md-12 m-t-5">
+            <input
+              class="form-control  text-end"
+              type="text"
+              disabled
+              [(ngModel)]="TotalTax"
+              id="tax_amount">
+          </div>
+
+          <div class="col-md-12 m-t-5 text-end">ยอดสุทธิ/Net</div>
+          <div class="col-md-12 m-t-5">
+            <input
+              class="form-control  text-end"
+              type="text"
+              disabled
+              [(ngModel)]="TotalNet"
+              id="total_net">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer kanit">
+
+    <button class="btn btn-air btn-light me-1">
+      <i class="icon-shopping-cart-full"></i>
+      พิมพ์ใบเสร็จ
+    </button>
+
+    <button class="btn btn-air btn-light  me-1">
+      <i class="icon-shopping-cart-full"></i>
+      พิมพ์ใบกำกับภาษี
+    </button>
+
+    <button
+      class="btn btn-air btn-light  me-1"
+      (click)="SaveInvoice(alert_sucess,alert_warning)">
+      <i class="icon-shopping-cart-full"></i>
+      ชำระเงิน
+    </button>
+
+  </div>
+
+</ng-template>
+
+<!-- ***************************************************** -->
+
+<ng-template
+  #confirm_reset
+  
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">ยืนยัน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+
+    <div class="row  m-b-10">
+      <div class="col-12 text-center m-b-10">
+        <h5>ยืนยันที่จะล้างข้อมูลในหน้านี้และเริ่มใหม่ ?</h5>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="btn btn-air btn-warning me-2 col-12"
+          (click)="ResetDocument()">
+          ยืนยัน/Confirm
+        </button>
+      </div>
+      <div class="col-6">
+        <button
+          type="button"
+          class="btn btn-outline-dark  col-12"
+          (click)="modal.close('Save click')">
+          ยกเลิก/Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- ***************************************************** -->
+
+<ng-template
+  #alert_sucess
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">แจ้งเตือน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row  m-b-0">
+      <div class="col-12 text-center m-b-10">
+
+        <h1> <i class="icon-save tx_success"></i> </h1>
+        <h5>
+              <label
+            id="alert_txt"
+            class="msg_success"
+            [innerHTML]="alert_txt">
+            Success Message
+          </label>
+            </h5>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<!-- ***************************************************** -->
+
+<ng-template
+  #alert_warning
+  let-modal>
+  <div class="modal-header">
+    <h6
+      class="modal-title"
+      id="modal-basic-title">แจ้งเตือน</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row  m-b-0">
+      <div class="col-12 text-center m-b-10">
+        <h1> <i class="msg_error fa fa-warning"></i> </h1>
+        <h5>
+              <label
+            id="alert_txt"
+            class="msg_error"
+            [innerHTML]="alert_txt">
+            Error Message
+          </label>
+            </h5>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close('Save click')">
+      Close
+    </button>
+  </div>
+</ng-template>

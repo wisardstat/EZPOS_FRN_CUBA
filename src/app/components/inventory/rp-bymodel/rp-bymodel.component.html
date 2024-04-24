@@ -9,26 +9,24 @@
     <div class="col-sm-12">
 
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-3">
-              <label class="col-sm-12 col-form-label">วันที่คลังสินค้า/Inventory Date</label>
-              <div class="col-sm-12">
 
-                <input
+        <div class="card-body"
+        [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'
+                    , 'height': _show_filter_card ? '180px' : '1px' }" 
+        >
+          <div class="row">
+
+            <div class="col-sm-3">
+              <label>วันที่คลังสินค้า</label>              
+              <input
                   class="form-control digits"
                   type="date"
                   [ngModel]="select_date | date:'yyyy-MM-dd'"
                   (ngModelChange)="select_date = $event">
-              </div>
-
             </div>
 
-            <div class="col-sm-3">
-
-              <div class="mb-3 m-form__group">
-                <label for="exampleFormControlSelect9">เลือกคลังสินค้า</label>
-
+            <div class="col-sm-3">              
+                <label >เลือกคลังสินค้า</label>
                 <select
                   class="form-control digits"
                   id="selected_wh"
@@ -45,15 +43,10 @@
                     {{ wh.wh_name }}
                   </option>
                 </select>
-              </div>
-
             </div>
 
             <div class="col-sm-3">
-              <div class="mb-3 m-form__group">
-
-                <label for="exampleFormControlSelect9">ตัวเลือกเพิ่มเติม</label>
-
+                <label >ตัวเลือกเพิ่มเติม</label>
                 <ng-select
                   class="js-example-placeholder-multiple"
                   id="selected_type_rp"
@@ -66,26 +59,21 @@
                   </ng-option>
                   <ng-option value="EXISTS">เฉพาะที่มีสินค้าคงเหลือ (Qty > 0)</ng-option>
                   <ng-option value="NONE">ไม่มีสินค้าในคลัง (Qty = 0)</ng-option>
-                </ng-select>
-              </div>
+                </ng-select>              
             </div>
 
             <div class="col-sm-3">
-              <label class="col-sm-12 col-form-label">ค้นหาชื่อสินค้า</label>
-              <div class="col-sm-12">
-
-                <input
-                  class="form-control digits"
-                  type="text"
-                  [ngModel]="find_pdname"
-                  (ngModelChange)="find_pdname = $event">
-              </div>
-
+              <label>ค้นหาชื่อสินค้า</label>              
+              <input
+                class="form-control digits"
+                type="text"
+                [ngModel]="find_pdname"
+                (ngModelChange)="find_pdname = $event">
             </div>
 
           </div>
 
-          <div class="row select2-drpdwn">
+          <div class="row select2-drpdwn m-t-5">
 
             <div class="col-sm-3">
 
@@ -138,27 +126,50 @@
             </div>
  
 
-            <div class="col-sm-3">
-              <div class="row">
-                <div class="col-md-12 col-lg-6 p-r-0">
-                  <button
-                    class="btn btn-primary m-t-30  col-12"
-                    type="submit"
-                    (click)="onSearch()">
-                    ค้นหา
-                  </button>
-                </div>
-                <div class="col-md-12 col-lg-6 p-l-1">
-                  <button
-                    class="btn btn-light m-t-30  col-12"
-                    type="button"
-                    (click)="resetFind()">
-                    เริ่มใหม่
-                  </button>
-                </div>
+            
+
+          </div>
+        </div>
+
+        <div class="card-footer p-t-10 p-b-10">
+
+            <div class="row text-end">
+              <div class="col">
+
+                <button
+                  class="btn btn-primary wd-100 m-r-10"
+                  type="submit"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                  (click)="onSearch()">
+                  <i class="icofont icofont-search"></i>
+                  ค้นหา / Search
+                </button>
+              
+                <button
+                  class="btn btn-light m-r-5"
+                  type="button"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                  (click)="resetFind()">
+                  <i class="icon-reload"></i>
+                  เริ่มใหม่ / Reset 
+                </button>
+
+                <a class="btn btn-light "
+                  type="button"                  
+                  (click)="HideFilterCard()">
+                  <i class="icon-arrow-up"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                  ></i>
+                  <i class="icon-arrows-vertical"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'hidden' : 'visible'}"
+                  ></i>
+                  
+                  {{_label_btn_hide_filtercard}}
+                </a>
+
               </div>
             </div>
-          </div>
+
         </div>
 
       </div>

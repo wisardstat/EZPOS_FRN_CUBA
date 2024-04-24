@@ -85,6 +85,7 @@
             <div class="row">
               <div class="col">
                 <div class="mb-3">
+                  
                   <label>Upload project file</label>
                   <ngx-dropzone (change)="onSelect($event)" [multiple]="true">
                     <ngx-dropzone-label>
@@ -103,7 +104,10 @@
             </div>
             <div class="row">
               <div class="col">
-                <div class="text-end"><a class="btn btn-success me-3" href="#">Add</a><a class="btn btn-danger" href="#">Cancel</a></div>
+                <div class="text-end">
+                  <a class="btn btn-success me-3" href="#">Add</a>
+                  <a class="btn btn-danger" href="#">Cancel</a></div>
+                  
               </div>
             </div>
           </div>

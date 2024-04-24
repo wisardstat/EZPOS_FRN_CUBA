@@ -1,29 +1,50 @@
-
 .ng-select {
-    .ng-select-container {
-      border: none !important;
-    }
+  .ng-select-container {
+    border: none !important;
   }
-
-  .center_div{
-    position:absolute;
-    z-index:99;
-    width:100%;
-  } 
-
-.bg_gray{
-  background-color:rgb(233, 231, 231)  ;
 }
 
-.pos_table thead tr th {  
-  color : #2F9599;
+.table_row_sub {
+  color: rgb(189, 188, 188);
+  font-size: 12px;
+}
+
+.center_div {
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+}
+
+.bg_gray {
+  background-color: rgb(233, 231, 231);
+}
+
+.pos_table thead tr th {
+  color: #2F9599;
   border-bottom: 2px solid #2F9599;
 }
- 
-.bg_iv{
-  background-color:#ecf7f8  ;
+
+.bg_iv {
+  background-color: #ecf7f8;
 }
 
-.si{
-    background-color:#FFFCED;
+.si {
+  background-color: #FFFCED;
+}
+
+.badge-SI {
+  background-color: #cbb963;
+}
+
+.badge-IV {
+  background-color: #63cb73;
+}
+
+.badge-MI {
+  background-color: #637dcb;
+}
+
+
+.badge-MO {
+  background-color: #c863cb;
 }

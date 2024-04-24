@@ -17,6 +17,7 @@
           <ngb-alert [type]="'warning'" [dismissible]="false">
             This is a warning alert
           </ngb-alert>
+          
           <ngb-alert [type]="'danger'" [dismissible]="false">
             This is a danger alert
           </ngb-alert>
@@ -42,7 +43,8 @@
         </div>
         <div class="card-body">
           <p *ngFor="let alert of alerts">
-            <ngb-alert [type]="alert.type" [dismissible]="true" (closed)="close(alert)">{{ alert.message }}</ngb-alert>
+            <ngb-alert [type]="alert.type" [dismissible]="true" (closed)="close(alert)">{{ alert.message }}
+            </ngb-alert>
           </p>
         </div>
       </div>

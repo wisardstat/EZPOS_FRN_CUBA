@@ -28,6 +28,7 @@ export class BookmarkComponent implements OnInit {
         if (items.bookmark) {
           this.bookmarkItems.push(items);
         }
+        
         if (!items.children) return false;
         items.children.filter((subItems) => {
           if (subItems.bookmark) {

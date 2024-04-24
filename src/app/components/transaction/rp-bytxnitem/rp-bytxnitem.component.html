@@ -10,7 +10,11 @@
     <div class="col-sm-12">
 
       <div class="card">
-        <div class="card-body">
+        <div class="card-body" 
+        
+        [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'
+                    , 'height': _show_filter_card ? '270px' : '1px' }" 
+         >
           <div class="row">
 
             <div class="col-sm-3">
@@ -140,7 +144,6 @@
 
             <div class="col-sm-3">
               <div class="mb-3 m-form__group">
-
                 <div class="col-form-label">เลือกรุ่น/Model</div>
 
                 <ng-select
@@ -166,68 +169,70 @@
             <div class="col-sm-3">
               <label class="col-sm-12 col-form-label">ค้นหาชื่อลูกค้า</label>
               <div class="col-sm-12">
-
                 <input
                   class="form-control digits"
                   type="text"
                   [ngModel]="find_cust_name"
                   (ngModelChange)="find_cust_name = $event">
               </div>
-
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <label class="col-sm-12 col-form-label">ค้นหาชื่อสินค้า</label>
               <div class="col-sm-12">
-
                 <input
                   class="form-control digits"
                   type="text"
                   [ngModel]="find_pdname"
                   (ngModelChange)="find_pdname = $event">
               </div>
-
             </div>
 
-            <div class="col-sm-3"></div>
-
-            <div class="col-sm-3"></div>
-
-            <div class="col-sm-3">
-              <div class="row">
-                <div class="col-md-12 col-lg-6 p-r-0">
-                  <a
-                    class="btn btn-primary m-t-30 w-100"
-                    type="button"
-                    title
-                    (click)="onSearch()">
-                    <i class="icofont icofont-search"></i>
-                    Search
-                  </a>
-                </div>
-                <div class="col-md-12 col-lg-6 p-l-1">
-
-                  <a
-                    class="btn btn-light m-t-30"
-                    type="button"
-                    title
-                    (click)="resetFind()">
-                    <i class="icon-reload"></i>
-                    Reset
-                  </a>
-                </div>
-              </div>
-            </div>
-
+            <div class="col-sm-8"></div>
           </div>
         </div>
+
+        <div class="card-footer p-t-10 p-b-10">
+          <div class="row">
+            <div class="col text-end">              
+                <a class="btn btn-primary wd-100 m-r-10"
+                  type="button"                  
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                  (click)="onSearch()">
+                  <i class="icofont icofont-search"></i>
+                  ค้นหา / Search
+                </a>              
+                <a class="btn btn-light  m-r-10"
+                  type="button"         
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                  (click)="resetFind()">
+                  <i class="icon-reload"></i>
+                  เริ่มใหม่ / Reset 
+                </a>
+                
+                <a class="btn btn-light "
+                  type="button"                  
+                  (click)="HideFilterCard()">
+                  <i class="icon-arrow-up"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'visible' : 'hidden'}"
+                  ></i>
+                  <i class="icon-arrows-vertical"
+                  [ngStyle]="{'visibility':_show_filter_card ? 'hidden' : 'visible'}"
+                  ></i>
+                  
+                  {{_label_btn_hide_filtercard}}
+                </a>
+            </div>
+          </div> 
+        </div>
+
 
       </div>
     </div>
   </div>
 
+  
   <div class="center_div">
-
     <div
       class="loader-box"
       [style.display]="(LoadingShow == 0) ? 'none' : 'block'">
@@ -296,28 +301,29 @@
                           style="width:180px;">
                           วันที่เอกสาร/DocDate
                         </th>
-                        <th scope="col">ประเภทเอกสาร/TypeDoc</th>
+                        <th scope="col">ประเภทเอกสาร</th>
+                        
                         <!-- <th scope="col" >ชื่อลูกค้า/Customer</th> -->
                         <!-- <th scope="col" >row_key</th> -->
-                        <th scope="col">ประเภทสินค้า</th>
-                        <th scope="col">ยี่ห้อ/brand</th>
-                        <th scope="col">รุ่น/model</th>
-                        <th scope="col">ชื่อสินค้า</th>
+                        <!-- <th scope="col">ประเภทสินค้า</th>
+                        <th scope="col">ยี่ห้อ/brand</th> -->
+                        <!-- <th scope="col">รุ่น/model</th> -->
+                        <th style="width:300px" scope="col">รายการ</th>
 
                         <th
                           class="text-end"
                           scope="col">
-                          จำนวนสินค้า/Qty
+                          จำนวน
                         </th>
                         <th
                           class="text-end"
                           scope="col">
-                          ต้นทุนรวม/Cost
+                          ต้นทุน
                         </th>
                         <th
                           class="text-end"
                           scope="col">
-                          ยอดขาย/Amount
+                          ยอดรวม
                         </th>
                       </tr>
                     </thead>
@@ -330,19 +336,21 @@
                           <br>
                           <span class="table_row_sub"> <i class="fa fa-home"></i> {{ product.wh_name }} </span>
                         </td>
-                        <td>
-                          {{ product.type_doc }}
-                          <br>
-                          <span class="table_row_sub"><i class="icofont icofont-ebook"></i> {{ product.doc_id }} </span>
+                        <td>{{ product.type_doc }}<br>
+                          <span class="table_row_sub" style="font-size: 10px;">
+                            <i class="icofont icofont-ebook"></i>
+                             {{ product.doc_id }} </span>
                         </td>
                         <!-- <td>{{ product.cust_fname }}</td> -->
                         <!-- <td>{{ product.row_key }}</td> -->
-                        <td>{{ product.group_name }}</td>
-                        <td>{{ product.brand_name }}</td>
-                        <td>{{ product.model_name }}</td>
+                        <!-- <td>{{ product.group_name }}</td> -->
+                        <!-- <td>{{ product.brand_name }}</td>
+                        <td>{{ product.model_name }}</td> -->
                         <td>
+                          {{ product.group_name }}
+                          <br/>
                           {{ product.pd_name }}
-                          <br>
+                          <br/>
                           <span class="table_row_sub"><i class="icofont icofont-businessman"></i>{{ product.cust_fname }} </span>
                         </td>
                         <td class="text-end robo">{{ product.qty_abs | number }}</td>

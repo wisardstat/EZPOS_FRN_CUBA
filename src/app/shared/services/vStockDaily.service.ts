@@ -10,6 +10,9 @@ import { environment } from '../../../environments/environment'
 
 export class vStockDaily {
 
+  public url :string = environment.api_url
+  public limit :string = environment.api_row_limit.toString()
+
   public api_row_limit = String(environment.api_row_limit);
 
   constructor(private httpClient: HttpClient) { }
@@ -17,8 +20,9 @@ export class vStockDaily {
   // http://127.0.0.1:8000/v1/stockDailys/GroupByModel?skip=0&limit=100
 
   getListAll() {
-    var url = 'http://127.0.0.1:8000/v1/vstockcard/?skip=0&limit=10';
-    return this.httpClient.get(url);
+    
+    return this.httpClient.get(this.url+'vstockcard/?skip=0&limit='+this.limit);
+
   }
 
   getListByModel( _wh_id: string
@@ -30,16 +34,16 @@ export class vStockDaily {
                 ) {
 
 
-    var url = (`http://localhost:8000/v1/stockDailys/GroupByModel?`
+    var url = (this.url+`stockDailys/GroupByModel?`
       + `brand_id=` + _brand_id
       + `&categoty_id=` + _category_id
       + `&wh_id=` + _wh_id
       + `&type_rp=` + _type_rp
       + `&stock_date=` + _stock_date
       + `&find_pdname=` + _find_pdname
-      + `&skip=0&limit=1000`);
+      + `&skip=0&limit=`+this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -53,7 +57,7 @@ export class vStockDaily {
     , _find_pdname: string
     ) {
 
-    var url = (`http://localhost:8000/v1/stockDailys/GroupByItem?`
+    var url = (this.url+`stockDailys/GroupByItem?`
       + `brand_id=` + _brand_id
       + `&categoty_id=` + _category_id
       + `&wh_id=` + _wh_id
@@ -61,9 +65,9 @@ export class vStockDaily {
       + `&type_rp=` + _type_rp
       + `&stock_date=` + _stock_date
       + `&find_pdname=` + _find_pdname
-      + `&skip=0&limit=`+ this.api_row_limit);
+      + `&skip=0&limit=`+ this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -77,7 +81,7 @@ export class vStockDaily {
     , _find_pdname: string
     ) {
 
-    var url = (`http://localhost:8000/v1/stockDailys/GroupByItem_totalQty?`
+    var url = (this.url+`stockDailys/GroupByItem_totalQty?`
       + `brand_id=` + _brand_id
       + `&categoty_id=` + _category_id
       + `&wh_id=` + _wh_id
@@ -85,9 +89,9 @@ export class vStockDaily {
       + `&type_rp=` + _type_rp
       + `&stock_date=` + _stock_date
       + `&find_pdname=` + _find_pdname
-      + `&skip=0&limit=`+this.api_row_limit);
+      + `&skip=0&limit=`+this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }

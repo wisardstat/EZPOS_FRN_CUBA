@@ -5,6 +5,8 @@ import { LayoutService } from '../../../services/layout.service';
 import { NavService } from '../../../services/nav.service';
 import { fadeInAnimation } from '../../../data/router-animation/router-animation';
 
+import { environment } from '../../../../../../src/environments/environment'
+
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
@@ -13,6 +15,8 @@ import { fadeInAnimation } from '../../../data/router-animation/router-animation
 })
 export class ContentComponent implements OnInit, AfterViewInit {
   
+  public show_customizer :boolean = !environment.production
+
   constructor(private route: ActivatedRoute, public navServices: NavService, 
     public layout: LayoutService) {
       

@@ -1,15 +1,20 @@
-import { Component,Renderer2,OnInit, } from '@angular/core';
+import { Component, Renderer2, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgbActiveModal, NgbModal, ModalDismissReasons, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { category_list } from '../../../../shared/services/categpry.service'
 import { inventory_list } from '../../../../shared/services/inventory.service'
 import { brand_list } from '../../../../shared/services/brand.service'
 import { stockIn } from '../../../../shared/services/stockIn.service'
+import { supplys } from '../../../../shared/services/supply.service'
+
 
 import { models } from '../../../../shared/services/model.service'
 import { StockInRequest, StockItem, SupplierDetail } from '../str-interface/stock-in-request.model'
 import { HttpClient } from '@angular/common/http';
 
+import { NgSelectModule, NgOption } from '@ng-select/ng-select';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { error } from 'console';
 
 @Component({
   selector: 'app-str-create',
@@ -17,17 +22,18 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./str-create.component.scss']
 })
 
-export class StrCreateComponent implements OnInit{
+export class StrCreateComponent implements OnInit {
 
   public _category_list: any;
   public _brand_list: any;
   public _model_list: any;
+  public _supply_list: any;
 
   public selected_category: any;
   public selected_brand: any;
   public brand_new: string;
   public selected_model: any;
-  
+
   public alert_txt: string = ""
 
   public wh_id: string = "W001";
@@ -36,18 +42,22 @@ export class StrCreateComponent implements OnInit{
   public DOC_STATUS: string = "Y"
   public type_doc: string = "1"
 
-  public vendor_id: string = "" ;
-  public supply_name: string="";
-  public supply_addr: string="";
-  public supply_tel: string="";
-  public supply_tax_id: string="";
-  public color: string="";
+  public vendor_id: string = "";
+  public supply_name: string = "";
+  public supply_addr: string = "";
+  public supply_tel: string = "";
+  public supply_tax_id: string = "";
+  public color: string = "";
   public qty: number;
   public cost: number = 0;
   public barcode: string;
 
+  public input_qty_disable: string = "false";
+
+  @ViewChild('combo_model') combo_model: NgSelectComponent;
+
   closeResult: string;
-  
+
   supplierDetail: SupplierDetail;
   stockItem: StockItem;
   itemList: StockItem[] = [];
@@ -58,14 +68,16 @@ export class StrCreateComponent implements OnInit{
     private brand_list_sv: brand_list,
     private models_sv: models,
     private stockIn_sv: stockIn,
+    private supplys_sv: supplys,
     private renderer: Renderer2,
     private modalService: NgbModal,
-    
+
   ) {
   }
 
   open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -73,24 +85,62 @@ export class StrCreateComponent implements OnInit{
   }
 
   private getDismissReason(reason: any): string {
+
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
-
-  
 
   ngOnInit() {
 
     this.category_list_sv.getValue().subscribe(response => { this._category_list = response; });
     this.brand_list_sv.getValue().subscribe(response => { this._brand_list = response; });
     this.models_sv.getList().subscribe(response => { this._model_list = response; });
-    
+
+    this.supplys_sv.getList_findname("").subscribe(response => { this._supply_list = response; });
+
     this.qty = 1;
+
+  }
+
+  supply_name_onKeydown() {
+    console.log('>> supply_name_onKeydown')
+    console.log('>> supply_name=' + this.supply_name)
+
+    this.supplys_sv.getList_findname(this.supply_name).subscribe(response => { this._supply_list = response; });
+
+  }
+
+  supply_getinfo(supply_id) {
+
+    console.log('>> supply_getinfo')
+    console.log('>> supply_id =' + supply_id)
+
+    this.supplys_sv.getSingle_byId(supply_id).subscribe(
+      response => {
+
+        this.vendor_id = response['supply_id'];
+        this.supply_name = response['supply_name'];
+        this.supply_tax_id = response['supply_tax_id'];
+        this.supply_tel = response['supply_tel'];
+        this.supply_addr = response['supply_addr'];
+
+      });
+
+  }
+
+  supply_reset() {
+    this.vendor_id = "";
+    this.supply_name = "";
+    this.supply_tax_id = "";
+    this.supply_tel = "";
+    this.supply_addr = "";
+
+    this.renderer.selectRootElement('#supply_name').focus();
   }
 
   onKeyDownEvent(event: any) {
@@ -98,93 +148,101 @@ export class StrCreateComponent implements OnInit{
   }
 
   addItem(modal_alert) {
-    
-    console.log("addItem")
-    console.log(this.selected_category)
-    var bEmpty : Boolean = false
-    var Label : String =""
 
-    
-    if (this.selected_category === undefined)
-    {
-      bEmpty = true      
-      Label = "กรุณาระบุ "+"ประเภทสินค้า"
-    }
-    else if (this.selected_brand === undefined)
-    {
-      bEmpty = true      
-      Label = "กรุณาระบุ "+"ยี่ห้อสินค้า/Brand"
-    }
-    else if (this.selected_model === undefined)
-    {
-      bEmpty = true      
-      Label = "กรุณาระบุ "+"รุ่นสินค้า/Model"
-    }
-    else if (this.barcode === undefined)
-    {
-      bEmpty = true      
-      Label = "กรุณาระบุ "+"เลข Emei/Barcode/บาร์โค๊ด"
-    }
-    else if (this.barcode.length<5)
-    {
-      bEmpty = true      
-      Label = "ความยาว เลข Emei/Barcode/บาร์โค๊ด น้อยกว่า 5 หลัก"
-    }
+    try {
+      console.log("addItem")
 
-    if (this.cost === undefined)
-    {
-      this.cost = 0 
-    }
+      var bEmpty: Boolean = false
+      var Label: String = ""
 
-    var _respond =  this.stockIn_sv.get_BarcodeExists(this.barcode,this.selected_category.group_id,this.cc_id)
-    
-    console.log(">>> respond="+String(_respond))
-
-    if (String(_respond)!=="")
-    {
-      bEmpty = true    
-      Label = String(_respond)
-      console.log(">>> Not undefined")
-    }
-
-
-    if (bEmpty===false)
-    {
-      console.log("+++++ None undefined ++++++")
-      this.stockItem = {
-        doc_type_name: this.doc_type_name,
-        color: this.color,
-        bar_code: this.barcode.toUpperCase(),
-        pd_name: this.selected_brand.brand_name + this.selected_brand.brand_name + this.color,
-        group_id: this.selected_category.group_id,
-        brand_id: this.selected_brand.brand_id,
-        model_id: this.selected_model.model_id,
-        group_name: this.selected_category.group_name,
-        brand_name: this.selected_brand.brand_name,
-        model_name: this.selected_model.model_name,
-        cost: this.cost,
-        qty: this.qty,
-        UEDIT: "UEDIT",
-        DEDIT: "DEDIT",
-        cc_id: this.cc_id,
+      if (this.selected_category === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "ประเภทสินค้า/Category"
+      }
+      else if (this.selected_category.group_id === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "ประเภทสินค้า/Category"
+      }
+      else if (this.selected_brand === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "ยี่ห้อสินค้า/Brand"
+      }
+      else if (this.selected_brand.brand_id === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "ยี่ห้อสินค้า/Brand"
+      }
+      else if (this.selected_model === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "รุ่นสินค้า/Model"
+      }
+      else if (this.selected_model.model_id === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "รุ่นสินค้า/Model"
+      }
+      else if (this.barcode === undefined) {
+        bEmpty = true
+        Label = "กรุณาระบุ " + "เลข Emei/Barcode/บาร์โค๊ด"
+      }
+      else if (this.barcode.length < 5) {
+        bEmpty = true
+        Label = "ความยาว เลข Emei/Barcode/บาร์โค๊ด น้อยกว่า 5 หลัก"
       }
 
-      this.itemList.push(this.stockItem);
-      this.barcode = '';      
-      this.renderer.selectRootElement('#barcode_input').focus();    
+      if (this.cost === undefined) {
+        this.cost = 0
+      }
 
-      console.log("addItem")
-      console.log(this.itemList)
+      if (bEmpty === false) {
+
+        this.stockIn_sv.get_BarcodeExists(this.barcode, this.selected_category.group_id, this.cc_id).subscribe(response => {
+
+          console.log("response==> " + response)
+
+          if (response === "") {
+            console.log("+++++ None undefined ++++++")
+            this.stockItem = {
+              doc_type_name: this.doc_type_name,
+              color: this.color,
+              bar_code: this.barcode.toUpperCase(),
+              pd_name: this.selected_brand.brand_name + this.selected_brand.brand_name + this.color,
+              group_id: this.selected_category.group_id,
+              brand_id: this.selected_brand.brand_id,
+              model_id: this.selected_model.model_id,
+              group_name: this.selected_category.group_name,
+              brand_name: this.selected_brand.brand_name,
+              model_name: this.selected_model.model_name,
+              cost: this.cost,
+              qty: this.qty,
+              UEDIT: "UEDIT",
+              DEDIT: "DEDIT",
+              cc_id: this.cc_id,
+            }
+
+            this.itemList.push(this.stockItem);
+            this.barcode = '';
+            this.renderer.selectRootElement('#barcode_input').focus();
+
+            console.log("addItem")
+            console.log(this.itemList)
+          }
+          else {
+            console.log(Label)
+            this.alert_txt = response + " !!"
+            this.open(modal_alert)
+          }
+        });
+      }
+      else {
+        console.log(Label)
+        this.alert_txt = Label + " !!"
+        this.open(modal_alert)
+      }
     }
-    else 
-    {
-      console.log(Label)
-      this.alert_txt = Label+" !!"
-      this.open(modal_alert)
+    catch (er) {
+      console.error(er)
     }
- 
   }
- 
+
   removeItem(index: number) {
     this.itemList.splice(index, 1);
     console.log("removeItem")
@@ -202,37 +260,40 @@ export class StrCreateComponent implements OnInit{
     this.barcode = '';
   }
 
-  resetStockInForm(content) {
-   // window.location.reload();
-         /*********** Reset Form  ************* */
-         this.vendor_id =""
-         this.supply_name =""
-         this.supply_addr =""       
-         this.supply_tel =""
-         this.supply_tax_id=""
-         this.itemList = []
+  resetStockInForm(content, close_modal = 'y') {
+    // window.location.reload();
+    /*********** Reset Form  ************* */
+    this.vendor_id = ""
+    this.supply_name = ""
+    this.supply_addr = ""
+    this.supply_tel = ""
+    this.supply_tax_id = ""
+    this.itemList = []
 
-         this.resetProductDetailForm()
+    this.resetProductDetailForm()
 
-         this.modalService.dismissAll(content)
+    if (close_modal == 'y') {
+      this.modalService.dismissAll(content)
+    }
   }
 
 
-  saveStock(modal_alert) {
+  saveStock(modal_alert, model_success) {
+
+    this.modalService.dismissAll('confirm_save')
 
     if (this.itemList.length > 0) {
 
-      if (this.supply_name=="")
-      {
+      if (this.supply_name == "") {
         this.supply_name = "ไม่ระบุ"
-        this.vendor_id =  "S000"
-        console.log("this.supply_name="+this.supply_name)
+        this.vendor_id = "S000"
+        console.log("this.supply_name=" + this.supply_name)
       }
-      
+
       this.supplierDetail = {
 
         supply_id: this.vendor_id,
-        supply_name:  this.supply_name,
+        supply_name: this.supply_name,
         supply_addr: this.supply_addr,
         supply_addr1: '',
         supply_addr2: '',
@@ -266,45 +327,90 @@ export class StrCreateComponent implements OnInit{
       this.stockIn_sv.saveStockIn(stockData).subscribe(response => {
 
         if (response.status == "success") {
-          alert("บันทึกสำเร็จ")
-          //this.resetStockInForm()
+
+          this.modalService.dismissAll('save_sucess')
+          this.alert_txt = "บันทึกข้อมูลเรียบร้อย / Save Successfull "
+          this.open(model_success)
+          this.resetStockInForm(modal_alert, 'n')
 
         } else if (response.status == "alert") {
-
           // alert(response.message)
           this.modalService.dismissAll('confirm_save')
           this.alert_txt = response.message
           this.open(modal_alert)
-
         } else {
-
           alert(response.message)
-
         }
       });
 
-
-
     } else {
-
       // alert("กรุณา เพิ่มรายการสินค้าที่รับเข้า (Item-List)")
       this.modalService.dismissAll('confirm_save')
       this.alert_txt = "กรุณา เพิ่มรายการสินค้าที่รับเข้า (Item-List)"
       this.open(modal_alert)
+
     }
   }
 
-  NextToInput(input){
-    this.renderer.selectRootElement(input).focus();  
-    if (input=='#qty')
-    {
-      this.renderer.selectRootElement(input).value="1";  
+  NextToInput(input) {
+
+    if (input == '#qty' && this.input_qty_disable == "true") {
+      this.renderer.selectRootElement('#barcode_input').focus();
     }
-    else{
-      this.renderer.selectRootElement(input).value="";  
+    else {
+      this.renderer.selectRootElement(input).focus();
+    }
+
+    if (input == '#qty') {
+      this.renderer.selectRootElement(input).value = "1";
+    }
+    else {
+      this.renderer.selectRootElement(input).value = "";
+    }
+
+  }
+
+  Category_OnChange() {
+    try {
+      this.category_list_sv.get_emei_list().subscribe(response => {
+
+        var _group_emei = ''
+
+        for (let i = 0; i < Object.keys(response).length; i++) {
+          _group_emei += ',' + response[i].group_id
+        }
+
+        if (_group_emei.indexOf(this.selected_category.group_id) !== -1) {
+          this.input_qty_disable = 'true';
+          this.qty = 1;
+        }
+        else {
+          this.input_qty_disable = 'false';
+        }
+
+      });
+    } catch (er) {
+      console.error(er)
+    }
+
+  }
+
+
+  Brand_OnChange() {
+
+    try {
+
+      console.log(' Respond API')
+      this.models_sv.getModelList_byBrand(this.selected_category.group_id, this.selected_brand.brand_id)
+        .subscribe(response => { this._model_list = response; });
+
+    } catch (e) {
+      console.error('>> Brand_OnChange')
+      console.log(e);
     }
   }
 
 
+  
 
 }

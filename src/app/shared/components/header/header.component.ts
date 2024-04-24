@@ -12,11 +12,14 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 })
 export class HeaderComponent implements OnInit {
   public elem: any;
+  public wh_name_default :string = ""
 
   constructor(public layout: LayoutService, public navServices: NavService, @Inject(DOCUMENT) private document: any) {}
 
   ngOnInit() {
+
     this.elem = document.documentElement;
+    this.wh_name_default = sessionStorage.getItem('wh_name_default');
   }
 
   sidebarToggle() {

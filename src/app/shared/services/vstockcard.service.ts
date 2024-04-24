@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as data from '../data/tasks/task';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment'
+
+// import { environment } from '../../../environments/environment'
+
+import { environment } from '../../../../src/environments/environment'
 
 
 @Injectable({
@@ -10,12 +13,16 @@ import { environment } from '../../../environments/environment'
 
 export class vStockCard {
 
-  public api_row_limit = String(environment.api_row_limit);
+  public url :string = environment.api_url
+  public limit :string = environment.api_row_limit.toString()
+
+  
   constructor(private httpClient: HttpClient) { }
 
-  getListAll() {
-    var url = 'http://127.0.0.1:8000/v1/vstockcard/?skip=0&limit=10';
-    return this.httpClient.get(url);
+  getListAll() {    
+    
+    return this.httpClient.get( this.url+'vstockcard/?skip=0&limit='+this.limit);
+
   }
 
 
@@ -28,15 +35,15 @@ export class vStockCard {
 
     ) {
 
-    var url = (`http://localhost:8000/v1/vstockcard/getListByDoc?`
+    var url = (this.url+`vstockcard/getListByDoc?`
       + `doc_date_st=` + _doc_date_st
       + `&doc_date_en=` + _doc_date_en
       + `&wh_id=` + _wh_id
       + `&type_doc_id=` + _type_doc_id
       + `&find_cust_name=` + _find_cust_name
-      + `&skip=0&limit=` + this.api_row_limit);
+      + `&skip=0&limit=` + this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -51,15 +58,15 @@ export class vStockCard {
 
     ) {
 
-    var url = (`http://localhost:8000/v1/vstockcard/getListByDoc_Total?`
+    var url = (this.url+`vstockcard/getListByDoc_Total?`
       + `doc_date_st=` + _doc_date_st
       + `&doc_date_en=` + _doc_date_en
       + `&wh_id=` + _wh_id
       + `&type_doc_id=` + _type_doc_id
       + `&find_cust_name=` + _find_cust_name
-      + `&skip=0&limit=` + this.api_row_limit);
+      + `&skip=0&limit=` + this.limit);
 
-    console.log('url >> ', url);
+    
     return this.httpClient.get(url);
 
   }
@@ -79,7 +86,7 @@ export class vStockCard {
 
   ) {
 
-  var url = (`http://localhost:8000/v1/vstockcard/getListByItem?`
+  var url = (this.url+`vstockcard/getListByItem?`
     + `doc_date_st=` + _doc_date_st
     + `&doc_date_en=` + _doc_date_en
     + `&wh_id=` + _wh_id
@@ -89,9 +96,9 @@ export class vStockCard {
     + `&model_id=` + _model_id    
     + `&find_cust_name=` + _find_cust_name
     + `&find_pd_name=` + _find_pd_name
-    + `&skip=0&limit=` + this.api_row_limit);
+    + `&skip=0&limit=` + this.limit);
 
-  console.log('url >> ', url);
+  
   return this.httpClient.get(url);
 
 }
@@ -110,7 +117,7 @@ getListByItem_Total(
 
 ) {
 
-var url = (`http://localhost:8000/v1/vstockcard/getListByItem_Total?`
+var url = (this.url+`vstockcard/getListByItem_Total?`
   + `doc_date_st=` + _doc_date_st
   + `&doc_date_en=` + _doc_date_en
   + `&wh_id=` + _wh_id
@@ -120,9 +127,9 @@ var url = (`http://localhost:8000/v1/vstockcard/getListByItem_Total?`
   + `&model_id=` + _model_id    
   + `&find_cust_name=` + _find_cust_name
   + `&find_pd_name=` + _find_pd_name
-  + `&skip=0&limit=` + this.api_row_limit);
+  + `&skip=0&limit=` + this.limit);
 
-console.log('url >> ', url);
+
 return this.httpClient.get(url);
 
 }
